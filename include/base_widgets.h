@@ -5,7 +5,6 @@
 #include <qtmetamacros.h>
 #pragma once
 
-
 class WindowClass: public QWidget {
         Q_OBJECT;
 public:

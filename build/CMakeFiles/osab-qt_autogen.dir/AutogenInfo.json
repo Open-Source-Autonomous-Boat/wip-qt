@@ -288,6 +288,11 @@
 			"/home/troyd/Documents/github/osab-qt/src/widgets/initial.cpp",
 			"Mu",
 			null
+		],
+		[
+			"/home/troyd/Documents/github/osab-qt/src/widgets/initial/tab1.cpp",
+			"Mu",
+			null
 		]
 	],
 	"VERBOSITY" : 0
