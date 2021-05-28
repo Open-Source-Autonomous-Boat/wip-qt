@@ -1,0 +1,4 @@
+/home/troyd/Documents/github/osab-qt/build/CMakeFiles/edit_cache.dir
+/home/troyd/Documents/github/osab-qt/build/CMakeFiles/rebuild_cache.dir
+/home/troyd/Documents/github/osab-qt/build/CMakeFiles/osab-qt.dir
+/home/troyd/Documents/github/osab-qt/build/CMakeFiles/osab-qt_autogen.dir
