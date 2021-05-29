@@ -1,2 +1,0 @@
-#include <QWidget>
-#pragma once
