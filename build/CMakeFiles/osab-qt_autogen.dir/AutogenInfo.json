@@ -7,9 +7,9 @@
 	"CMAKE_LIST_FILES" : 
 	[
 		"/home/troyd/Documents/github/osab-qt/CMakeLists.txt",
-		"/home/troyd/Documents/github/osab-qt/build/CMakeFiles/3.20.2/CMakeSystem.cmake",
+		"/home/troyd/Documents/github/osab-qt/build/CMakeFiles/3.20.3/CMakeSystem.cmake",
 		"/usr/share/cmake-3.20/Modules/CMakeSystemSpecificInitialize.cmake",
-		"/home/troyd/Documents/github/osab-qt/build/CMakeFiles/3.20.2/CMakeCXXCompiler.cmake",
+		"/home/troyd/Documents/github/osab-qt/build/CMakeFiles/3.20.3/CMakeCXXCompiler.cmake",
 		"/usr/share/cmake-3.20/Modules/CMakeSystemSpecificInformation.cmake",
 		"/usr/share/cmake-3.20/Modules/CMakeGenericSystem.cmake",
 		"/usr/share/cmake-3.20/Modules/CMakeInitializeConfigs.cmake",
@@ -228,6 +228,12 @@
 			"Mu",
 			"MROXUFLNXW/moc_initial.cpp",
 			null
+		],
+		[
+			"/home/troyd/Documents/github/osab-qt/include/widgets/initial/tabs.h",
+			"Mu",
+			"4JNSWFM64F/moc_tabs.cpp",
+			null
 		]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
@@ -286,11 +292,6 @@
 		[ "/home/troyd/Documents/github/osab-qt/src/main.cpp", "Mu", null ],
 		[
 			"/home/troyd/Documents/github/osab-qt/src/widgets/initial.cpp",
-			"Mu",
-			null
-		],
-		[
-			"/home/troyd/Documents/github/osab-qt/src/widgets/initial/tab1.cpp",
 			"Mu",
 			null
 		]

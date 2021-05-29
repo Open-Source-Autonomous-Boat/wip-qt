@@ -214,30 +214,6 @@ src/widgets/initial.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/osab-qt.dir/build.make CMakeFiles/osab-qt.dir/src/widgets/initial.cpp.s
 .PHONY : src/widgets/initial.cpp.s
 
-src/widgets/initial/tab1.o: src/widgets/initial/tab1.cpp.o
-.PHONY : src/widgets/initial/tab1.o
-
-# target to build an object file
-src/widgets/initial/tab1.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/osab-qt.dir/build.make CMakeFiles/osab-qt.dir/src/widgets/initial/tab1.cpp.o
-.PHONY : src/widgets/initial/tab1.cpp.o
-
-src/widgets/initial/tab1.i: src/widgets/initial/tab1.cpp.i
-.PHONY : src/widgets/initial/tab1.i
-
-# target to preprocess a source file
-src/widgets/initial/tab1.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/osab-qt.dir/build.make CMakeFiles/osab-qt.dir/src/widgets/initial/tab1.cpp.i
-.PHONY : src/widgets/initial/tab1.cpp.i
-
-src/widgets/initial/tab1.s: src/widgets/initial/tab1.cpp.s
-.PHONY : src/widgets/initial/tab1.s
-
-# target to generate assembly for a file
-src/widgets/initial/tab1.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/osab-qt.dir/build.make CMakeFiles/osab-qt.dir/src/widgets/initial/tab1.cpp.s
-.PHONY : src/widgets/initial/tab1.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -257,9 +233,6 @@ help:
 	@echo "... src/widgets/initial.o"
 	@echo "... src/widgets/initial.i"
 	@echo "... src/widgets/initial.s"
-	@echo "... src/widgets/initial/tab1.o"
-	@echo "... src/widgets/initial/tab1.i"
-	@echo "... src/widgets/initial/tab1.s"
 .PHONY : help
 
 

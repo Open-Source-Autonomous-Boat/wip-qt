@@ -1,7 +1,6 @@
-CMakeFiles/osab-qt.dir/src/main.cpp.o: \
- /home/troyd/Documents/github/osab-qt/src/main.cpp \
- /usr/include/stdc-predef.h /usr/include/qt6/QtWidgets/QApplication \
- /usr/include/qt6/QtWidgets/qapplication.h \
+CMakeFiles/osab-qt.dir/src/widgets/initial/tabs.cpp.o: \
+ /home/troyd/Documents/github/osab-qt/src/widgets/initial/tabs.cpp \
+ /usr/include/stdc-predef.h /usr/include/qt6/QtWidgets/qwidget.h \
  /usr/include/qt6/QtWidgets/qtwidgetsglobal.h \
  /usr/include/qt6/QtGui/qtguiglobal.h /usr/include/qt6/QtCore/qglobal.h \
  /usr/include/c++/11.1.0/type_traits \
@@ -138,12 +137,14 @@ CMakeFiles/osab-qt.dir/src/main.cpp.o: \
  /usr/include/qt6/QtCore/qversiontagging.h \
  /usr/include/qt6/QtGui/qtgui-config.h \
  /usr/include/qt6/QtWidgets/qtwidgets-config.h \
- /usr/include/qt6/QtCore/qcoreapplication.h \
- /usr/include/qt6/QtCore/qstring.h /usr/include/qt6/QtCore/qchar.h \
- /usr/include/qt6/QtCore/qstringview.h \
- /usr/include/qt6/QtCore/qbytearray.h /usr/include/qt6/QtCore/qrefcount.h \
+ /usr/include/qt6/QtGui/qwindowdefs.h \
+ /usr/include/qt6/QtCore/qobjectdefs.h \
  /usr/include/qt6/QtCore/qnamespace.h \
  /usr/include/qt6/QtCore/qtmetamacros.h \
+ /usr/include/qt6/QtCore/qobjectdefs_impl.h \
+ /usr/include/qt6/QtCore/qobject.h /usr/include/qt6/QtCore/qstring.h \
+ /usr/include/qt6/QtCore/qchar.h /usr/include/qt6/QtCore/qstringview.h \
+ /usr/include/qt6/QtCore/qbytearray.h /usr/include/qt6/QtCore/qrefcount.h \
  /usr/include/qt6/QtCore/qarraydata.h /usr/include/qt6/QtCore/qpair.h \
  /usr/include/string.h /usr/include/strings.h \
  /usr/include/qt6/QtCore/qarraydatapointer.h \
@@ -222,8 +223,6 @@ CMakeFiles/osab-qt.dir/src/main.cpp.o: \
  /usr/include/qt6/QtCore/qanystringview.h \
  /usr/include/qt6/QtCore/qutf8stringview.h \
  /usr/include/qt6/QtCore/qstringtokenizer.h \
- /usr/include/qt6/QtCore/qobject.h /usr/include/qt6/QtCore/qobjectdefs.h \
- /usr/include/qt6/QtCore/qobjectdefs_impl.h \
  /usr/include/qt6/QtCore/qlist.h /usr/include/qt6/QtCore/qhashfunctions.h \
  /usr/include/c++/11.1.0/numeric \
  /usr/include/c++/11.1.0/bits/stl_numeric.h \
@@ -253,43 +252,33 @@ CMakeFiles/osab-qt.dir/src/main.cpp.o: \
  /usr/include/qt6/QtCore/qpropertyprivate.h \
  /usr/include/c++/11.1.0/experimental/source_location \
  /usr/include/c++/11.1.0/chrono /usr/include/c++/11.1.0/ratio \
- /usr/include/c++/11.1.0/ctime /usr/include/qt6/QtCore/qcoreevent.h \
- /usr/include/qt6/QtCore/qeventloop.h /usr/include/qt6/QtCore/qdebug.h \
- /usr/include/qt6/QtCore/qhash.h /usr/include/qt6/QtCore/qmap.h \
- /usr/include/qt6/QtCore/qshareddata_impl.h \
- /usr/include/qt6/QtCore/qtextstream.h \
- /usr/include/qt6/QtCore/qstringconverter.h \
- /usr/include/qt6/QtCore/qset.h \
- /usr/include/qt6/QtCore/qcontiguouscache.h \
+ /usr/include/c++/11.1.0/ctime /usr/include/qt6/QtCore/qmargins.h \
+ /usr/include/qt6/QtGui/qpaintdevice.h /usr/include/qt6/QtCore/qrect.h \
+ /usr/include/qt6/QtCore/qsize.h /usr/include/qt6/QtCore/qpoint.h \
+ /usr/include/qt6/QtGui/qpalette.h /usr/include/qt6/QtGui/qcolor.h \
+ /usr/include/qt6/QtGui/qrgb.h /usr/include/qt6/QtGui/qrgba64.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include-fixed/limits.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include-fixed/syslimits.h \
  /usr/include/limits.h /usr/include/bits/posix1_lim.h \
  /usr/include/bits/local_lim.h /usr/include/linux/limits.h \
  /usr/include/bits/posix2_lim.h /usr/include/bits/xopen_lim.h \
- /usr/include/bits/uio_lim.h /usr/include/qt6/QtCore/qsharedpointer.h \
- /usr/include/qt6/QtCore/qsharedpointer_impl.h \
- /usr/include/qt6/QtGui/qwindowdefs.h /usr/include/qt6/QtCore/qpoint.h \
- /usr/include/qt6/QtCore/qsize.h /usr/include/qt6/QtCore/qmargins.h \
- /usr/include/qt6/QtGui/qcursor.h /usr/include/qt6/QtGui/qbitmap.h \
- /usr/include/qt6/QtGui/qpixmap.h /usr/include/qt6/QtGui/qpaintdevice.h \
- /usr/include/qt6/QtCore/qrect.h /usr/include/qt6/QtGui/qcolor.h \
- /usr/include/qt6/QtGui/qrgb.h /usr/include/qt6/QtGui/qrgba64.h \
+ /usr/include/bits/uio_lim.h /usr/include/qt6/QtGui/qbrush.h \
  /usr/include/qt6/QtGui/qimage.h /usr/include/qt6/QtGui/qpixelformat.h \
  /usr/include/qt6/QtGui/qtransform.h /usr/include/qt6/QtGui/qpolygon.h \
  /usr/include/qt6/QtGui/qregion.h /usr/include/qt6/QtCore/qline.h \
- /usr/include/qt6/QtGui/qguiapplication.h \
- /usr/include/qt6/QtGui/qinputmethod.h /usr/include/qt6/QtCore/qlocale.h \
- /usr/include/qt6/QtCore/qvariant.h \
- /home/troyd/Documents/github/osab-qt/include/widgets/initial.h \
- /usr/include/qt6/QtWidgets/QTabWidget \
- /usr/include/qt6/QtWidgets/qtabwidget.h \
- /usr/include/qt6/QtWidgets/qwidget.h /usr/include/qt6/QtGui/qpalette.h \
- /usr/include/qt6/QtGui/qbrush.h /usr/include/qt6/QtGui/qfont.h \
- /usr/include/qt6/QtGui/qfontmetrics.h /usr/include/qt6/QtGui/qfontinfo.h \
+ /usr/include/qt6/QtGui/qpixmap.h \
+ /usr/include/qt6/QtCore/qsharedpointer.h \
+ /usr/include/qt6/QtCore/qsharedpointer_impl.h \
+ /usr/include/qt6/QtGui/qfont.h /usr/include/qt6/QtGui/qfontmetrics.h \
+ /usr/include/qt6/QtGui/qfontinfo.h \
  /usr/include/qt6/QtWidgets/qsizepolicy.h \
- /usr/include/qt6/QtGui/qkeysequence.h /usr/include/qt6/QtGui/qicon.h \
+ /usr/include/qt6/QtGui/qcursor.h /usr/include/qt6/QtGui/qbitmap.h \
+ /usr/include/qt6/QtGui/qkeysequence.h \
  /home/troyd/Documents/github/osab-qt/include/base_widgets.h \
  /usr/include/qt6/QtWidgets/QWidget /usr/include/qt6/QtWidgets/qwidget.h \
+ /usr/include/qt6/QtWidgets/QTabWidget \
+ /usr/include/qt6/QtWidgets/qtabwidget.h \
+ /usr/include/qt6/QtWidgets/qwidget.h /usr/include/qt6/QtGui/qicon.h \
  /usr/include/qt6/QtCore/qobject.h \
  /usr/include/qt6/QtWidgets/qtabwidget.h \
  /usr/include/qt6/QtCore/qtmetamacros.h

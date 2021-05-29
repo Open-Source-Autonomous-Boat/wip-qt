@@ -10,8 +10,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/osab-qt.dir/src/main.cpp.o.d"
   "CMakeFiles/osab-qt.dir/src/widgets/initial.cpp.o"
   "CMakeFiles/osab-qt.dir/src/widgets/initial.cpp.o.d"
-  "CMakeFiles/osab-qt.dir/src/widgets/initial/tab1.cpp.o"
-  "CMakeFiles/osab-qt.dir/src/widgets/initial/tab1.cpp.o.d"
 )
 
 # Per-language clean rules from dependency scanning.

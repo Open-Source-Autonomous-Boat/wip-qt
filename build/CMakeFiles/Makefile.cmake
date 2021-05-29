@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
   "../CMakeLists.txt"
-  "CMakeFiles/3.20.2/CMakeCXXCompiler.cmake"
-  "CMakeFiles/3.20.2/CMakeSystem.cmake"
+  "CMakeFiles/3.20.3/CMakeCXXCompiler.cmake"
+  "CMakeFiles/3.20.3/CMakeSystem.cmake"
   "/usr/lib/cmake/Qt6/3rdparty/kwin/FindXKB.cmake"
   "/usr/lib/cmake/Qt6/FindWrapAtomic.cmake"
   "/usr/lib/cmake/Qt6/FindWrapOpenGL.cmake"

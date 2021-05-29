@@ -82,12 +82,12 @@ clean: CMakeFiles/osab-qt_autogen.dir/clean
 CMakeFiles/osab-qt.dir/all: CMakeFiles/osab-qt_autogen.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/osab-qt.dir/build.make CMakeFiles/osab-qt.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/osab-qt.dir/build.make CMakeFiles/osab-qt.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/troyd/Documents/github/osab-qt/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target osab-qt"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/troyd/Documents/github/osab-qt/build/CMakeFiles --progress-num=1,2,3,4 "Built target osab-qt"
 .PHONY : CMakeFiles/osab-qt.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/osab-qt.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/troyd/Documents/github/osab-qt/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/troyd/Documents/github/osab-qt/build/CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/osab-qt.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/troyd/Documents/github/osab-qt/build/CMakeFiles 0
 .PHONY : CMakeFiles/osab-qt.dir/rule
@@ -108,7 +108,7 @@ CMakeFiles/osab-qt.dir/clean:
 CMakeFiles/osab-qt_autogen.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/osab-qt_autogen.dir/build.make CMakeFiles/osab-qt_autogen.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/osab-qt_autogen.dir/build.make CMakeFiles/osab-qt_autogen.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/troyd/Documents/github/osab-qt/build/CMakeFiles --progress-num=6 "Built target osab-qt_autogen"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/troyd/Documents/github/osab-qt/build/CMakeFiles --progress-num=5 "Built target osab-qt_autogen"
 .PHONY : CMakeFiles/osab-qt_autogen.dir/all
 
 # Build rule for subdir invocation for target.

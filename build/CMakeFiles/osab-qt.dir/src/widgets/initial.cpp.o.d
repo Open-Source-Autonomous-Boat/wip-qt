@@ -2,8 +2,8 @@ CMakeFiles/osab-qt.dir/src/widgets/initial.cpp.o: \
  /home/troyd/Documents/github/osab-qt/src/widgets/initial.cpp \
  /usr/include/stdc-predef.h \
  /home/troyd/Documents/github/osab-qt/include/widgets/initial.h \
- /home/troyd/Documents/github/osab-qt/include/base_widgets.h \
- /usr/include/qt6/QtWidgets/QWidget /usr/include/qt6/QtWidgets/qwidget.h \
+ /usr/include/qt6/QtWidgets/QTabWidget \
+ /usr/include/qt6/QtWidgets/qtabwidget.h \
  /usr/include/qt6/QtWidgets/qtwidgetsglobal.h \
  /usr/include/qt6/QtGui/qtguiglobal.h /usr/include/qt6/QtCore/qglobal.h \
  /usr/include/c++/11.1.0/type_traits \
@@ -140,6 +140,7 @@ CMakeFiles/osab-qt.dir/src/widgets/initial.cpp.o: \
  /usr/include/qt6/QtCore/qversiontagging.h \
  /usr/include/qt6/QtGui/qtgui-config.h \
  /usr/include/qt6/QtWidgets/qtwidgets-config.h \
+ /usr/include/qt6/QtWidgets/qwidget.h \
  /usr/include/qt6/QtGui/qwindowdefs.h \
  /usr/include/qt6/QtCore/qobjectdefs.h \
  /usr/include/qt6/QtCore/qnamespace.h \
@@ -276,19 +277,51 @@ CMakeFiles/osab-qt.dir/src/widgets/initial.cpp.o: \
  /usr/include/qt6/QtGui/qfontinfo.h \
  /usr/include/qt6/QtWidgets/qsizepolicy.h \
  /usr/include/qt6/QtGui/qcursor.h /usr/include/qt6/QtGui/qbitmap.h \
- /usr/include/qt6/QtGui/qkeysequence.h \
- /usr/include/qt6/QtWidgets/QTabWidget \
- /usr/include/qt6/QtWidgets/qtabwidget.h \
- /usr/include/qt6/QtWidgets/qwidget.h /usr/include/qt6/QtGui/qicon.h \
+ /usr/include/qt6/QtGui/qkeysequence.h /usr/include/qt6/QtGui/qicon.h \
+ /home/troyd/Documents/github/osab-qt/include/base_widgets.h \
+ /usr/include/qt6/QtWidgets/QWidget /usr/include/qt6/QtWidgets/qwidget.h \
  /usr/include/qt6/QtCore/qobject.h \
  /usr/include/qt6/QtWidgets/qtabwidget.h \
  /usr/include/qt6/QtCore/qtmetamacros.h \
- /usr/include/qt6/QtWidgets/QPushButton \
- /usr/include/qt6/QtWidgets/qpushbutton.h \
- /usr/include/qt6/QtWidgets/qabstractbutton.h \
- /usr/include/qt6/QtWidgets/QGridLayout \
- /usr/include/qt6/QtWidgets/qgridlayout.h \
+ /usr/include/qt6/QtWidgets/qboxlayout.h \
  /usr/include/qt6/QtWidgets/qlayout.h \
  /usr/include/qt6/QtWidgets/qlayoutitem.h \
  /usr/include/qt6/QtWidgets/qboxlayout.h \
- /usr/include/qt6/QtWidgets/qgridlayout.h
+ /usr/include/qt6/QtWidgets/qgridlayout.h \
+ /usr/include/qt6/QtWidgets/qframe.h \
+ /usr/include/qt6/QtWidgets/qgridlayout.h \
+ /usr/include/qt6/QtWidgets/qlabel.h /usr/include/qt6/QtWidgets/qframe.h \
+ /usr/include/qt6/QtGui/qpicture.h /usr/include/qt6/QtCore/qiodevice.h \
+ /usr/include/qt6/QtGui/qtextdocument.h \
+ /usr/include/qt6/QtCore/qvariant.h /usr/include/qt6/QtCore/qmap.h \
+ /usr/include/qt6/QtCore/qshareddata_impl.h \
+ /usr/include/qt6/QtCore/qhash.h /usr/include/qt6/QtCore/qdebug.h \
+ /usr/include/qt6/QtCore/qtextstream.h \
+ /usr/include/qt6/QtCore/qstringconverter.h \
+ /usr/include/qt6/QtCore/qset.h \
+ /usr/include/qt6/QtCore/qcontiguouscache.h \
+ /usr/include/qt6/QtCore/qurl.h /usr/include/qt6/QtCore/qnamespace.h \
+ /usr/include/qt6/QtWidgets/qpushbutton.h \
+ /usr/include/qt6/QtWidgets/qabstractbutton.h \
+ /usr/include/qt6/QtWidgets/qwidget.h /usr/include/unistd.h \
+ /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
+ /usr/include/bits/confname.h /usr/include/bits/getopt_posix.h \
+ /usr/include/bits/getopt_core.h /usr/include/bits/unistd_ext.h \
+ /usr/include/qt6/QtWidgets/QBoxLayout \
+ /usr/include/qt6/QtWidgets/qboxlayout.h \
+ /usr/include/qt6/QtWidgets/QGridLayout \
+ /usr/include/qt6/QtWidgets/qgridlayout.h \
+ /usr/include/qt6/QtWidgets/QPushButton \
+ /usr/include/qt6/QtWidgets/qpushbutton.h \
+ /usr/include/qt6/QtWidgets/QLabel /usr/include/qt6/QtWidgets/qlabel.h \
+ /usr/include/c++/11.1.0/iostream /usr/include/c++/11.1.0/ostream \
+ /usr/include/c++/11.1.0/ios /usr/include/c++/11.1.0/bits/basic_ios.h \
+ /usr/include/c++/11.1.0/bits/locale_facets.h \
+ /usr/include/c++/11.1.0/cwctype /usr/include/wctype.h \
+ /usr/include/bits/wctype-wchar.h \
+ /usr/include/c++/11.1.0/x86_64-pc-linux-gnu/bits/ctype_base.h \
+ /usr/include/c++/11.1.0/x86_64-pc-linux-gnu/bits/ctype_inline.h \
+ /usr/include/c++/11.1.0/bits/locale_facets.tcc \
+ /usr/include/c++/11.1.0/bits/basic_ios.tcc \
+ /usr/include/c++/11.1.0/bits/ostream.tcc /usr/include/c++/11.1.0/istream \
+ /usr/include/c++/11.1.0/bits/istream.tcc
