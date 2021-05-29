@@ -7,21 +7,18 @@
 
 class WindowClass: public QWidget {
         Q_OBJECT;
-public:
-        WindowClass(QWidget *parent = nullptr) {
-        };
 protected:
-        virtual void _setupWin() {};
-        virtual void _setupWidgets() {};
+        virtual void _SetupWin() {};
+        virtual void _SetupWidgets() {};
 };
+
+/* Why can't QT let use use Q_OBJECT in template functions... */
 
 class TabWindowClass: public QTabWidget {
         Q_OBJECT;
-public:
-        TabWindowClass(QTabWidget *parent = nullptr) {};
 protected:
-        virtual void _setupWin() {};
-        virtual void _setupWidgets() {};
+        virtual void _SetupWin() {};
+        virtual void _SetupWidgets() {};
         
 };
 

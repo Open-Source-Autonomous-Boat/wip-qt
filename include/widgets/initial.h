@@ -1,17 +1,34 @@
+#include <qboxlayout.h>
+#include <qgridlayout.h>
+#include <qpushbutton.h>
+#include <qwidget.h>
+
 #include <QTabWidget>
 
 #include "base_widgets.h"
 
+#pragma once
+
 class InitialWidget : public TabWindowClass {
  public:
-  InitialWidget() : TabWindowClass() {
-    this->_setupWidgets();
-    this->_setupWin();
+  InitialWidget() {
+    this->_SetupWidgets();
+    this->_SetupWin();
   }
  public slots:
   void quit();
 
- private:
-  void _setupWidgets() override;
-  void _setupWin() override;
+ protected:
+  void _SetupWidgets() override;
+  void _SetupWin() override;
 };
+
+namespace tab_1_widgets {
+// Widgets
+QPushButton* ExitButton(InitialWidget* parent);
+namespace dash_board {
+QBoxLayout* DeviceName(InitialWidget* parent);
+}
+// Layouts
+QGridLayout* Grid(InitialWidget* parent);
+}  // namespace tab_1_widgets

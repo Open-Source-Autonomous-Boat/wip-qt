@@ -27,7 +27,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_IMPORT_SOURCE_DIR ON)
 
-find_package(Qt6 COMPONENTS Widgets Core REQUIRED)
+find_package(Qt6 COMPONENTS Widgets Core Sql REQUIRED)
 
 if (WIN32)
    add_executable(osab-qt WIN32 ${SOURCES})
