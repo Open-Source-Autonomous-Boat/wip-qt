@@ -35,4 +35,4 @@ elseif (UNIX)
    add_executable(osab-qt ${SOURCES})
 endif()
 
-target_link_libraries(osab-qt Qt6::Widgets Qt6::Core)
+target_link_libraries(osab-qt Qt6::Widgets Qt6::Core Qt6::Sql)

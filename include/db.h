@@ -1,9 +1,8 @@
-#include <QtSql/qsqldatabase.h>
-#include <QtSql/qsqlquery.h>
+#include <QtSql/QSql>
+#include <QString>
+#include <QtSql/QSql>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
-#include <QString>
-
 #pragma once
 
 

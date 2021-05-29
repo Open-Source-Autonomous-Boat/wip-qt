@@ -1,7 +1,7 @@
 #include "db.h"
-#include <QtSql/qsqldatabase.h>
-#include <QtSql/QSqlQuery>
+#include <QtSql/QSql>
 #include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
 #include <cstdlib>
 #include <QString>
 #include <QDebug>
