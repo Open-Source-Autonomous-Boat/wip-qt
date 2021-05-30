@@ -26,6 +26,7 @@ class InitialWidget : public TabWindowClass {
 namespace tab_1_widgets {
 // Widgets
 QPushButton* ExitButton(InitialWidget* parent);
+QPushButton* SettingsButton(InitialWidget* parent);
 namespace dash_board {
   QBoxLayout* NameLabel(InitialWidget* parent, QString key);
 }

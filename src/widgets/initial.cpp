@@ -5,6 +5,7 @@
 #include <qframe.h>
 #include <qgridlayout.h>
 #include <qlabel.h>
+#include <qlayout.h>
 #include <qnamespace.h>
 #include <qobject.h>
 #include <qpushbutton.h>
@@ -27,18 +28,30 @@ QPushButton* tab_1_widgets::ExitButton(InitialWidget* parent) {
   return new_widget;
 }
 
+QPushButton* tab_1_widgets::SettingsButton(InitialWidget* parent) {
+  auto* new_widget = new QPushButton("Settings", parent);
+  QObject::connect(new_widget, &QPushButton::clicked, parent,
+                   &InitialWidget::quit);
+  return new_widget;
+}
+
 QGridLayout* tab_1_widgets::Grid(InitialWidget* parent) {
   std::vector<QString> list_data = {"Device Name", "Identification Number",
-                                    "Uptime", "Current Coordination", "Status"};
+                                    "Uptime", "Current Coordinates", "Status"};
   auto* grid = new QGridLayout(parent);
   auto* main_dash = new QBoxLayout(QBoxLayout::TopToBottom);
+  auto* button_bar = new QBoxLayout(QBoxLayout::TopToBottom);
   auto* bottom_bar = new QBoxLayout(QBoxLayout::LeftToRight);
   bottom_bar->addWidget(tab_1_widgets::ExitButton(parent));
+  bottom_bar->addWidget(tab_1_widgets::SettingsButton(parent));
+  main_dash->addStretch();
+  button_bar->addStretch();
   for (auto& data : list_data) {
     main_dash->addLayout(tab_1_widgets::dash_board::NameLabel(parent, data));
   }
-  grid->addLayout(main_dash, 0, 0);
-  grid->addLayout(bottom_bar, 1, 0);
+  grid->addLayout(main_dash, 1, 0);
+  grid->addLayout(button_bar, 0, 0);
+  grid->addLayout(bottom_bar, 2, 0);
   return grid;
 }
 
@@ -49,6 +62,7 @@ QBoxLayout* tab_1_widgets::dash_board::NameLabel(InitialWidget* parent,
   auto value = new QLabel("Unknown");
   value->setTextInteractionFlags(Qt::TextSelectableByMouse |
                                  Qt::TextSelectableByKeyboard);
+  box->setSizeConstraint(QLayout::SetMinimumSize);
   box->addWidget(label);
   box->addWidget(value);
   return box;
@@ -67,14 +81,16 @@ QBoxLayout* tab_1_widgets::dash_board::NameLabel(InitialWidget* parent,
  */
 void InitialWidget::_SetupWidgets() {
   /* Tab 1 */
+  QWidget *Tab1 = new QWidget(this);
+  Tab1->setLayout(tab_1_widgets::Grid(this));
   /* Tab 2 */
   /* Final Adjustments */
-  this->setLayout(tab_1_widgets::Grid(this));
+  this->addTab(Tab1, "Dashboard");
 }
 
 void InitialWidget::_SetupWin() {
   this->setWindowTitle("OSAB WIP");
-  this->setMinimumSize(200, 200);
+  this->setMinimumSize(600, 400);
   this->show();
 }
 

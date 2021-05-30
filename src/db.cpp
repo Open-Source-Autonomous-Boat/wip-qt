@@ -27,14 +27,14 @@ DBManager::DBManager(QString path) {
   }
   this->query.exec("SELECT count(*) FROM table");
   if (this->query.value(0).toInt() <= 0) {
-    this->query.exec("CREATE TABLE info(key value)");
+    this->query.exec("CREATE TABLE info(id INTEGER PRIMARY KEY, key TEXT, value INTEGER)");
   }
 }
 
-DBManager::~DBManager() { std::exit(0); }
+DBManager::~DBManager() = default;
 
 QString DBManager::GetValue(QString key, QString catagory) {
-  this->query.prepare("SELECT (key) FROM (catagory) VALUES (:key) (:catagory)");
+  this->query.prepare("SELECT (key) FROM info WHERE value VALUES (:key) (:catagory)");
   this->query.bindValue(":key", key);
   this->query.bindValue(":catagory", catagory);
   if (!this->query.exec()) {
