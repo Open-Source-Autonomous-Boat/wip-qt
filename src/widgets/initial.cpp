@@ -16,6 +16,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QWidget>
+#include <vector>
 
 #include "base_widgets.h"
 
@@ -27,26 +28,32 @@ QPushButton* tab_1_widgets::ExitButton(InitialWidget* parent) {
 }
 
 QGridLayout* tab_1_widgets::Grid(InitialWidget* parent) {
+  std::vector<QString> list_data = {"Device Name", "Identification Number",
+                                    "Uptime", "Current Coordination", "Status"};
   auto* grid = new QGridLayout(parent);
   auto* main_dash = new QBoxLayout(QBoxLayout::TopToBottom);
   auto* bottom_bar = new QBoxLayout(QBoxLayout::LeftToRight);
   bottom_bar->addWidget(tab_1_widgets::ExitButton(parent));
-  main_dash->addLayout(tab_1_widgets::dash_board::DeviceName(parent));
+  for (auto& data : list_data) {
+    main_dash->addLayout(tab_1_widgets::dash_board::NameLabel(parent, data));
+  }
   grid->addLayout(main_dash, 0, 0);
   grid->addLayout(bottom_bar, 1, 0);
   return grid;
 }
 
-
-QBoxLayout *tab_1_widgets::dash_board::DeviceName(InitialWidget* parent) {
+QBoxLayout* tab_1_widgets::dash_board::NameLabel(InitialWidget* parent,
+                                                 QString key) {
   auto box = new QBoxLayout(QBoxLayout::LeftToRight);
-  auto label = new QLabel("Device Name");
-  auto value = new QLabel("Unkown");
+  auto label = new QLabel(key);
+  auto value = new QLabel("Unknown");
+  value->setTextInteractionFlags(Qt::TextSelectableByMouse |
+                                 Qt::TextSelectableByKeyboard);
   box->addWidget(label);
   box->addWidget(value);
   return box;
 }
- 
+
 /*
  * Structure of tabs:
  * - Widget

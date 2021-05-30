@@ -27,7 +27,7 @@ namespace tab_1_widgets {
 // Widgets
 QPushButton* ExitButton(InitialWidget* parent);
 namespace dash_board {
-QBoxLayout* DeviceName(InitialWidget* parent);
+  QBoxLayout* NameLabel(InitialWidget* parent, QString key);
 }
 // Layouts
 QGridLayout* Grid(InitialWidget* parent);
