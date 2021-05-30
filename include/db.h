@@ -11,7 +11,7 @@ public:
   DBManager(QString path);
   ~DBManager();
   // Get shit here!
-  QString GetValue(QString key);
+  QString GetValue(QString key, QString catagory);
 private:
   QSqlQuery query;
   QSqlDatabase db;
