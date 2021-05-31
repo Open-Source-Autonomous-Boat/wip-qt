@@ -23,13 +23,22 @@ class InitialWidget : public TabWindowClass {
   void _SetupWin() override;
 };
 
-namespace tab_1_widgets {
-// Widgets
+namespace general_widgets {
+QBoxLayout* NameLabel(InitialWidget* parent, QString key);
+QBoxLayout* EditLabel(InitialWidget* parent, QString key);
 QPushButton* ExitButton(InitialWidget* parent);
+}  // namespace general_widgets
+
+namespace tab_1_widgets {  // Dashboard
+// Widgets
 QPushButton* SettingsButton(InitialWidget* parent);
-namespace dash_board {
-  QBoxLayout* NameLabel(InitialWidget* parent, QString key);
-}
 // Layouts
 QGridLayout* Grid(InitialWidget* parent);
 }  // namespace tab_1_widgets
+
+namespace tab_2_widgets {  // Device Info
+                           // Widgets
+QPushButton* Apply(InitialWidget* parent);
+// Layouts
+QGridLayout* Grid(InitialWidget* parent);
+}  // namespace tab_2_widgets
