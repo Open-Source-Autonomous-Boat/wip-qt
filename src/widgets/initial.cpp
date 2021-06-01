@@ -61,7 +61,7 @@ QGridLayout* tab_1_widgets::Grid(InitialWidget* parent) {
 }
 
 QBoxLayout* general_widgets::NameLabel(InitialWidget* parent, QString key) {
-  std::unique_ptr<DBManager> db(new DBManager());
+  //std::unique_ptr<DBManager> db(new DBManager());
   auto* box = new QBoxLayout(QBoxLayout::LeftToRight);
   auto* label = new QLabel(key);
   //auto* value = new QLabel(db->GetValue(key));

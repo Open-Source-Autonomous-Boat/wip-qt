@@ -10,11 +10,12 @@
 #include <cstdlib>
 
 DBManager::DBManager() {
-  /*
-   * Does not support Windows yet :/
-   */
   const QString home_dir = std::getenv("HOME");
+#if defined(__WIN32) || defined(__MINGW64__) || defined(__MINGW32__)
+  const QString cache_dir(QString("%1/AppData/Roaming/osab").arg(home_dir));
+#elif defined(__LINUX)
   const QString cache_dir(QString("%1/.cache/osab").arg(home_dir));
+#endif
   const QString path(QString("%1/db.sql").arg(cache_dir));
   QDir db_dir(cache_dir);
   if (!db_dir.exists()) {
