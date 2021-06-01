@@ -11,9 +11,9 @@
 
 DBManager::DBManager() {
   const QString home_dir = std::getenv("HOME");
-#if defined(__WIN32) || defined(__MINGW64__) || defined(__MINGW32__)
+#if defined(__WIN32__) || defined(__MINGW64__) || defined(__MINGW32__)
   const QString cache_dir(QString("%1/AppData/Roaming/osab").arg(home_dir));
-#elif defined(__LINUX)
+#elif defined(__unix__)
   const QString cache_dir(QString("%1/.cache/osab").arg(home_dir));
 #endif
   const QString path(QString("%1/db.sql").arg(cache_dir));
@@ -31,15 +31,16 @@ DBManager::DBManager() {
     db_file.close();
   }
   this->db = QSqlDatabase::addDatabase("QSQLITE");
-  this->db.setDatabaseName(path);
-  if (!this->db.open()) {
+  this->db.setDatabaseName("main_db");
+  bool open_bool = this->db.open();
+  if (!open_bool) {
     qDebug() << this->db.lastError();
     return;
   }
-  this->query.exec("SELECT count(*) FROM info");
-  if (this->query.value(0).toInt() <= 0) {
-    this->query.exec("CREATE TABLE info(id INTEGER PRIMARY KEY, key TEXT, value INTEGER)");
-  }
+  // this->query.exec("SELECT count(*) FROM info");
+  // if (this->query.value(0).toInt() <= 0) {
+  //   this->query.exec("CREATE TABLE info(id INTEGER PRIMARY KEY, key TEXT, value INTEGER)");
+  // }
 }
 
 DBManager::~DBManager() = default;
@@ -64,4 +65,10 @@ QString DBManager::SetValue(QString key, QString value) {
 
 void DBManager::GenPath() {
   return;
+}
+
+void DBManager::CloseDB() {
+  if (this->db.isOpen()) {
+    this->db.close();
+  } else { return; }
 }

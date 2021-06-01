@@ -1,5 +1,4 @@
 #include "widgets/initial.h"
-#include "db.h"
 
 #include <qboxlayout.h>
 #include <qbrush.h>
@@ -11,6 +10,7 @@
 #include <qnamespace.h>
 #include <qobject.h>
 #include <qpushbutton.h>
+#include <qtabwidget.h>
 #include <qwidget.h>
 #include <unistd.h>
 
@@ -25,6 +25,7 @@
 #include <vector>
 
 #include "base_widgets.h"
+#include "db.h"
 
 QPushButton* general_widgets::ExitButton(InitialWidget* parent) {
   auto* new_widget = new QPushButton("Exit", parent);
@@ -46,25 +47,26 @@ QGridLayout* tab_1_widgets::Grid(InitialWidget* parent) {
   auto* grid = new QGridLayout(parent);
   auto* main_dash = new QBoxLayout(QBoxLayout::TopToBottom);
   auto* button_bar = new QBoxLayout(QBoxLayout::TopToBottom);
-  auto* bottom_bar = new QBoxLayout(QBoxLayout::LeftToRight);
-  bottom_bar->addWidget(general_widgets::ExitButton(parent));
-  bottom_bar->addWidget(tab_1_widgets::SettingsButton(parent));
+  std::unique_ptr<DBManager>db(new DBManager());
   main_dash->addStretch();
   button_bar->addStretch();
   for (auto& data : list_data) {
-    main_dash->addLayout(general_widgets::NameLabel(parent, data));
+    main_dash->addLayout(general_widgets::NameLabel(parent, data, db.get()));
   }
   grid->addLayout(main_dash, 1, 0);
   grid->addLayout(button_bar, 0, 0);
-  grid->addLayout(bottom_bar, 2, 0);
+  db.get()->CloseDB();
   return grid;
 }
 
-QBoxLayout* general_widgets::NameLabel(InitialWidget* parent, QString key) {
-  //std::unique_ptr<DBManager> db(new DBManager());
+QBoxLayout* general_widgets::NameLabel(InitialWidget* parent, QString key,
+                                       DBManager* db) {
+  if (!db) {
+    std::unique_ptr<DBManager>db(new DBManager());
+  }
   auto* box = new QBoxLayout(QBoxLayout::LeftToRight);
   auto* label = new QLabel(key);
-  //auto* value = new QLabel(db->GetValue(key));
+  // auto* value = new QLabel(db->GetValue(key));
   auto* value = new QLabel("Unknown");
   value->setTextInteractionFlags(Qt::TextSelectableByMouse |
                                  Qt::TextSelectableByKeyboard);
@@ -74,7 +76,12 @@ QBoxLayout* general_widgets::NameLabel(InitialWidget* parent, QString key) {
   return box;
 }
 
-QBoxLayout* general_widgets::EditLabel(InitialWidget* parent, QString key) {
+QBoxLayout* general_widgets::EditLabel(InitialWidget* parent, QString key,
+                                       DBManager* db) {
+  if (!db) {
+        qDebug() << "I made a new connection <3";
+        std::unique_ptr<DBManager>db(new DBManager());
+  }
   auto* box = new QBoxLayout(QBoxLayout::LeftToRight);
   auto* label = new QLabel(key);
   auto* value = new QLineEdit(parent);
@@ -86,14 +93,16 @@ QBoxLayout* general_widgets::EditLabel(InitialWidget* parent, QString key) {
 }
 
 QGridLayout* tab_2_widgets::Grid(InitialWidget* parent) {
-  std::vector<QString>value_list = {"Device Information", "Nickname"};
+  std::vector<QString> value_list = {"Device Information", "Nickname"};
   auto* info_bar = new QBoxLayout(QBoxLayout::TopToBottom);
   auto* grid = new QGridLayout();
-  for (auto& i: value_list) {
-    info_bar->addLayout(general_widgets::EditLabel(parent, i));
+  std::unique_ptr<DBManager>db(new DBManager());
+  for (auto& i : value_list) {
+    info_bar->addLayout(general_widgets::EditLabel(parent, i, db.get()));
   }
   grid->addLayout(info_bar, 0, 0);
   grid->addWidget(tab_2_widgets::Apply(parent), 1, 0);
+  db.get()->CloseDB();
   return grid;
 }
 
@@ -121,8 +130,16 @@ void InitialWidget::_SetupWidgets() {
   QWidget* tab_2 = new QWidget(this);
   tab_2->setLayout(tab_2_widgets::Grid(this));
   /* Final Adjustments */
-  this->addTab(tab_1, "Dashboard");
-  this->addTab(tab_2, "Device Information");
+  auto* bar = new QBoxLayout(QBoxLayout::LeftToRight);
+  auto* tabs = new QTabWidget(this);
+  auto* main_layout = new QBoxLayout(QBoxLayout::TopToBottom);
+  bar->addWidget(general_widgets::ExitButton(this));
+  bar->addWidget(tab_1_widgets::SettingsButton(this));
+  tabs->addTab(tab_1, "Dashboard");
+  tabs->addTab(tab_2, "Device Information");
+  main_layout->addWidget(tabs);
+  main_layout->addLayout(bar);
+  this->setLayout(main_layout);
 }
 
 void InitialWidget::_SetupWin() {

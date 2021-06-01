@@ -6,10 +6,11 @@
 #include <QTabWidget>
 
 #include "base_widgets.h"
+#include "db.h"
 
 #pragma once
 
-class InitialWidget : public TabWindowClass {
+class InitialWidget : public WindowClass {
  public:
   InitialWidget() {
     this->_SetupWidgets();
@@ -24,8 +25,10 @@ class InitialWidget : public TabWindowClass {
 };
 
 namespace general_widgets {
-QBoxLayout* NameLabel(InitialWidget* parent, QString key);
-QBoxLayout* EditLabel(InitialWidget* parent, QString key);
+QBoxLayout* NameLabel(InitialWidget* parent, QString key,
+                      DBManager* db = nullptr);
+QBoxLayout* EditLabel(InitialWidget* parent, QString key,
+                      DBManager* db = nullptr);
 QPushButton* ExitButton(InitialWidget* parent);
 }  // namespace general_widgets
 
