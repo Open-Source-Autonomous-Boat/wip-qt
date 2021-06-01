@@ -1,18 +1,16 @@
-#include <QtSql/QSql>
 #include <QString>
-#include <QtSql/QSql>
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlQuery>
+#include <QtSql>
 #pragma once
 
-
 class DBManager {
-public:
-  DBManager(QString path);
+ public:
+  DBManager();
   ~DBManager();
   // Get shit here!
-  QString GetValue(QString key, QString catagory);
-private:
+  QString GetValue(QString key);
+  QString SetValue(QString key, QString value);
+ private:
+  void GenPath();
   QSqlQuery query;
   QSqlDatabase db;
 };

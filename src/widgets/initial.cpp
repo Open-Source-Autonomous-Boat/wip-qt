@@ -1,4 +1,5 @@
 #include "widgets/initial.h"
+#include "db.h"
 
 #include <qboxlayout.h>
 #include <qbrush.h>
@@ -19,6 +20,8 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QWidget>
+#include <algorithm>
+#include <memory>
 #include <vector>
 
 #include "base_widgets.h"
@@ -58,8 +61,10 @@ QGridLayout* tab_1_widgets::Grid(InitialWidget* parent) {
 }
 
 QBoxLayout* general_widgets::NameLabel(InitialWidget* parent, QString key) {
+  std::unique_ptr<DBManager> db(new DBManager());
   auto* box = new QBoxLayout(QBoxLayout::LeftToRight);
   auto* label = new QLabel(key);
+  //auto* value = new QLabel(db->GetValue(key));
   auto* value = new QLabel("Unknown");
   value->setTextInteractionFlags(Qt::TextSelectableByMouse |
                                  Qt::TextSelectableByKeyboard);
@@ -81,9 +86,13 @@ QBoxLayout* general_widgets::EditLabel(InitialWidget* parent, QString key) {
 }
 
 QGridLayout* tab_2_widgets::Grid(InitialWidget* parent) {
+  std::vector<QString>value_list = {"Device Information", "Nickname"};
+  auto* info_bar = new QBoxLayout(QBoxLayout::TopToBottom);
   auto* grid = new QGridLayout();
-  grid->addLayout(general_widgets::EditLabel(parent, "Device Information"), 0,
-                  0);
+  for (auto& i: value_list) {
+    info_bar->addLayout(general_widgets::EditLabel(parent, i));
+  }
+  grid->addLayout(info_bar, 0, 0);
   grid->addWidget(tab_2_widgets::Apply(parent), 1, 0);
   return grid;
 }

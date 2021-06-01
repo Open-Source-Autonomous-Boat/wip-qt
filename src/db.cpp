@@ -4,13 +4,19 @@
 
 #include <QDebug>
 #include <QFileInfo>
+#include <QDir>
 #include <QString>
-#include <QtSql/QSql>
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlQuery>
+#include <QtSql>
 #include <cstdlib>
 
-DBManager::DBManager(QString path) {
+DBManager::DBManager() {
+  const QString home_dir = std::getenv("HOME");
+  const QString cache_dir(QString("%1/.cache/osab").arg(home_dir));
+  const QString path(QString("%1/db.sql").arg(cache_dir));
+  QDir db_dir(cache_dir);
+  if (!db_dir.exists()) {
+    db_dir.mkpath(cache_dir);
+  }
   QFile db_file(path);
   if (!db_file.exists()) {
     /*
@@ -20,12 +26,13 @@ DBManager::DBManager(QString path) {
     db_file.write(0, 0);
     db_file.close();
   }
-  this->db = QSqlDatabase::addDatabase("SQLITE");
+  this->db = QSqlDatabase::addDatabase("QSQLITE");
   this->db.setDatabaseName(path);
   if (!this->db.open()) {
-    qDebug() << "Failed to open Database";
+    qDebug() << this->db.lastError();
+    return;
   }
-  this->query.exec("SELECT count(*) FROM table");
+  this->query.exec("SELECT count(*) FROM info");
   if (this->query.value(0).toInt() <= 0) {
     this->query.exec("CREATE TABLE info(id INTEGER PRIMARY KEY, key TEXT, value INTEGER)");
   }
@@ -33,12 +40,24 @@ DBManager::DBManager(QString path) {
 
 DBManager::~DBManager() = default;
 
-QString DBManager::GetValue(QString key, QString catagory) {
-  this->query.prepare("SELECT (key) FROM info WHERE value VALUES (:key) (:catagory)");
+QString DBManager::GetValue(QString key) {
+  this->query.prepare("SELECT (key) FROM info VALUES (:key)");
   this->query.bindValue(":key", key);
-  this->query.bindValue(":catagory", catagory);
   if (!this->query.exec()) {
     return QString();
   }
   return this->query.value(0).toString();
+}
+
+
+QString DBManager::SetValue(QString key, QString value) {
+  this->query.prepare("");
+  if (!this->query.exec()) {
+    return QString();
+  }
+  return this->query.value(0).toString();
+}
+
+void DBManager::GenPath() {
+  return;
 }
