@@ -55,7 +55,6 @@ QGridLayout* tab_1_widgets::Grid(InitialWidget* parent) {
   }
   grid->addLayout(main_dash, 1, 0);
   grid->addLayout(button_bar, 0, 0);
-  db.get()->CloseDB();
   return grid;
 }
 
@@ -79,7 +78,6 @@ QBoxLayout* general_widgets::NameLabel(InitialWidget* parent, QString key,
 QBoxLayout* general_widgets::EditLabel(InitialWidget* parent, QString key,
                                        DBManager* db) {
   if (!db) {
-        qDebug() << "I made a new connection <3";
         std::unique_ptr<DBManager>db(new DBManager());
   }
   auto* box = new QBoxLayout(QBoxLayout::LeftToRight);
@@ -102,7 +100,6 @@ QGridLayout* tab_2_widgets::Grid(InitialWidget* parent) {
   }
   grid->addLayout(info_bar, 0, 0);
   grid->addWidget(tab_2_widgets::Apply(parent), 1, 0);
-  db.get()->CloseDB();
   return grid;
 }
 

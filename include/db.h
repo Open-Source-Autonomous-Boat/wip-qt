@@ -1,5 +1,6 @@
 #include <QString>
 #include <QtSql>
+#include <memory>
 #pragma once
 
 class DBManager {
@@ -9,9 +10,8 @@ class DBManager {
   // Get stuff here!
   QString GetValue(QString key);
   QString SetValue(QString key, QString value);
-  void CloseDB();
  private:
   void GenPath();
-  QSqlQuery query;
+  std::unique_ptr<QSqlQuery>query;
   QSqlDatabase db;
 };

@@ -3,11 +3,12 @@
 #include <qfileinfo.h>
 
 #include <QDebug>
-#include <QFileInfo>
 #include <QDir>
+#include <QFileInfo>
 #include <QString>
 #include <QtSql>
 #include <cstdlib>
+#include <memory>
 
 DBManager::DBManager() {
   const QString home_dir = std::getenv("HOME");
@@ -30,45 +31,41 @@ DBManager::DBManager() {
     db_file.write(0, 0);
     db_file.close();
   }
-  this->db = QSqlDatabase::addDatabase("QSQLITE");
-  this->db.setDatabaseName("main_db");
-  bool open_bool = this->db.open();
-  if (!open_bool) {
-    qDebug() << this->db.lastError();
+  if (!QSqlDatabase::contains("main_db")) {
+    this->db = QSqlDatabase::addDatabase("QSQLITE", "main_db");
+  } else {
+    this->db = QSqlDatabase::database("main_db");
+  }
+  this->query = std::make_unique<QSqlQuery>(QSqlQuery(this->db));
+  this->db.open();
+  if (!this->query->exec("SELECT count(*) from info")) {
+    qDebug() << this->query->exec(
+        "CREATE TABLE info(id INTEGER PRIMARY KEY, key TEXT, value TEXT)");
+	qDebug() << this->query->lastError();
     return;
   }
-  // this->query.exec("SELECT count(*) FROM info");
-  // if (this->query.value(0).toInt() <= 0) {
-  //   this->query.exec("CREATE TABLE info(id INTEGER PRIMARY KEY, key TEXT, value INTEGER)");
-  // }
 }
 
 DBManager::~DBManager() = default;
 
 QString DBManager::GetValue(QString key) {
-  this->query.prepare("SELECT (key) FROM info VALUES (:key)");
-  this->query.bindValue(":key", key);
-  if (!this->query.exec()) {
-    return QString();
+  this->query->prepare("SELECT value FROM info WHERE key=(key) VALUES (:key)");
+  this->query->bindValue(":key", key);
+  if (!this->query->exec()) {
+    return QString("Unknown");
   }
-  return this->query.value(0).toString();
+  return this->query->value(0).toString();
 }
-
 
 QString DBManager::SetValue(QString key, QString value) {
-  this->query.prepare("");
-  if (!this->query.exec()) {
-    return QString();
+  this->query->prepare(
+      "UPDATE info SET value=(value) WHERE key=(key) VALUES (:key) (:value)");
+  this->query->bindValue(":key", key);
+  this->query->bindValue(":value", value);
+  if (!this->query->exec()) {
+    return QString("");
   }
-  return this->query.value(0).toString();
+  return this->query->value(0).toString();
 }
 
-void DBManager::GenPath() {
-  return;
-}
-
-void DBManager::CloseDB() {
-  if (this->db.isOpen()) {
-    this->db.close();
-  } else { return; }
-}
+void DBManager::GenPath() { return; }
