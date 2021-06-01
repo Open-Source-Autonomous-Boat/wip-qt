@@ -6,7 +6,7 @@ class DBManager {
  public:
   DBManager();
   ~DBManager();
-  // Get shit here!
+  // Get stuff here!
   QString GetValue(QString key);
   QString SetValue(QString key, QString value);
  private:

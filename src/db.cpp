@@ -10,6 +10,9 @@
 #include <cstdlib>
 
 DBManager::DBManager() {
+  /*
+   * Does not support Windows yet :/
+   */
   const QString home_dir = std::getenv("HOME");
   const QString cache_dir(QString("%1/.cache/osab").arg(home_dir));
   const QString path(QString("%1/db.sql").arg(cache_dir));
