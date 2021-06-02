@@ -5,9 +5,9 @@
 
 class InitialWindow: public WindowClass {
 public:
-    InitialWindow(QQuickItem* parent = nullptr);
-    void _SetupWin() override;
-    void _SetupWidgets() override;
+    InitialWindow(QObject* parent = nullptr);
+    void _SetupWin();
+    void _SetupWidgets();
 signals:
     void quit();
 };

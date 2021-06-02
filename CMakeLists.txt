@@ -4,20 +4,34 @@ project(osab-qt VERSION 0.0.1 LANGUAGES CXX)
 
 # Directories
 set(SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
-set(FORM_DIR "${CMAKE_SOURCE_DIR}/forms")
 set(INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 include_directories(${SOURCE_DIR})
-include_directories(${FORM_DIR})
 include_directories(${INCLUDE_DIR})
 
+# Sauce
 file(GLOB_RECURSE SOURCES
-                  "${FORM_DIR}/*.ui"
-                  "${FORM_DIR}/*.qrc"
+                  "${SOURCE_DIR}/*.qml"
+                  "${SOURCE_DIR}/*.qrc"
                   "${INCLUDE_DIR}/*.h"
                   "${SOURCE_DIR}/*.cpp"
 )
 
+# Resources
+
+set(QT_COMP
+    Quick
+    Core
+    Sql
+    Qml
+    QuickControls2)
+
+set(QT_LIB
+    Qt6::Core
+    Qt6::Quick
+    Qt6::Sql
+    Qt6::Qml
+    Qt6::QuickControls2)
 # Settings
 
 set(CMAKE_AUTOMOC ON)
@@ -28,9 +42,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_IMPORT_SOURCE_DIR ON)
 set(CMAKE_BUILD_TYPE Debug)
 
-find_package(Qt6 COMPONENTS
-    Quick Core Sql Qml QuickControls2
-    REQUIRED)
+find_package(Qt6 COMPONENTS ${QT_COMP} REQUIRED)
 
 if (WIN32)
    add_executable(osab-qt WIN32 ${SOURCES})
@@ -38,5 +50,4 @@ elseif (UNIX)
    add_executable(osab-qt ${SOURCES})
 endif()
 
-target_link_libraries(osab-qt
-    Qt6::Quick Qt6::Core Qt6::Sql Qt6::Qml Qt6::QuickControls2)
+target_link_libraries(osab-qt ${QT_LIB})
