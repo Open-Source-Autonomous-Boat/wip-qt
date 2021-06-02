@@ -1,9 +1,7 @@
-#include <QApplication>
+#include <QGuiApplication>
 
-#include "widgets/initial.h"
 
 int main(int argc, char *argv[]) {
-  QApplication test(argc, argv);
-  InitialWidget Lol;
+  QGuiApplication test(argc, argv);
   return test.exec();
 }
