@@ -28,7 +28,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_IMPORT_SOURCE_DIR ON)
 set(CMAKE_BUILD_TYPE Debug)
 
-find_package(Qt6 COMPONENTS Widgets Core Sql REQUIRED)
+find_package(Qt6 COMPONENTS
+    Quick Core Sql Qml QuickControls2
+    REQUIRED)
 
 if (WIN32)
    add_executable(osab-qt WIN32 ${SOURCES})
@@ -36,4 +38,5 @@ elseif (UNIX)
    add_executable(osab-qt ${SOURCES})
 endif()
 
-target_link_libraries(osab-qt Qt6::Widgets Qt6::Core Qt6::Sql)
+target_link_libraries(osab-qt
+    Qt6::Quick Qt6::Core Qt6::Sql Qt6::Qml Qt6::QuickControls2)
