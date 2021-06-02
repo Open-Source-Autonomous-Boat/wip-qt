@@ -1,21 +1,30 @@
 #include "initial.h"
-#include "widgets/base_widgets.h"
-#include <QQuickItem>
-#include <QQmlApplicationEngine>
-#include <QGuiApplication>
+
 #include <QDebug>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QQuickItem>
+#include <memory>
 
-InitialWindow::InitialWindow(QObject* parent) {
-        this->_SetupWin();
+#include "utils/apps.h"
+#include "widgets/base_widgets.h"
+
+InitialWindow::InitialWindow(int argc, char** argv)
+    : app(app_utils::CreateApp(argc, argv)) {
+  this->SetupRenderer();
+}
+InitialWindow::~InitialWindow() {
+  delete this->engine;
 }
 
-void InitialWindow::_SetupWin() {
-    QQmlApplicationEngine engine;
-    engine.addImportPath("qrc:/qml");
-    engine.load(QUrl(QStringLiteral("qrc:/qml/initial.qml")));
-    if (engine.rootObjects().isEmpty()) {
-        QGuiApplication::exit(-1);
-    }
-    return;
+void InitialWindow::SetupRenderer() {
+  this->engine = new QQmlApplicationEngine(this);
+  this->engine->load(QUrl(QStringLiteral("qrc:/qml/initial.qml")));
+  if (this->engine->rootObjects().isEmpty()) {
+    QGuiApplication::exit(-1);
+  }
 }
-void InitialWindow::_SetupWidgets() {}
+
+int InitialWindow::exec() {
+  return this->app->exec();
+}
