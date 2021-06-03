@@ -11,7 +11,7 @@ ApplicationWindow {
   visible: true
   minimumHeight: 200
   minimumWidth: 400
-  //maximumHeight: 600
+  //maximumHeight: 500
   //maximumWidth: 800
   title: qsTr("WIP-QT")
   

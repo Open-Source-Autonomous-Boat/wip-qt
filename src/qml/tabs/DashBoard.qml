@@ -8,47 +8,47 @@ ColumnLayout {
   id: root
   width: parent.width
   height: parent.height
-  property var font_size: Qt.application.font.pixelSize * 1.0
-  property var header_font_size: Qt.application.font.pixelSize * 1.6
-  Layout.topMargin: 20
+  property real font_size: Qt.application.font.pixelSize * 1.2
+  property real header_font_size: Qt.application.font.pixelSize * 1.6
+  //Layout.topMargin: 20
   Pane {
-	width: parent.width
-	height: parent.height
-	palette.window: "red"
-	Label {
-	  text: "Dashboard"
-	  font.pixelSize: root.header_font_size
-	  font.bold: true
-	}
-	Layout.fillWidth: true
+    width: parent.width
+    height: parent.height
+    palette.window: "#22000000"
+    Label {
+      text: "Dashboard"
+      font.pixelSize: root.header_font_size
+      font.bold: true
+    }
+    Layout.fillWidth: true
   }
-  GridLayout {
-	  columns: 2
-	  rows: 4
-	  height: root.height
-	  width: root.width
-	  
-	Label {
-	  text: "Device Name"
-	  font.pixelSize: root.font_size
-	  font.bold: true
-	}
-	Label {
-	  text: "Unknown"
-	  font.pixelSize: root.font_size
-	  font.bold: true
-	}
-	Label {
-	  text: "Process ID"
-	  font.pixelSize: root.font_size
-	  font.bold: true
-	}
-	Label {
-	  text: "Unknown"
-	  font.pixelSize: root.font_size
-	  font.bold: true
-	}
-	Layout.fillWidth: true
-	LayoutMirroring.enabled: true
+  ColumnLayout {
+      height: root.height
+      width: root.width
+    RowLayout {
+        Label {
+            text: "Device Name"
+            font.pixelSize: root.font_size
+            font.bold: true
+        }
+        Label {
+                text: "Unknown"
+                font.pixelSize: root.font_size
+                //font.bold: true
+        }
+    }
+    RowLayout {
+        Label {
+            text: "Process ID"
+            font.pixelSize: root.font_size
+            font.bold: true
+        }
+        Label {
+                text: "Unknown"
+                font.pixelSize: root.font_size
+                //font.bold: true
+        }
+    }
+    Layout.fillWidth: true
   }
 }
