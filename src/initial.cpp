@@ -4,6 +4,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickItem>
+#include <QQmlTypeInfo>
 #include <memory>
 #if defined(__unix__)
 #include <unistd.h>
@@ -17,6 +18,7 @@
 InitialWindow::InitialWindow(int argc, char** argv)
     : app(app_utils::CreateApp(argc, argv)) {
   this->SetupRenderer();
+    qmlRegisterType<InitialWindow>("osab.xyz",1,0, "InitialWindow");
 }
 InitialWindow::~InitialWindow() {
   delete this->engine;
@@ -24,6 +26,7 @@ InitialWindow::~InitialWindow() {
 
 void InitialWindow::SetupRenderer() {
   this->engine = new QQmlApplicationEngine(this);
+  this->engine->addImportPath("qrc:/qml");
   this->engine->load(QUrl(QStringLiteral("qrc:/qml/initial.qml")));
   if (this->engine->rootObjects().isEmpty()) {
     QGuiApplication::exit(-1);

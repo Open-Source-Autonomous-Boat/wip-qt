@@ -3,7 +3,8 @@ import QtQml 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
-import io.qt.src.initial 1.0
+
+import osab.xyz 1.0
 
 import "tabs"
 
@@ -15,6 +16,9 @@ ApplicationWindow {
   //maximumHeight: 500
   //maximumWidth: 800
   title: qsTr("WIP-QT")
+
+
+  InitialWindow {}
   
   TabBar {
 	id: main_tab_bar
