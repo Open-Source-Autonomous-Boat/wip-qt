@@ -5,6 +5,11 @@
 #include <QQmlApplicationEngine>
 #include <QQuickItem>
 #include <memory>
+#if defined(__unix__)
+#include <unistd.h>
+#elif defined(__WIN32)
+#include <windows.h>
+#endif
 
 #include "utils/apps.h"
 #include "widgets/base_widgets.h"
@@ -27,4 +32,16 @@ void InitialWindow::SetupRenderer() {
 
 int InitialWindow::exec() {
   return this->app->exec();
+}
+
+/* Properties */
+
+QString InitialWindow::PropGetPID() {
+#ifdef __unix__
+  this->prop_pid = QString::number(getpid());
+#ifdef __WIN32
+  this->prop_pid = QString::number(GetProcessId())
+#endif
+#endif
+    return this->prop_pid;
 }

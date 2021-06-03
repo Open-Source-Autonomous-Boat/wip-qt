@@ -3,6 +3,7 @@ import QtQml 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
+import io.qt.src.initial 1.0
 
 import "tabs"
 

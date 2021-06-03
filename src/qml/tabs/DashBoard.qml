@@ -22,11 +22,15 @@ ColumnLayout {
     }
     Layout.fillWidth: true
   }
+  InitialWindow {
+                id: initial
+  } 
   GridLayout {
           columns: 2
           rows: 4
           height: root.height
           width: root.width
+          /* Row 1 */
           Label {
                   text: "Device Name"
                   font.pixelSize: root.font_size
@@ -35,16 +39,19 @@ ColumnLayout {
           Label {
                   text: "Unknown"
                   font.pixelSize: root.font_size
+                  objectName: "dash_device_name"
                   //font.bold: true
           }
+          /* Row 1 */
           Label {
                   text: "Process ID"
                   font.pixelSize: root.font_size
                   font.bold: true
           }
           Label {
-                  text: "Unknown"
+                  text: initial.prop_pid
                   font.pixelSize: root.font_size
+                  objectName: "dash_pid_label"
                   //font.bold: true
           }
           Layout.fillWidth: true
