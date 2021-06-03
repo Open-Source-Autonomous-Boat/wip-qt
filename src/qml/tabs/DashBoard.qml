@@ -22,33 +22,31 @@ ColumnLayout {
     }
     Layout.fillWidth: true
   }
-  ColumnLayout {
-      height: root.height
-      width: root.width
-    RowLayout {
-        Label {
-            text: "Device Name"
-            font.pixelSize: root.font_size
-            font.bold: true
-        }
-        Label {
-                text: "Unknown"
-                font.pixelSize: root.font_size
-                //font.bold: true
-        }
-    }
-    RowLayout {
-        Label {
-            text: "Process ID"
-            font.pixelSize: root.font_size
-            font.bold: true
-        }
-        Label {
-                text: "Unknown"
-                font.pixelSize: root.font_size
-                //font.bold: true
-        }
-    }
-    Layout.fillWidth: true
+  GridLayout {
+          columns: 2
+          rows: 4
+          height: root.height
+          width: root.width
+          Label {
+                  text: "Device Name"
+                  font.pixelSize: root.font_size
+                  font.bold: true
+          }
+          Label {
+                  text: "Unknown"
+                  font.pixelSize: root.font_size
+                  //font.bold: true
+          }
+          Label {
+                  text: "Process ID"
+                  font.pixelSize: root.font_size
+                  font.bold: true
+          }
+          Label {
+                  text: "Unknown"
+                  font.pixelSize: root.font_size
+                  //font.bold: true
+          }
+          Layout.fillWidth: true
   }
 }
