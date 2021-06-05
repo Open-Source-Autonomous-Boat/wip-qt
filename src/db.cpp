@@ -1,6 +1,7 @@
 #include "db.h"
 
 #include <qfileinfo.h>
+#include <qsqlquery.h>
 
 #include <QDebug>
 #include <QDir>
@@ -12,60 +13,60 @@
 
 DBManager::DBManager() {
   const QString home_dir = std::getenv("HOME");
-#if defined(__WIN32__) || defined(__MINGW64__) || defined(__MINGW32__)
+#if defined(__WIN32) || defined(__MINGW64__) || defined(__MINGW32__)
   const QString cache_dir(QString("%1/AppData/Roaming/osab").arg(home_dir));
 #elif defined(__unix__)
   const QString cache_dir(QString("%1/.cache/osab").arg(home_dir));
+#else
+  const QString cache_dir(QString("./"));
+  qDebug() << "Unknown/Unhandled OS";
 #endif
   const QString path(QString("%1/db.sql").arg(cache_dir));
   QDir db_dir(cache_dir);
   if (!db_dir.exists()) {
     db_dir.mkpath(cache_dir);
   }
-  QFile db_file(path);
-  if (!db_file.exists()) {
-    /*
-     * If file doesn't exist, create empty file
-     */
-    db_file.open(QIODevice::WriteOnly);
-    db_file.write(0, 0);
-    db_file.close();
-  }
   if (!QSqlDatabase::contains("main_db")) {
     this->db = QSqlDatabase::addDatabase("QSQLITE", "main_db");
+    this->db.setDatabaseName(path);
   } else {
     this->db = QSqlDatabase::database("main_db");
   }
-  this->query = std::make_unique<QSqlQuery>(QSqlQuery(this->db));
   this->db.open();
-  if (!this->query->exec("SELECT count(*) from info")) {
-    qDebug() << this->query->exec(
-        "CREATE TABLE info(id INTEGER PRIMARY KEY, key TEXT, value TEXT)");
-	qDebug() << this->query->lastError();
-    return;
-  }
+  this->query = new QSqlQuery(this->db);
+  this->query->exec(
+      "CREATE TABLE IF NOT EXISTS info(id INTEGER PRIMARY KEY AUTOINCREMENT, "
+      "key TEXT, value TEXT)");
+  this->SetValue("dev_name", "The Sears Tower"); // DEBUG
+  return;
 }
 
-DBManager::~DBManager() = default;
+DBManager::~DBManager() {
+  delete this->query;
+};
 
 QString DBManager::GetValue(QString key) {
-  this->query->prepare("SELECT value FROM info WHERE key=(key) VALUES (:key)");
+  this->query->prepare("SELECT value FROM info WHERE key=:key");
   this->query->bindValue(":key", key);
   if (!this->query->exec()) {
-    return QString("Unknown");
+    qDebug() << this->query->lastError().text();
+    return "";
   }
-  return this->query->value(0).toString();
+  if (this->query->next()) {
+    return this->query->value(0).toString();
+  } else {
+    return "";
+  }
 }
 
-QString DBManager::SetValue(QString key, QString value) {
+void DBManager::SetValue(QString key, QString value) {
   this->query->prepare(
-      "UPDATE info SET value=(value) WHERE key=(key) VALUES (:key) (:value)");
+      "INSERT INTO info(key, value) VALUES(:key, :value)"
+      "ON CONFLICT(key) DO UPDATE SET value=:value");
   this->query->bindValue(":key", key);
   this->query->bindValue(":value", value);
   if (!this->query->exec()) {
-    return QString("");
+    qDebug() << this->query->lastError().text();
   }
-  return this->query->value(0).toString();
 }
 
-void DBManager::GenPath() { return; }

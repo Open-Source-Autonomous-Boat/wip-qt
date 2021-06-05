@@ -4,6 +4,8 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
 
+import osab.xyz.DashBoard 1.0
+
 ColumnLayout {
   id: root
   width: parent.width
@@ -22,7 +24,7 @@ ColumnLayout {
     }
     Layout.fillWidth: true
   }
-  InitialWindow {
+  DashBoard {
                 id: initial
   } 
   GridLayout {
@@ -37,7 +39,7 @@ ColumnLayout {
                   font.bold: true
           }
           Label {
-                  text: "Unknown"
+                  text: initial.GetPropDevName
                   font.pixelSize: root.font_size
                   objectName: "dash_device_name"
                   //font.bold: true
@@ -49,7 +51,7 @@ ColumnLayout {
                   font.bold: true
           }
           Label {
-                  text: initial.prop_pid
+                  text: initial.GetPropPid
                   font.pixelSize: root.font_size
                   objectName: "dash_pid_label"
                   //font.bold: true

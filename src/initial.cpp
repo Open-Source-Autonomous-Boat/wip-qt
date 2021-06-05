@@ -14,11 +14,12 @@
 
 #include "utils/apps.h"
 #include "widgets/base_widgets.h"
+#include "widgets/dashboard.h"
 
 InitialWindow::InitialWindow(int argc, char** argv)
     : app(app_utils::CreateApp(argc, argv)) {
+  qmlRegisterType<DashBoard>("osab.xyz.DashBoard",1,0, "DashBoard");
   this->SetupRenderer();
-    qmlRegisterType<InitialWindow>("osab.xyz",1,0, "InitialWindow");
 }
 InitialWindow::~InitialWindow() {
   delete this->engine;
@@ -39,12 +40,3 @@ int InitialWindow::exec() {
 
 /* Properties */
 
-QString InitialWindow::PropGetPID() {
-#ifdef __unix__
-  this->prop_pid = QString::number(getpid());
-#ifdef __WIN32
-  this->prop_pid = QString::number(GetProcessId())
-#endif
-#endif
-    return this->prop_pid;
-}

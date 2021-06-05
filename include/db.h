@@ -9,9 +9,8 @@ class DBManager {
   ~DBManager();
   // Get stuff here!
   QString GetValue(QString key);
-  QString SetValue(QString key, QString value);
+  void SetValue(QString key, QString value);
  private:
-  void GenPath();
-  std::unique_ptr<QSqlQuery>query;
+  QSqlQuery* query;
   QSqlDatabase db;
 };
