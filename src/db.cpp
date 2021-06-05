@@ -1,6 +1,7 @@
 #include "db.h"
 
 #include <qfileinfo.h>
+#include <qsqldatabase.h>
 #include <qsqlquery.h>
 
 #include <QDebug>
@@ -35,8 +36,7 @@ DBManager::DBManager() {
   this->db.open();
   this->query = new QSqlQuery(this->db);
   this->query->exec(
-      "CREATE TABLE IF NOT EXISTS info(id INTEGER PRIMARY KEY AUTOINCREMENT, "
-      "key TEXT, value TEXT)");
+      "CREATE TABLE IF NOT EXISTS info(key TEXT PRIMARY KEY, value TEXT)");
   this->SetValue("dev_name", "The Sears Tower"); // DEBUG
   return;
 }
@@ -62,7 +62,7 @@ QString DBManager::GetValue(QString key) {
 void DBManager::SetValue(QString key, QString value) {
   this->query->prepare(
       "INSERT INTO info(key, value) VALUES(:key, :value)"
-      "ON CONFLICT(key) DO UPDATE SET value=:value");
+      "ON CONFLICT(key) DO UPDATE SET value=excluded.value");
   this->query->bindValue(":key", key);
   this->query->bindValue(":value", value);
   if (!this->query->exec()) {
