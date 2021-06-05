@@ -37,7 +37,6 @@ DBManager::DBManager() {
   this->query = new QSqlQuery(this->db);
   this->query->exec(
       "CREATE TABLE IF NOT EXISTS info(key TEXT PRIMARY KEY, value TEXT)");
-  this->SetValue("dev_name", "The Sears Tower"); // DEBUG
   return;
 }
 
@@ -70,3 +69,10 @@ void DBManager::SetValue(QString key, QString value) {
   }
 }
 
+void DBManager::RemValue(QString key) {
+  this->query->prepare("DELETE FROM info WHERE key=:key");
+  this->query->bindValue(":key", key);
+  if (!this->query->exec()) {
+    qDebug() << this->query->lastError().text();
+  }
+}
