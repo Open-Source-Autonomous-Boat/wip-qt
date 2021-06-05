@@ -13,10 +13,11 @@
 #include <memory>
 
 DBManager::DBManager() {
-  const QString home_dir = std::getenv("HOME");
 #if defined(__WIN32) || defined(__MINGW64__) || defined(__MINGW32__)
+  const QString home_dir = std::getenv("USERPROFILE");
   const QString cache_dir(QString("%1/AppData/Roaming/osab").arg(home_dir));
 #elif defined(__unix__)
+  const QString home_dir = std::getenv("HOME");
   const QString cache_dir(QString("%1/.cache/osab").arg(home_dir));
 #else
   const QString cache_dir(QString("./"));
@@ -27,6 +28,7 @@ DBManager::DBManager() {
   if (!db_dir.exists()) {
     db_dir.mkpath(cache_dir);
   }
+  qDebug() << path;
   if (!QSqlDatabase::contains("main_db")) {
     this->db = QSqlDatabase::addDatabase("QSQLITE", "main_db");
     this->db.setDatabaseName(path);

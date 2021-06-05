@@ -2,3 +2,4 @@ bin/
 CMakeFiles/
 build/*
 .cache
+.vs
