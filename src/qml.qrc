@@ -1,6 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/initial.qml</file>
-		<file>qml/tabs/DashBoard.qml</file>
+        <file>qml/tabs/DashBoard.qml</file>
+        <file>qml/tabs/DevInfo.qml</file>
+        <file>qml/snippets/HeaderSnip.qml</file>
+        <file>qml/settings/Settings.qml</file>
     </qresource>
 </RCC>

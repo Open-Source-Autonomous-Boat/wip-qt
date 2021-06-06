@@ -27,10 +27,8 @@ QString DashBoard::GetPropPid() {
 
 QString DashBoard::GetPropDevName() {
   this->prop_dev_name = this->db->GetValue("dev_name");
-  if (this->prop_dev_name == "") {
-    this->prop_dev_name = "Unknown";
-  }
-  return this->prop_dev_name;
+  return (this->prop_dev_name != "") ?
+        this->prop_dev_name : "Unknown";
 }
 
 void DashBoard::SetPropDevName(const QString user_name) {

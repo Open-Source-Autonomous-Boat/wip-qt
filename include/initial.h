@@ -15,6 +15,7 @@ class InitialWindow : public WindowClass {
   InitialWindow(int argc, char** argv);
   ~InitialWindow();
   void SetupRenderer();
+  void SetupSignals();
   int exec();
  private:
   QQmlApplicationEngine* engine;

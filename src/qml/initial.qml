@@ -7,6 +7,7 @@ import QtQuick.Window 2.12
 import osab.xyz.DashBoard 1.0
 
 import "tabs"
+import "settings"
 
 ApplicationWindow {
   id: window
@@ -20,14 +21,13 @@ ApplicationWindow {
   
   TabBar {
 	id: main_tab_bar
-	property int bar_font_size: Qt.application.font.pixelSize * 1.2
 	width: parent.width
 	Repeater {
-	  model: ["Dashboard", "Device Information", "Cache", "Lol"]
+      model: ["Dashboard", "Device Information"]
 	  TabButton {
 		hoverEnabled: true
 		id: tab_button
-		font.pixelSize: main_tab_bar.bar_font_size
+        font.pixelSize: Settings.font_size
 		text: qsTr(modelData)
 		ToolTip.visible: hovered
 		ToolTip.delay: 1000
@@ -49,7 +49,11 @@ ApplicationWindow {
 	DashBoard {
 	  height: parent.height
 	  width: window.width
-	}
+    }
+    DevInfo {
+      height: parent.height
+      width: window.width
+    }
   }
   footer: RowLayout {
 	id: button_bar
@@ -60,12 +64,13 @@ ApplicationWindow {
 	  right: window.right
 	}
 	Button {
-	  font.pixelSize: Qt.application.font.pixelSize * 1.2
+      font.pixelSize: Settings.font_size
 	  implicitWidth: button_bar.width / 2
 	  text: qsTr("Exit")
+      onClicked: function() {window.close()}
 	}
 	Button {
-	  font.pixelSize: Qt.application.font.pixelSize * 1.2
+      font.pixelSize: Settings.font_size
 	  implicitWidth: button_bar.width / 2
 	  text: qsTr("Settings")
 	}

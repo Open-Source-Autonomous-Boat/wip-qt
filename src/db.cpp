@@ -39,7 +39,6 @@ DBManager::DBManager() {
   this->query = new QSqlQuery(this->db);
   this->query->exec(
       "CREATE TABLE IF NOT EXISTS info(key TEXT PRIMARY KEY, value TEXT)");
-  this->SetValue("dev_name", "The Sears Tower"); // DEBUG
 }
 
 DBManager::~DBManager() {

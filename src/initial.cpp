@@ -4,6 +4,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickItem>
+#include <QQuickView>
 #include <QQmlTypeInfo>
 #include <memory>
 #if defined(__unix__)
@@ -18,8 +19,9 @@
 
 InitialWindow::InitialWindow(int argc, char** argv)
     : app(app_utils::CreateApp(argc, argv)) {
-  qmlRegisterType<DashBoard>("osab.xyz.DashBoard",1,0, "DashBoard");
+  qmlRegisterType<DashBoard>("osab.xyz.DashBoard",1,0, "Dash");
   this->SetupRenderer();
+  this->SetupSignals();
 }
 InitialWindow::~InitialWindow() {
   delete this->engine;
@@ -34,9 +36,12 @@ void InitialWindow::SetupRenderer() {
   }
 }
 
+void InitialWindow::SetupSignals() {
+        /* Useless */
+}
+
 int InitialWindow::exec() {
   return this->app->exec();
 }
 
-/* Properties */
 
