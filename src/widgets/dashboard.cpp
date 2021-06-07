@@ -1,5 +1,7 @@
-#include "widgets/dashboard.h"
-#include "db.h"
+#include <QObject>
+#include <QString>
+#include <QQmlEngine>
+#include <QJSEngine>
 
 #include <qobject.h>
 #if defined(__unix__)
@@ -8,6 +10,9 @@
 #include <windows.h>
 #endif
 
+#include "widgets/dashboard.h"
+#include "db.h"
+
 DashBoard::DashBoard(QObject* parent) : QObject(parent) {
   db = new DBManager();
 }
@@ -15,7 +20,7 @@ DashBoard::~DashBoard() {
   delete db;
 }
 
-QString DashBoard::GetPropPid() {
+QString DashBoard::ppid() {
   this->prop_pid = QString("Unknown");
 #if defined(__unix__)
   this->prop_pid = QString::number(getpid());
@@ -25,14 +30,20 @@ QString DashBoard::GetPropPid() {
   return this->prop_pid;
 }
 
-QString DashBoard::GetPropDevName() {
+QString DashBoard::devname() {
   this->prop_dev_name = this->db->GetValue("dev_name");
   return (this->prop_dev_name != "") ?
         this->prop_dev_name : "Unknown";
 }
 
-void DashBoard::SetPropDevName(const QString user_name) {
+void DashBoard::setdevname(const QString user_name) {
   this->prop_dev_name = user_name;
   this->db->SetValue("dev_name", this->prop_dev_name);
-  emit this->NotifyPropDevName();
+  emit this->devnameChanged();
+}
+
+QObject * DashBoard::SingletonGet(QQmlEngine* engine, QJSEngine* script_engine) {
+  Q_UNUSED(engine);
+  Q_UNUSED(script_engine);
+  return new DashBoard();
 }

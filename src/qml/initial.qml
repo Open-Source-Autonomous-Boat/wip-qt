@@ -4,7 +4,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
 
-import osab.xyz.DashBoard 1.0
+
 
 import "tabs"
 import "settings"
@@ -13,11 +13,14 @@ ApplicationWindow {
   id: window
   visible: true
   minimumHeight: 200
-  minimumWidth: 400
+  minimumWidth: 600
   //maximumHeight: 500
   //maximumWidth: 800
   title: qsTr("WIP-QT")
 
+  Settings {
+	id: sett
+  }
   
   TabBar {
 	id: main_tab_bar
@@ -27,7 +30,7 @@ ApplicationWindow {
 	  TabButton {
 		hoverEnabled: true
 		id: tab_button
-        font.pixelSize: Settings.font_size
+        font.pixelSize: sett.font_size
 		text: qsTr(modelData)
 		ToolTip.visible: hovered
 		ToolTip.delay: 1000
@@ -64,13 +67,13 @@ ApplicationWindow {
 	  right: window.right
 	}
 	Button {
-      font.pixelSize: Settings.font_size
+      font.pixelSize: sett.font_size
 	  implicitWidth: button_bar.width / 2
 	  text: qsTr("Exit")
       onClicked: function() {window.close()}
 	}
 	Button {
-      font.pixelSize: Settings.font_size
+      font.pixelSize: sett.font_size
 	  implicitWidth: button_bar.width / 2
 	  text: qsTr("Settings")
 	}

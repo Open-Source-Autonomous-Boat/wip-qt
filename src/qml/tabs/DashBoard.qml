@@ -14,41 +14,43 @@ ColumnLayout {
   height: parent.height
   //Layout.topMargin: 20
   HeaderSnip{label_name: "Dashboard"}
-  Dash {
-                id: initial
-  } 
+  /* Dash {
+	id: dash
+	onDevnameChanged: {
+	  dash_prop_dev_name.text = dash.devname
+	}
+  }  */
   Settings {
-      id: sett
+	id: sett
   }
   GridLayout {
-          columns: 2
-          rows: 4
-          height: root.height
-          width: root.width
-          /* Row 1 */
-          Label {
-                  text: "Device Name"
-                  font.pixelSize: sett.font_size
-                  font.bold: true
-          }
-          Label {
-                  text: initial.GetPropDevName
-                  font.pixelSize: sett.font_size
-                  objectName: "dash_device_name"
-                  //font.bold: true
-          }
-          /* Row 1 */
-          Label {
-                  text: "Process ID"
-                  font.pixelSize: sett.font_size
-                  font.bold: true
-          }
-          Label {
-                  text: initial.GetPropPid
-                  font.pixelSize: sett.font_size
-                  objectName: "dash_pid_label"
-                  //font.bold: true
-          }
-          Layout.fillWidth: true
+	columns: 2
+	rows: 4
+	height: root.height
+	width: root.width
+	/* Row 1 */
+	Label {
+	  text: "Device Name"
+	  font.pixelSize: sett.font_size
+	  font.bold: true
+	}
+	Label {
+	  id: dash_prop_dev_name
+	  text: Dash.devname
+	  font.pixelSize: sett.font_size
+	  //font.bold: true
+	}
+	/* Row 1 */
+	Label {
+	  text: "Process ID"
+	  font.pixelSize: sett.font_size
+	  font.bold: true
+	}
+	Label {
+	  text: Dash.ppid
+	  font.pixelSize: sett.font_size
+	  //font.bold: true
+	}
+	Layout.fillWidth: true
   }
 }

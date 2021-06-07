@@ -19,9 +19,8 @@
 
 InitialWindow::InitialWindow(int argc, char** argv)
     : app(app_utils::CreateApp(argc, argv)) {
-  qmlRegisterType<DashBoard>("osab.xyz.DashBoard",1,0, "Dash");
-  this->SetupRenderer();
   this->SetupSignals();
+  this->SetupRenderer();
 }
 InitialWindow::~InitialWindow() {
   delete this->engine;
@@ -37,7 +36,10 @@ void InitialWindow::SetupRenderer() {
 }
 
 void InitialWindow::SetupSignals() {
-        /* Useless */
+  //auto* context = this->engine->rootContext();
+  //DashBoard db_info;
+  //context->setContextProperty("db_info", &db_info);
+  qmlRegisterSingletonType<DashBoard>("osab.xyz.DashBoard",1,0, "Dash", DashBoard::SingletonGet);
 }
 
 int InitialWindow::exec() {

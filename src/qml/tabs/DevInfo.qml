@@ -10,10 +10,10 @@ import "../settings"
 
 ColumnLayout {
   id: root
-  Settings {
-      id: sett
-  }
-  Dash {id: dash}
+  /* I hate this */
+  signal devinfo_change(string info)
+  //Dash {id: dash}
+  Settings {id: sett}
   HeaderSnip{label_name: "Device Information"}
   GridLayout {
       columns: 2
@@ -21,17 +21,20 @@ ColumnLayout {
       RowLayout {
           Label {
               font.pixelSize: sett.font_size
-              text: "Device Information"
+              text: "Device Name"
           }
           TextField {
               id: dev_name_field
               //objectName: dev_name_field_obj
-              placeholderText: dash.GetPropDevName
-              text: dash.GetPropDevName
+              placeholderText: Dash.devname
+              text: Dash.devname
+              Layout.fillWidth: true
           }
           Button {
               text: qsTr("Apply")
-              onClicked: dash.GetPropDevName = dev_name_field.text
+              onClicked: {
+				Dash.devname = dev_name_field.text
+			  }
           }
       }
   }
