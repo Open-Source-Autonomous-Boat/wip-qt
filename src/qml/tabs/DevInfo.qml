@@ -15,27 +15,43 @@ ColumnLayout {
   //Dash {id: dash}
   Settings {id: sett}
   HeaderSnip{label_name: "Device Information"}
-  GridLayout {
-      columns: 2
-      rows: 2
-      RowLayout {
-          Label {
-              font.pixelSize: sett.font_size
-              text: "Device Name"
-          }
-          TextField {
-              id: dev_name_field
-              //objectName: dev_name_field_obj
-              placeholderText: Dash.devname
-              text: Dash.devname
-              Layout.fillWidth: true
-          }
-          Button {
-              text: qsTr("Apply")
-              onClicked: {
-				Dash.devname = dev_name_field.text
-			  }
-          }
-      }
+  ColumnLayout {
+	Layout.leftMargin: 20
+	Layout.rightMargin: 20
+	RowLayout {
+	  Label {
+		text: "Status"
+	  }
+	  Label {
+		id: dis_stat_label
+		property bool dis: true
+		text: (dis) ? "Disconnected" : "Connected"
+		font.bold: true
+		color: (dis) ? "red" : "green"
+	  }
+	  Button {
+		text: (dis_stat_label.dis) ? "Connect" : "Disconnect"
+		visible: true //(dis_stat_label.dis) ? true : false
+		onClicked: { dis_stat_label.dis = (dis_stat_label.dis) ? false : true }
+	  }
+	}
+	RowLayout {
+	  Label {
+		text: "Device Name"
+	  }
+	  TextField {
+		id: dev_name_field
+		//objectName: dev_name_field_obj
+		placeholderText: Dash.devname
+		text: Dash.devname
+		Layout.fillWidth: true
+	  }
+	  Button {
+		text: qsTr("Apply")
+		onClicked: {
+		  Dash.devname = dev_name_field.text
+		}
+	  }
+	}
   }
 }

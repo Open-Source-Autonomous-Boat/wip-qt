@@ -14,19 +14,19 @@ ApplicationWindow {
   visible: true
   minimumHeight: 200
   minimumWidth: 600
-  //maximumHeight: 500
-  //maximumWidth: 800
+  height: 600
+  width: 800
   title: qsTr("WIP-QT")
 
   Settings {
 	id: sett
   }
-  
+    
   TabBar {
 	id: main_tab_bar
 	width: parent.width
 	Repeater {
-      model: ["Dashboard", "Device Information"]
+        model: ["Dashboard", "Device Information", "Route", "Information DB"]
 	  TabButton {
 		hoverEnabled: true
 		id: tab_button

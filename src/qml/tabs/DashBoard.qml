@@ -14,12 +14,6 @@ ColumnLayout {
   height: parent.height
   //Layout.topMargin: 20
   HeaderSnip{label_name: "Dashboard"}
-  /* Dash {
-	id: dash
-	onDevnameChanged: {
-	  dash_prop_dev_name.text = dash.devname
-	}
-  }  */
   Settings {
 	id: sett
   }
@@ -28,7 +22,22 @@ ColumnLayout {
 	rows: 4
 	height: root.height
 	width: root.width
+	Layout.leftMargin: 20
+	Layout.rightMargin: 20
 	/* Row 1 */
+	Label {
+	  text: "Status"
+	  font.pixelSize: sett.font_size
+	  font.bold: true
+	}
+	Label {
+	  id: dash_prop_connection
+	  text: "Disconnected"
+	  font.pixelSize: sett.font_size
+          color: "red"
+	  //font.bold: true
+	}
+	/* Row 2 */
 	Label {
 	  text: "Device Name"
 	  font.pixelSize: sett.font_size
@@ -38,9 +47,8 @@ ColumnLayout {
 	  id: dash_prop_dev_name
 	  text: Dash.devname
 	  font.pixelSize: sett.font_size
-	  //font.bold: true
 	}
-	/* Row 1 */
+	/* Row 3 */
 	Label {
 	  text: "Process ID"
 	  font.pixelSize: sett.font_size
@@ -49,7 +57,6 @@ ColumnLayout {
 	Label {
 	  text: Dash.ppid
 	  font.pixelSize: sett.font_size
-	  //font.bold: true
 	}
 	Layout.fillWidth: true
   }

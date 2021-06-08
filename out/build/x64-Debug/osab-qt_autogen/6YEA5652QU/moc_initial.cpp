@@ -6,10 +6,12 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include <memory>
-#include "../../../../../include/initial.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
+
+#include <memory>
+
+#include "../../../../../include/initial.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'initial.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 68
@@ -22,72 +24,65 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_InitialWindow_t {
-    const uint offsetsAndSize[2];
-    char stringdata0[14];
+  const uint offsetsAndSize[2];
+  char stringdata0[14];
 };
 #define QT_MOC_LITERAL(ofs, len) \
-    uint(offsetof(qt_meta_stringdata_InitialWindow_t, stringdata0) + ofs), len 
-static const qt_meta_stringdata_InitialWindow_t qt_meta_stringdata_InitialWindow = {
-    {
-QT_MOC_LITERAL(0, 13) // "InitialWindow"
+  uint(offsetof(qt_meta_stringdata_InitialWindow_t, stringdata0) + ofs), len
+static const qt_meta_stringdata_InitialWindow_t
+    qt_meta_stringdata_InitialWindow = {
+        {
+            QT_MOC_LITERAL(0, 13)  // "InitialWindow"
 
-    },
-    "InitialWindow"
-};
+        },
+        "InitialWindow"};
 #undef QT_MOC_LITERAL
 
 static const uint qt_meta_data_InitialWindow[] = {
 
- // content:
-       9,       // revision
-       0,       // classname
-       0,    0, // classinfo
-       0,    0, // methods
-       0,    0, // properties
-       0,    0, // enums/sets
-       0,    0, // constructors
-       0,       // flags
-       0,       // signalCount
+    // content:
+    9,     // revision
+    0,     // classname
+    0, 0,  // classinfo
+    0, 0,  // methods
+    0, 0,  // properties
+    0, 0,  // enums/sets
+    0, 0,  // constructors
+    0,     // flags
+    0,     // signalCount
 
-       0        // eod
+    0  // eod
 };
 
-void InitialWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
-{
-    (void)_o;
-    (void)_id;
-    (void)_c;
-    (void)_a;
+void InitialWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
+                                       int _id, void **_a) {
+  (void)_o;
+  (void)_id;
+  (void)_c;
+  (void)_a;
 }
 
-const QMetaObject InitialWindow::staticMetaObject = { {
-    QMetaObject::SuperData::link<WindowClass::staticMetaObject>(),
-    qt_meta_stringdata_InitialWindow.offsetsAndSize,
-    qt_meta_data_InitialWindow,
-    qt_static_metacall,
-    nullptr,
-    nullptr,
-    nullptr
-} };
+const QMetaObject InitialWindow::staticMetaObject = {
+    {QMetaObject::SuperData::link<WindowClass::staticMetaObject>(),
+     qt_meta_stringdata_InitialWindow.offsetsAndSize,
+     qt_meta_data_InitialWindow, qt_static_metacall, nullptr, nullptr,
+     nullptr}};
 
-
-const QMetaObject *InitialWindow::metaObject() const
-{
-    return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
+const QMetaObject *InitialWindow::metaObject() const {
+  return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject()
+                                    : &staticMetaObject;
 }
 
-void *InitialWindow::qt_metacast(const char *_clname)
-{
-    if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_InitialWindow.stringdata0))
-        return static_cast<void*>(this);
-    return WindowClass::qt_metacast(_clname);
+void *InitialWindow::qt_metacast(const char *_clname) {
+  if (!_clname) return nullptr;
+  if (!strcmp(_clname, qt_meta_stringdata_InitialWindow.stringdata0))
+    return static_cast<void *>(this);
+  return WindowClass::qt_metacast(_clname);
 }
 
-int InitialWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
-{
-    _id = WindowClass::qt_metacall(_c, _id, _a);
-    return _id;
+int InitialWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a) {
+  _id = WindowClass::qt_metacall(_c, _id, _a);
+  return _id;
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

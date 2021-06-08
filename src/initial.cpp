@@ -3,9 +3,9 @@
 #include <QDebug>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlTypeInfo>
 #include <QQuickItem>
 #include <QQuickView>
-#include <QQmlTypeInfo>
 #include <memory>
 #if defined(__unix__)
 #include <unistd.h>
@@ -22,28 +22,25 @@ InitialWindow::InitialWindow(int argc, char** argv)
   this->SetupSignals();
   this->SetupRenderer();
 }
-InitialWindow::~InitialWindow() {
-  delete this->engine;
-}
+InitialWindow::~InitialWindow() { delete this->engine; }
 
 void InitialWindow::SetupRenderer() {
+  // Initializes QML engine for program :D
   this->engine = new QQmlApplicationEngine(this);
+  // Add path that engine can import from
   this->engine->addImportPath("qrc:/qml");
+  // Loads index QML file
   this->engine->load(QUrl(QStringLiteral("qrc:/qml/initial.qml")));
-  if (this->engine->rootObjects().isEmpty()) {
-    QGuiApplication::exit(-1);
+  if (this->engine->rootObjects().isEmpty()) { // Check if empty
+    QGuiApplication::exit(-1); // If empty exit UwU
   }
 }
 
 void InitialWindow::SetupSignals() {
-  //auto* context = this->engine->rootContext();
-  //DashBoard db_info;
-  //context->setContextProperty("db_info", &db_info);
-  qmlRegisterSingletonType<DashBoard>("osab.xyz.DashBoard",1,0, "Dash", DashBoard::SingletonGet);
+  // So I can use Dash without importing from QML <3
+  qmlRegisterSingletonType<DashBoard>("osab.xyz.DashBoard", 1, 0, "Dash",
+                                      DashBoard::SingletonGet);
 }
 
-int InitialWindow::exec() {
-  return this->app->exec();
-}
-
-
+// Returns exit code ;-;
+int InitialWindow::exec() { return this->app->exec(); }
