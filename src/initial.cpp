@@ -9,7 +9,7 @@
 #include <memory>
 #if defined(__unix__)
 #include <unistd.h>
-#elif defined(__WIN32)
+#elif defined(_WINDOWS)
 #include <windows.h>
 #endif
 

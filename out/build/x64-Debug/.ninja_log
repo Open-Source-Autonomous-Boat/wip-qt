@@ -1,0 +1,16 @@
+# ninja log v5
+12	759	6449079864320659	osab-qt_autogen/timestamp	4d237f086db0c390
+741	2107	6449062602554829	CMakeFiles/osab-qt.dir/src/utils/psuedo_uuid_gen.cpp.obj	895fc3779f7af378
+689	728	6449062588782396	osab-qt_autogen/UVLADIE3JM/qrc_qml.cpp	edad791dba85d175
+752	3070	6449062612186533	CMakeFiles/osab-qt.dir/src/widgets/base_widgets.cpp.obj	dc186bbc61fa7ef9
+748	806	6449062589567540	CMakeFiles/osab-qt.dir/osab-qt_autogen/UVLADIE3JM/qrc_qml.cpp.obj	efc362b15aba3136
+738	2561	6449062607090685	CMakeFiles/osab-qt.dir/src/utils/apps.cpp.obj	92f6b9364ec9516f
+743	3181	6449062613291712	CMakeFiles/osab-qt.dir/src/main.cpp.obj	35130b7d08061e82
+731	4181	6449062623298479	CMakeFiles/osab-qt.dir/src/db.cpp.obj	64d04c0ae4500d20
+746	4998	6449062631449909	CMakeFiles/osab-qt.dir/src/widgets/dashboard.cpp.obj	c805f5e341344981
+733	5822	6449062639681345	CMakeFiles/osab-qt.dir/src/initial.cpp.obj	761d1fb97cd8d1d9
+762	5279	6449079910973854	CMakeFiles/osab-qt.dir/src/geo/map.cpp.obj	32210444eeba4a3e
+759	5323	6449079911418933	CMakeFiles/osab-qt.dir/src/geo/render.cpp.obj	b9d14ecdc1fd7ccb
+764	5400	6449079912189065	CMakeFiles/osab-qt.dir/osab-qt_autogen/mocs_compilation.cpp.obj	2df10a07dc3240e6
+5401	5716	6449079915306900	../../../bin/osab-qt.exe	1fbca7a91c0a4183
+7	190	6449083010157646	../../../bin/osab-qt.exe	1fbca7a91c0a4183

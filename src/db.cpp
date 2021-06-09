@@ -9,14 +9,26 @@
 #include <QFileInfo>
 #include <QString>
 #include <QtSql>
+#if defined(_WINDOWS)
+#include <windows.h>
+#endif
 #include <cstdlib>
 #include <memory>
 
 DBManager::DBManager() {
   // If on Windows, get home directory and set cache to respective sub-dir
-#if defined(__WIN32) || defined(__MINGW64__) || defined(__MINGW32__)
+#if defined(_WINDOWS) || defined(__MINGW64__) || defined(__MINGW32__) || defined(_MSC_VER)
   // Why Windows whyyyyy????!?!??
-  const QString home_dir = std::getenv("USERPROFILE");
+  int buf_size = 65535;
+  std::wstring buff;
+  buff.resize(buf_size);
+  buf_size = GetEnvironmentVariableW(L"USERPROFILE", &buff[0], buf_size);
+  if (!buf_size) {
+    qDebug() << "Failed to get environment variable";
+    return;
+  }
+  buff.resize(buf_size);
+  const QString home_dir = QString::fromWCharArray(buff.c_str());
   const QString cache_dir(QString("%1/AppData/Roaming/osab").arg(home_dir));
 #elif defined(__unix__) // if on *NIX, same as above
   const QString home_dir = std::getenv("HOME");
