@@ -14,19 +14,19 @@
 #pragma once
 
 
-class MapDisplay: public QQuickItem {
-  Q_OBJECT;
-  QML_ELEMENT
-public:
-  MapDisplay();
-  ~MapDisplay();
-public slots:
-  void Sync();
-  void Cleanup();
-private slots:
-  void HandleWindowChanged(QQuickWindow* win);
-private:
-  void releaseResources() override;
-  MapDisplayRender* render;
-};
+//class MapDisplay: public QQuickItem {
+//  Q_OBJECT;
+//  QML_ELEMENT
+//public:
+//  MapDisplay();
+//  ~MapDisplay();
+//public slots:
+//  void Sync();
+//  void Cleanup();
+//private slots:
+//  void HandleWindowChanged(QQuickWindow* win);
+//private:
+//  void releaseResources() override;
+//  MapDisplayRender* render;
+//};
 

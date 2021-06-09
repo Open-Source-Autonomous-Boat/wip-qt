@@ -25,7 +25,7 @@ ColumnLayout {
 	  Label {
 		id: dis_stat_label
 		property bool dis: true
-		text: (dis) ? "Disconnected" : "Connected"
+        text: "Disconnected"//(dis) ? "Disconnected" : "Connected"
 		font.bold: true
 		color: (dis) ? "red" : "green"
 	  }

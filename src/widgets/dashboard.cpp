@@ -6,9 +6,11 @@
 #include <QString>
 #if defined(__unix__)
 #include <unistd.h>
-#elif defined(__WIN32)
+#endif
+#if defined(_WINDOWS) || defined(__MINGW64__) || defined(__MINGW32__) || defined(_MSC_VER)
 #include <windows.h>
 #endif
+
 
 #include "db.h"
 #include "widgets/dashboard.h"
@@ -26,7 +28,7 @@ QString DashBoard::ppid() {
 #if defined(__unix__)
   // Use POSIX function of *NIX
   this->prop_pid = QString::number(getpid());
-#elif defined(__WIN32)
+#elif defined(_WINDOWS)
   // Use WIN32 if Windows :face_vomiting:
   this->prop_pid = QString::number(GetCurrentProcessId());
 #endif

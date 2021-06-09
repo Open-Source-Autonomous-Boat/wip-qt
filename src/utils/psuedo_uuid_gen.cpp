@@ -14,7 +14,7 @@ QString psuedo_uuid::gen() {
 	 * 
 	 * Add uuid + random digit and assign that to pre-existant uuid
 	 */
-	uuid = QString(uuid + QString::number(std::rand() % 10 + 1));
+  uuid = QString(uuid + QString::number(std::rand() % 10 + 1));
   }
   // Return at last uwu
   return uuid;

@@ -9,7 +9,7 @@
 #include <QFileInfo>
 #include <QString>
 #include <QtSql>
-#if defined(_WINDOWS)
+#if defined(_WINDOWS) || defined(__MINGW64__) || defined(__MINGW32__) || defined(_MSC_VER)
 #include <windows.h>
 #endif
 #include <cstdlib>
