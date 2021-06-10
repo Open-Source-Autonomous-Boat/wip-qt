@@ -12,20 +12,20 @@
 
 #pragma once
 
-//class MapDisplayRender : public QQuickItem, protected QOpenGLFunctions {
-//  Q_OBJECT;
+class MapDisplayRender : public QQuickItem, protected QOpenGLFunctions {
+  Q_OBJECT;
 
-// public:
-//  MapDisplayRender();
-//  ~MapDisplayRender();
-//  void SetViewPortSize(const QSize& size);
-//  void SetWindow(QQuickWindow* win);
-// public slots:
-//  void Init();
-//  void Paint();
+ public:
+  MapDisplayRender();
+  ~MapDisplayRender();
+  void SetViewPortSize(const QSize& size);
+  void SetWindow(QQuickWindow* win);
+ public slots:
+  void Init();
+  void Paint();
 
-// private:
-//  QSize view_port_size;
-//  QOpenGLShaderProgram* shader;
-//  QQuickWindow* window;
-//};
+ private:
+  QSize view_port_size;
+  QOpenGLShaderProgram* shader;
+  QQuickWindow* window;
+};
