@@ -1,4 +1,5 @@
 #include "geo/render.h"
+
 #include <GL/gl.h>
 #include <qguiapplication.h>
 
@@ -9,8 +10,7 @@
  * I copied the whole thing from documentation <3
  */
 
-MapDisplayRender::MapDisplayRender(): shader(nullptr) {
-};
+MapDisplayRender::MapDisplayRender() : shader(nullptr){};
 
 void MapDisplayRender::SetViewPortSize(const QSize& size) {
   this->view_port_size = size;
@@ -19,7 +19,7 @@ void MapDisplayRender::SetViewPortSize(const QSize& size) {
 void MapDisplayRender::SetWindow(QQuickWindow* win) { this->window = win; }
 
 void MapDisplayRender::Init() {
-  if (!this->shader) { // This does not seem to be called
+  if (!this->shader) {  // This does not seem to be called
     QSGRendererInterface* ren_int = this->window->rendererInterface();
     Q_ASSERT(ren_int->graphicsApi() == QSGRendererInterface::OpenGL ||
              ren_int->graphicsApi() == QSGRendererInterface::OpenGLRhi);

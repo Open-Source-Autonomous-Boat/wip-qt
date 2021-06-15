@@ -1,10 +1,10 @@
 //#include <GL/gl.h>
-#include <QQuickItem>
 #include <QObject>
-#include <QtQml>
-#include <QSGGeometryNode>
 #include <QOpenGLFunctions>
+#include <QQuickItem>
 #include <QQuickWindow>
+#include <QSGGeometryNode>
+#include <QtQml>
 #if defined(__WIN32)
 #include <windows.h>
 #endif
@@ -13,20 +13,19 @@
 
 #pragma once
 
-
-class MapDisplay: public QQuickItem {
+class MapDisplay : public QQuickItem {
   Q_OBJECT;
   QML_ELEMENT
-  public:
+ public:
   MapDisplay();
   ~MapDisplay();
-public slots:
+ public slots:
   void Sync();
   void Cleanup();
-private slots:
+ private slots:
   void HandleWindowChanged(QQuickWindow* win);
-private:
+
+ private:
   void releaseResources() override;
   MapDisplayRender* render;
 };
-

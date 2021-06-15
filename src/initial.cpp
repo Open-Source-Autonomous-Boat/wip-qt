@@ -1,4 +1,5 @@
 #include "initial.h"
+
 #include <qnamespace.h>
 #include <qqml.h>
 #include <qsgnode.h>
@@ -17,10 +18,10 @@
 #include <windows.h>
 #endif
 
+#include "geo/map.h"
 #include "utils/apps.h"
 #include "widgets/base_widgets.h"
 #include "widgets/dashboard.h"
-#include "geo/map.h"
 
 InitialWindow::InitialWindow(int argc, char** argv)
     : app(app_utils::CreateApp(argc, argv)) {
@@ -36,8 +37,8 @@ void InitialWindow::SetupRenderer() {
   this->engine->addImportPath("qrc:/qml");
   // Loads index QML file
   this->engine->load(QUrl(QStringLiteral("qrc:/qml/initial.qml")));
-  if (this->engine->rootObjects().isEmpty()) { // Check if empty
-    QGuiApplication::exit(-1); // If empty exit UwU
+  if (this->engine->rootObjects().isEmpty()) {  // Check if empty
+    QGuiApplication::exit(-1);                  // If empty exit UwU
   }
 }
 

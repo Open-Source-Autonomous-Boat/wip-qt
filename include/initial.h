@@ -17,6 +17,7 @@ class InitialWindow : public WindowClass {
   void SetupRenderer();
   void SetupSignals();
   int exec();
+
  private:
   QQmlApplicationEngine* engine;
   QGuiApplication* app;

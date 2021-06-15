@@ -2,9 +2,9 @@
 #pragma once
 
 namespace psuedo_uuid {
-  /*
-   * Not even an actual attempt of making an uuid lol
-   * Is just here to generate random numbers
-   */
+/*
+ * Not even an actual attempt of making an uuid lol
+ * Is just here to generate random numbers
+ */
 QString gen();
-}
+}  // namespace psuedo_uuid

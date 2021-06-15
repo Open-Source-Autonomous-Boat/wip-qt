@@ -9,7 +9,7 @@
 #include "geo/render.h"
 #include "utils/cleaner.h"
 
-MapDisplay::MapDisplay(): render(nullptr) {
+MapDisplay::MapDisplay() : render(nullptr) {
   this->connect(this, &QQuickItem::windowChanged, this,
                 &MapDisplay::HandleWindowChanged);
   this->setFlag(QQuickItem::ItemHasContents);

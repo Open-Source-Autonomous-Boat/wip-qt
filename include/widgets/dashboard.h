@@ -1,20 +1,23 @@
 #include <qobject.h>
 #include <qtmetamacros.h>
+
+#include <QJSEngine>
 #include <QObject>
+#include <QQmlEngine>
 #include <QString>
 #include <QtQml>
-#include <QQmlEngine>
-#include <QJSEngine>
+
 #include "db.h"
 #pragma once
 
-
-class DashBoard: public QObject {
+class DashBoard : public QObject {
   Q_OBJECT;
   Q_PROPERTY(QString ppid READ ppid NOTIFY ppidChanged);
-  Q_PROPERTY(QString devname READ devname WRITE setdevname NOTIFY devnameChanged)
+  Q_PROPERTY(
+      QString devname READ devname WRITE setdevname NOTIFY devnameChanged)
   QML_ELEMENT;
-public:
+
+ public:
   explicit DashBoard(QObject* parent = nullptr);
   ~DashBoard();
   /* Read */
@@ -23,11 +26,12 @@ public:
   /* Write */
   void setdevname(const QString user_name);
   static QObject* SingletonGet(QQmlEngine* engine, QJSEngine* script_engine);
-signals:
+ signals:
   void ppidChanged();
   void devnameChanged();
-private:
+
+ private:
   QString prop_pid;
   QString prop_dev_name;
-  DBManager *db;
+  DBManager* db;
 };
