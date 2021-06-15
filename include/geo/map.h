@@ -17,7 +17,7 @@
 class MapDisplay: public QQuickItem {
   Q_OBJECT;
   QML_ELEMENT
-public:
+  public:
   MapDisplay();
   ~MapDisplay();
 public slots:

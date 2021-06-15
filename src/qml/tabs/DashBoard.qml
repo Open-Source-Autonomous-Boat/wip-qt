@@ -4,7 +4,8 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
 
-import osab.xyz.DashBoard 1.0   // Fixes style issues bla bla bla
+import osab.xyz.DashBoard 1.0
+import osab.xyz.Map 1.0
 import "../snippets"
 import "../settings"
 
@@ -60,4 +61,8 @@ ColumnLayout {
 	}
 	Layout.fillWidth: true
   }
+  MapDisplay {
+  width: parent.width
+  height: parent.height
+}
 }

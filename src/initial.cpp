@@ -1,4 +1,8 @@
 #include "initial.h"
+#include <qnamespace.h>
+#include <qqml.h>
+#include <qsgnode.h>
+#include <qsgrendererinterface.h>
 
 #include <QDebug>
 #include <QGuiApplication>
@@ -16,6 +20,7 @@
 #include "utils/apps.h"
 #include "widgets/base_widgets.h"
 #include "widgets/dashboard.h"
+#include "geo/map.h"
 
 InitialWindow::InitialWindow(int argc, char** argv)
     : app(app_utils::CreateApp(argc, argv)) {
@@ -38,8 +43,10 @@ void InitialWindow::SetupRenderer() {
 
 void InitialWindow::SetupSignals() {
   // So I can use Dash without importing from QML <3
+  QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGLRhi);
   qmlRegisterSingletonType<DashBoard>("osab.xyz.DashBoard", 1, 0, "Dash",
                                       DashBoard::SingletonGet);
+  qmlRegisterType<MapDisplay>("osab.xyz.Map", 1, 0, "MapDisplay");
 }
 
 // Returns exit code ;-;
