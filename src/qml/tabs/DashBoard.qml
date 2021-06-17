@@ -61,8 +61,5 @@ ColumnLayout {
 	}
 	Layout.fillWidth: true
   }
-  MapDisplay {
-  width: parent.width
-  height: parent.height
-}
+  MapDisplayRender {}
 }

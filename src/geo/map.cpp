@@ -1,51 +1,30 @@
+#if defined(_WINDOWS)
+#include <windows.h>
+#endif
+#include <GL/gl.h>
+#include <qopenglcontext.h>
+#include <qopenglframebufferobject.h>
+#include <qopenglfunctions.h>
+
+#include <QOpenGLFramebufferObjectFormat>
+#include <QOpenGLFunctions>
 
 #include "geo/map.h"
-
-#include <qquickwindow.h>
-
-#include <QQuickItem>
-#include <QQuickRenderControl>
-
 #include "geo/render.h"
 #include "utils/cleaner.h"
 
-MapDisplay::MapDisplay() : render(nullptr) {
-  this->connect(this, &QQuickItem::windowChanged, this,
-                &MapDisplay::HandleWindowChanged);
-  this->setFlag(QQuickItem::ItemHasContents);
-  return;
+MapDisplayRender::MapDisplayRender() = default;
+
+void MapDisplayRender::render() {
+  QOpenGLFunctions* func = QOpenGLContext::currentContext()->functions();
+  func->glClearColor(((int)this->color++ % 255) / 255, 0, 0, 1);
+  func->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+  this->update();
 }
 
-void MapDisplay::HandleWindowChanged(QQuickWindow *win) {
-  if (win) {
-    this->connect(win, &QQuickWindow::beforeSynchronizing, this,
-                  &MapDisplay::Sync, Qt::DirectConnection);
-    this->connect(win, &QQuickWindow::sceneGraphInvalidated, this,
-                  &MapDisplay::Cleanup, Qt::DirectConnection);
-    win->setColor(Qt::black);
-  }
+QOpenGLFramebufferObject* MapDisplayRender::createFramebufferObject(const QSize& size) {
+  QOpenGLFramebufferObjectFormat format;
+  format.setAttachment(QOpenGLFramebufferObject::CombinedDepthStencil);
+  format.setSamples(4);
+  return new QOpenGLFramebufferObject(size, format);
 }
-
-void MapDisplay::Sync() {
-  if (!this->render) {
-    this->render = new MapDisplayRender();
-    this->connect(this->window(), &QQuickWindow::beforeRendering, this->render,
-                  &MapDisplayRender::Init, Qt::DirectConnection);
-    this->connect(this->window(), &QQuickWindow::beforeRenderPassRecording,
-                  this->render, &MapDisplayRender::Paint, Qt::DirectConnection);
-  }
-  this->render->SetViewPortSize((this->window()->size() / 2) *
-                                (this->window()->devicePixelRatio() / 2));
-  this->render->SetWindow(this->window());
-}
-
-void MapDisplay::Cleanup() { delete this->render; }
-
-void MapDisplay::releaseResources() {
-  this->window()->scheduleRenderJob(
-      new CleanJob<MapDisplayRender>(this->render),
-      QQuickWindow::BeforeSynchronizingStage);
-  this->render = nullptr;
-};
-
-MapDisplay::~MapDisplay() = default;

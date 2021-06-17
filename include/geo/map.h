@@ -1,6 +1,10 @@
 //#include <GL/gl.h>
+#include <qopenglframebufferobject.h>
+#include <qquickframebufferobject.h>
 #include <QObject>
 #include <QOpenGLFunctions>
+#include <QOpenGLFramebufferObject>
+#include <QOpenGLFramebufferObjectFormat>
 #include <QQuickItem>
 #include <QQuickWindow>
 #include <QSGGeometryNode>
@@ -13,19 +17,18 @@
 
 #pragma once
 
-class MapDisplay : public QQuickItem {
-  Q_OBJECT;
-  QML_ELEMENT
- public:
-  MapDisplay();
-  ~MapDisplay();
- public slots:
-  void Sync();
-  void Cleanup();
- private slots:
-  void HandleWindowChanged(QQuickWindow* win);
 
- private:
-  void releaseResources() override;
-  MapDisplayRender* render;
+class MapDisplay {};
+
+class MapDisplayRender: public GeneralFBORender::Renderer {
+public:
+  MapDisplayRender();
+  void render() override;
+  QOpenGLFramebufferObject* createFramebufferObject(const QSize& size) override;
+  MapDisplay map;
+private:
+  float color = 0.0;
 };
+
+
+
