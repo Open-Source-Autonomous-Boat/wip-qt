@@ -1,3 +1,5 @@
+[![License](https://badgen.net/github/license/open-source-autonomous-boat/wip-qt)](https://github.com/Open-Source-Autonomous-Boat/wip-qt/blob/main/LICENSE.md)
+
 # WIP-qt: Prototype GUI for OSAB
 Watercraft Interface Program (Name subject to change)
 
