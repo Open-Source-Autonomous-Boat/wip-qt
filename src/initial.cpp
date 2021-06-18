@@ -35,6 +35,8 @@ void InitialWindow::SetupRenderer() {
   this->engine = new QQmlApplicationEngine(this);
   // Add path that engine can import from
   this->engine->addImportPath("qrc:/qml");
+  // Incase contexts need to be declared
+  this->SetupContext();
   // Loads index QML file
   this->engine->load(QUrl(QStringLiteral("qrc:/qml/initial.qml")));
   if (this->engine->rootObjects().isEmpty()) {  // Check if empty
@@ -47,7 +49,10 @@ void InitialWindow::SetupSignals() {
   QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGLRhi);
   qmlRegisterSingletonType<DashBoard>("osab.xyz.DashBoard", 1, 0, "Dash",
                                       DashBoard::SingletonGet);
-  qmlRegisterType<MapDisplayRender>("osab.xyz.Map", 1, 0, "MapDisplayRender");
+  qmlRegisterType<MapDisplayFBORender>("osab.xyz.Map", 1, 0, "MapDisplayRender");
+}
+
+void InitialWindow::SetupContext() {
 }
 
 // Returns exit code ;-;

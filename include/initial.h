@@ -16,6 +16,7 @@ class InitialWindow : public WindowClass {
   ~InitialWindow();
   void SetupRenderer();
   void SetupSignals();
+  void SetupContext();
   int exec();
 
  private:
