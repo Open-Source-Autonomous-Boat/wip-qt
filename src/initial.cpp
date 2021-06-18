@@ -49,7 +49,6 @@ void InitialWindow::SetupSignals() {
   QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGLRhi);
   qmlRegisterSingletonType<DashBoard>("osab.xyz.DashBoard", 1, 0, "Dash",
                                       DashBoard::SingletonGet);
-  qmlRegisterType<MapDisplayFBORender>("osab.xyz.Map", 1, 0, "MapDisplayRender");
 }
 
 void InitialWindow::SetupContext() {
