@@ -16,6 +16,11 @@
 #include <QtQuick>
 #pragma once
 
+/*
+ * I don't know wtf I am doing
+ */
+
+// This handles gui functions and lives in the gui thread
 class MapDisplay : public QQuickItem {
   Q_OBJECT;
   QML_ELEMENT;
@@ -25,11 +30,14 @@ public:
   
 };
 
+// Shaders for ~~Minecraft~~ map
 class MapShader : public QSGMaterialShader {
 public:
   MapShader();
 };
 
+
+// Material for map
 class MapMaterial : public QSGMaterial {
 public:
   MapMaterial();
@@ -40,6 +48,7 @@ public:
 };
 
 
+// This handles rendering functions and lives in the rendering thread
 class MapNode: public QSGGeometryNode {
 public:
   MapNode();

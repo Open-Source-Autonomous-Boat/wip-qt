@@ -10,12 +10,15 @@
 
 #include <memory>
 
+#include "geo/shapes.h"
+
 /* MapDisplay Class */
 
 MapDisplay::MapDisplay(){};
 
 QSGNode* MapDisplay::updatePaintNode(QSGNode* old, UpdatePaintNodeData*) {
   auto* node = static_cast<MapNode*>(old);
+
   if (!node) {
     node = new MapNode();
   }
@@ -50,11 +53,11 @@ QSGMaterialShader* MapMaterial::createShader(
 /* MapNode Class */
 
 MapNode::MapNode() {
+  std::unique_ptr<RectShape>rect_shape(new RectShape());
   auto* mat = new MapMaterial();
   this->setMaterial(mat);
   this->setFlag(OwnsMaterial, true);
-  QSGGeometry* geo =
-      new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), 4);
+  auto* geo = rect_shape.get()->GetQSGGeometryObject();
   QSGGeometry::updateTexturedRectGeometry(geo, QRect(), QRect());
   this->setGeometry(geo);
   this->setFlag(OwnsGeometry, true);
