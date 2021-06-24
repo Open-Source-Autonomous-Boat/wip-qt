@@ -27,7 +27,9 @@ class MapDisplay : public QQuickItem {
 public:
   MapDisplay();
   QSGNode* updatePaintNode(QSGNode* old, UpdatePaintNodeData*) override;
-  
+  void geometryChange(const QRectF &new_geo, const QRectF &old_geo) override;
+private:
+  bool flag_geo_changed = true;
 };
 
 // Shaders for ~~Minecraft~~ map
@@ -52,4 +54,5 @@ public:
 class MapNode: public QSGGeometryNode {
 public:
   MapNode();
+  void ChangeRectBounds(const QRectF &bounds);
 };

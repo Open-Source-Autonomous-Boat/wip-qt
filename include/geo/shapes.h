@@ -1,25 +1,25 @@
 #include <qsggeometry.h>
+
 #include <QSGGeometry>
 #pragma once
 
-class ShapeFrame {
- public:
-  virtual void Set(float data[]);
-  QSGGeometry* GetQSGGeometryObject();
-private:
-  int total_verts;
+struct rect_shape {
+  float x;  // X coordinate
+  float y;  // Y coordinate
+  float r;  // Red
+  float g;  // Green
+  float b;  // Blue
+  float a;  // Alpha
+  void set(float n_x, float n_y, float n_r, float n_g, float n_b, float n_a) {
+    this->x = n_x;
+    this->y = n_y;
+    this->r = n_r;
+    this->g = n_g;
+    this->b = n_b;
+    this->a = n_a;
+  }
 };
 
-class RectShape : public ShapeFrame {
- public:
-  void Set(float data[5]) override;
- private:
-  float x = 0; // X-coord
-  float y = 0; // Y-coord
-  float r = 0; // Red (RGBA)
-  float g = 0; // Green (RGBA)
-  float b = 0; // Blue (RGBA)
-  float a = 0; // Alpha (RGBA)
-private:
-  const int total_verts = 4;
-};
+namespace get_geo_data {
+  QSGGeometry* GetRectShape();
+}
