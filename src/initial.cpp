@@ -46,7 +46,6 @@ void InitialWindow::SetupRenderer() {
 
 void InitialWindow::SetupSignals() {
   // So I can use Dash without importing from QML <3
-  QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGLRhi);
   qmlRegisterSingletonType<DashBoard>("osab.xyz.DashBoard", 1, 0, "Dash",
                                       DashBoard::SingletonGet);
   qmlRegisterType<MapDisplay>("osab.xyz.Map", 1, 0, "MapDisplay");

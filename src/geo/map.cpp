@@ -16,7 +16,7 @@
 
 /* MapDisplay Class */
 
-MapDisplay::MapDisplay(){
+MapDisplay::MapDisplay(QQuickItem* parent) : QQuickItem(parent) {
   this->setFlag(ItemHasContents, true);
 };
 
@@ -34,7 +34,7 @@ QSGNode* MapDisplay::updatePaintNode(QSGNode* old, UpdatePaintNodeData*) {
   return node;
 }
 
-void MapDisplay::geometryChange(const QRectF &new_geo, const QRectF &old_geo) {
+void MapDisplay::geometryChange(const QRectF& new_geo, const QRectF& old_geo) {
   this->flag_geo_changed = false;
   this->update();
   QQuickItem::geometryChange(new_geo, old_geo);
@@ -42,13 +42,16 @@ void MapDisplay::geometryChange(const QRectF &new_geo, const QRectF &old_geo) {
 
 /* MapShader Class */
 
-MapShader::MapShader(){};
+MapShader::MapShader() {
+  qDebug() << "I have no shaders";
+  setShaderFileName(VertexStage, QString("qrc:/geo/shader/map.vert.qsb"));
+  //setShaderFileName(FragmentStage, QString("qrc:/geo/shader/map.frag"));
+};
 
 /* MapMaterial Class */
 
 MapMaterial::MapMaterial(){};
 MapMaterial::~MapMaterial(){};
-
 QSGMaterialType* MapMaterial::type() const {
   static QSGMaterialType type;
   return &type;
@@ -77,7 +80,8 @@ MapNode::MapNode() {
   this->setFlag(OwnsGeometry, true);
 }
 
-void MapNode::ChangeRectBounds(const QRectF &bounds) {
-  QSGGeometry::updateTexturedRectGeometry(this->geometry(), bounds, QRectF(0, 0, 1, 1));
+void MapNode::ChangeRectBounds(const QRectF& bounds) {
+  QSGGeometry::updateTexturedRectGeometry(this->geometry(), bounds,
+                                          QRectF(0, 0, 1, 1));
   this->markDirty(QSGNode::DirtyGeometry);
 }

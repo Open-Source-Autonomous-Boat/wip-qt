@@ -25,7 +25,7 @@ class MapDisplay : public QQuickItem {
   Q_OBJECT;
   QML_ELEMENT;
 public:
-  MapDisplay();
+  MapDisplay(QQuickItem* parent=nullptr);
   QSGNode* updatePaintNode(QSGNode* old, UpdatePaintNodeData*) override;
   void geometryChange(const QRectF &new_geo, const QRectF &old_geo) override;
 private:
