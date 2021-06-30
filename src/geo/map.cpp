@@ -1,5 +1,4 @@
 #include "geo/map.h"
-
 #include <qglobal.h>
 #include <qquickitem.h>
 #include <qsggeometry.h>
@@ -44,8 +43,8 @@ void MapDisplay::geometryChange(const QRectF& new_geo, const QRectF& old_geo) {
 
 MapShader::MapShader() {
   qDebug() << "I have no shaders";
-  setShaderFileName(VertexStage, QString("qrc:/geo/shader/map.vert.qsb"));
-  //setShaderFileName(FragmentStage, QString("qrc:/geo/shader/map.frag"));
+  setShaderFileName(VertexStage, "qrc:/geo/shader/map.vert.qsb");
+  //setShaderFileName(FragmentStage, "qrc:/geo/shader/map.frag");
 };
 
 /* MapMaterial Class */
