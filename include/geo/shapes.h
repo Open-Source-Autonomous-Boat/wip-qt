@@ -10,6 +10,7 @@ struct rect_shape {
   float g;  // Green
   float b;  // Blue
   float a;  // Alpha
+  const int seg_count = 4;
   void set(float n_x, float n_y, float n_r, float n_g, float n_b, float n_a) {
     this->x = n_x;
     this->y = n_y;

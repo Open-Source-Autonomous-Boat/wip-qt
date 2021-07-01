@@ -15,8 +15,7 @@ file(GLOB_RECURSE SOURCES
                   "${SOURCE_DIR}/*.qrc"
                   "${INCLUDE_DIR}/*.h"
                   "${SOURCE_DIR}/*.cpp"
-                  "${SOURCE_DIR}/*.vert*"
-                  "${SOURCE_DIR}/*.qsb*"
+                  "${SOURCE_DIR}/*.qsb"
 )
 
 # Resources

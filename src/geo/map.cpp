@@ -1,5 +1,5 @@
 #include "geo/map.h"
-#include <qglobal.h>
+
 #include <qquickitem.h>
 #include <qsggeometry.h>
 #include <qsgmaterial.h>
@@ -43,8 +43,8 @@ void MapDisplay::geometryChange(const QRectF& new_geo, const QRectF& old_geo) {
 
 MapShader::MapShader() {
   qDebug() << "I have no shaders";
-  setShaderFileName(VertexStage, "qrc:/geo/shader/map.vert.qsb");
-  //setShaderFileName(FragmentStage, "qrc:/geo/shader/map.frag");
+  setShaderFileName(VertexStage, ":/geo/shader/map.vert.qsb");
+  setShaderFileName(FragmentStage, ":/geo/shader/map.frag.qsb");
 };
 
 /* MapMaterial Class */
@@ -83,4 +83,16 @@ void MapNode::ChangeRectBounds(const QRectF& bounds) {
   QSGGeometry::updateTexturedRectGeometry(this->geometry(), bounds,
                                           QRectF(0, 0, 1, 1));
   this->markDirty(QSGNode::DirtyGeometry);
+}
+
+void MapNode::SetSegments() {
+  struct rect_shape* rect = {nullptr};
+  if (!rect->seg_count) {
+    qDebug() << "oops structs are funni";
+  }
+  auto* vertices = this->geometry()->vertexDataAsPoint2D();
+  vertices[0].set(0, 0);
+  vertices[1].set(0, 1);
+  vertices[2].set(1, 0);
+  vertices[3].set(1, 1);
 }

@@ -6,5 +6,6 @@
         <file>qml/snippets/HeaderSnip.qml</file>
         <file>qml/settings/Settings.qml</file>
         <file>geo/shader/map.vert.qsb</file>
+        <file>geo/shader/map.frag.qsb</file>
     </qresource>
 </RCC>

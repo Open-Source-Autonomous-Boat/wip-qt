@@ -35,7 +35,6 @@ void InitialWindow::SetupRenderer() {
   this->engine = new QQmlApplicationEngine(this);
   // Add path that engine can import from
   this->engine->addImportPath("qrc:/qml");
-  this->engine->addImportPath("qrc:/geo");
   // Incase contexts need to be declared
   this->SetupContext();
   // Loads index QML file

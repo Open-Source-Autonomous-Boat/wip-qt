@@ -55,4 +55,5 @@ class MapNode: public QSGGeometryNode {
 public:
   MapNode();
   void ChangeRectBounds(const QRectF &bounds);
+  void SetSegments();
 };

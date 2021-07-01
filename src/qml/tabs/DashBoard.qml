@@ -62,6 +62,6 @@ ColumnLayout {
 	Layout.fillWidth: true
   }
   MapDisplay {
-}
+  }
 }
 
