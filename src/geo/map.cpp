@@ -23,7 +23,6 @@ QSGNode* MapDisplay::updatePaintNode(QSGNode* old, UpdatePaintNodeData*) {
   auto* node = static_cast<MapNode*>(old);
 
   if (!node) {
-    qDebug() << "Getting new node";
     node = new MapNode();
   }
   if (this->flag_geo_changed) {
@@ -42,7 +41,6 @@ void MapDisplay::geometryChange(const QRectF& new_geo, const QRectF& old_geo) {
 /* MapShader Class */
 
 MapShader::MapShader() {
-  qDebug() << "I have no shaders";
   setShaderFileName(VertexStage, ":/geo/shader/map.vert.qsb");
   setShaderFileName(FragmentStage, ":/geo/shader/map.frag.qsb");
 };
@@ -86,8 +84,8 @@ void MapNode::ChangeRectBounds(const QRectF& bounds) {
 }
 
 void MapNode::SetSegments() {
-  struct rect_shape* rect = {nullptr};
-  if (!rect->seg_count) {
+  struct rect_shape rect = {NULL};
+  if (!rect.seg_count) {
     qDebug() << "oops structs are funni";
   }
   auto* vertices = this->geometry()->vertexDataAsPoint2D();

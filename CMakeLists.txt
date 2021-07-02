@@ -15,9 +15,8 @@ file(GLOB_RECURSE SOURCES
                   "${SOURCE_DIR}/*.qrc"
                   "${INCLUDE_DIR}/*.h"
                   "${SOURCE_DIR}/*.cpp"
-                  "${SOURCE_DIR}/*.qsb"
-)
 
+)
 # Resources
 
 set(QT_COMP
@@ -43,12 +42,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_IMPORT_SOURCE_DIR ON)
 set(CMAKE_BUILD_TYPE Debug)
 set(QML_IMPORT_MAJOR_VERSION 1)
-
-if (MSVC)
-    set(CMAKE_PREFIX_PATH "C:/Qt/6.1.1/msvc2019_64")
-elseif(MINGW)
-    set(CMAKE_PREFIX_PATH "C:/Qt/6.1.1/mingw81_64")
-endif()
 
 find_package(Qt6 COMPONENTS ${QT_COMP} REQUIRED)
 
