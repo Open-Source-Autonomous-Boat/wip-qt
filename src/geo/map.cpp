@@ -84,7 +84,7 @@ void MapNode::ChangeRectBounds(const QRectF& bounds) {
 }
 
 void MapNode::SetSegments() {
-  struct rect_shape rect = {NULL};
+  struct rect_shape rect;
   if (!rect.seg_count) {
     qDebug() << "oops structs are funni";
   }
