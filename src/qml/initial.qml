@@ -4,8 +4,6 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
 
-
-
 import "tabs"
 import "settings"
 
@@ -26,7 +24,7 @@ ApplicationWindow {
 	id: main_tab_bar
 	width: parent.width
 	Repeater {
-        model: ["Dashboard", "Device Information"]
+        model: ["Dashboard", "Device Information", "Debug map"]
 	  TabButton {
 		hoverEnabled: true
 		id: tab_button
@@ -57,6 +55,10 @@ ApplicationWindow {
       height: parent.height
       width: window.width
     }
+    MapQML {
+      height: parent.height
+      width: parent.width
+    } 
   }
   footer: RowLayout {
 	id: button_bar

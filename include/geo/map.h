@@ -24,36 +24,40 @@
 class MapDisplay : public QQuickItem {
   Q_OBJECT;
   QML_ELEMENT;
-public:
-  MapDisplay(QQuickItem* parent=nullptr);
-  QSGNode* updatePaintNode(QSGNode* old, UpdatePaintNodeData*) override;
-  void geometryChange(const QRectF &new_geo, const QRectF &old_geo) override;
-private:
+
+ public:
+  MapDisplay(QQuickItem* parent = nullptr);
+  ~MapDisplay() {}
+
+ private:
   bool flag_geo_changed = true;
+
+ protected:
+  QSGNode* updatePaintNode(QSGNode* old, UpdatePaintNodeData*) override;
+  void geometryChange(const QRectF& new_geo, const QRectF& old_geo) override;
 };
 
-// Shaders for ~~Minecraft~~ map
+// Shaders for map
 class MapShader : public QSGMaterialShader {
-public:
+ public:
   MapShader();
 };
 
-
 // Material for map
 class MapMaterial : public QSGMaterial {
-public:
+ public:
   MapMaterial();
   ~MapMaterial();
   QSGMaterialType* type() const override;
   int compare(const QSGMaterial* other) const override;
-  QSGMaterialShader* createShader(QSGRendererInterface::RenderMode) const override;
+  QSGMaterialShader* createShader(
+      QSGRendererInterface::RenderMode) const override;
 };
 
-
 // This handles rendering functions and lives in the rendering thread
-class MapNode: public QSGGeometryNode {
-public:
+class MapNode : public QSGGeometryNode {
+ public:
   MapNode();
-  void ChangeRectBounds(const QRectF &bounds);
-  void SetSegments();
+  void ChangeRectBounds(const QRectF& bounds);
+  void SetSegments(const QRectF rect);
 };

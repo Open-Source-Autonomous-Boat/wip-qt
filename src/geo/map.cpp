@@ -8,6 +8,7 @@
 #include <qsgnode.h>
 #include <qsgrendererinterface.h>
 
+#include <QColor>
 #include <QDebug>
 #include <memory>
 
@@ -29,6 +30,13 @@ QSGNode* MapDisplay::updatePaintNode(QSGNode* old, UpdatePaintNodeData*) {
     node->ChangeRectBounds(this->boundingRect());
     this->flag_geo_changed = false;
   }
+  const QRectF rect = this->boundingRect();
+  auto* vertices = node->geometry()->vertexDataAsPoint2D();
+  vertices[0].set(rect.bottomLeft().x(), rect.topLeft().y());
+  vertices[1].set(rect.bottomLeft().x(), rect.bottomRight().x());
+  vertices[2].set(rect.topLeft().x(), rect.topRight().x());
+  vertices[3].set(rect.bottomRight().x(), rect.topRight().y());
+  node->markDirty(QSGNode::DirtyGeometry | QSGNode::DirtyMaterial);
   return node;
 }
 
@@ -41,8 +49,8 @@ void MapDisplay::geometryChange(const QRectF& new_geo, const QRectF& old_geo) {
 /* MapShader Class */
 
 MapShader::MapShader() {
-  setShaderFileName(VertexStage, ":/geo/shader/map.vert.qsb");
-  setShaderFileName(FragmentStage, ":/geo/shader/map.frag.qsb");
+  this->setShaderFileName(VertexStage, ":/geo/shader/map.vert.qsb");
+  this->setShaderFileName(FragmentStage, ":/geo/shader/map.frag.qsb");
 };
 
 /* MapMaterial Class */
@@ -68,29 +76,21 @@ QSGMaterialShader* MapMaterial::createShader(
 /* MapNode Class */
 
 MapNode::MapNode() {
+  // Material
   auto* mat = new MapMaterial();
   this->setMaterial(mat);
-  this->setFlag(OwnsMaterial, true);
+  this->setFlag(QSGGeometryNode::OwnsMaterial, true);
+  // Geometry
   auto* geo = get_geo_data::GetRectShape();
-  QSGGeometry::updateTexturedRectGeometry(geo, QRect(), QRect());
   this->setGeometry(geo);
-  this->setFlag(OwnsGeometry, true);
+  this->setFlag(QSGGeometryNode::OwnsGeometry, true);
 }
 
 void MapNode::ChangeRectBounds(const QRectF& bounds) {
   QSGGeometry::updateTexturedRectGeometry(this->geometry(), bounds,
-                                          QRectF(0, 0, 1, 1));
+                                          QRectF(0, 0, 0, 0));
   this->markDirty(QSGNode::DirtyGeometry);
 }
 
-void MapNode::SetSegments() {
-  struct rect_shape rect;
-  if (!rect.seg_count) {
-    qDebug() << "oops structs are funni";
-  }
-  auto* vertices = this->geometry()->vertexDataAsPoint2D();
-  vertices[0].set(0, 0);
-  vertices[1].set(0, 1);
-  vertices[2].set(1, 0);
-  vertices[3].set(1, 1);
+void MapNode::SetSegments(const QRectF rect) {
 }
