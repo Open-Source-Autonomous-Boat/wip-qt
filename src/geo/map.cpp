@@ -32,11 +32,11 @@ QSGNode* MapDisplay::updatePaintNode(QSGNode* old, UpdatePaintNodeData*) {
   }
   const QRectF rect = this->boundingRect();
   auto* vertices = node->geometry()->vertexDataAsPoint2D();
-  vertices[0].set(rect.bottomLeft().x(), rect.topLeft().y());
-  vertices[1].set(rect.bottomLeft().x(), rect.bottomRight().x());
-  vertices[2].set(rect.topLeft().x(), rect.topRight().x());
-  vertices[3].set(rect.bottomRight().x(), rect.topRight().y());
-  node->markDirty(QSGNode::DirtyGeometry | QSGNode::DirtyMaterial);
+  vertices[0].set(0, 0);
+  vertices[1].set(200, 0);
+  vertices[2].set(0, 200);
+  vertices[3].set(200, 200);
+  node->markDirty(QSGNode::DirtyGeometry);
   return node;
 }
 
@@ -77,7 +77,8 @@ QSGMaterialShader* MapMaterial::createShader(
 
 MapNode::MapNode() {
   // Material
-  auto* mat = new MapMaterial();
+  auto* mat = new QSGFlatColorMaterial();
+  mat->setColor(Qt::blue);
   this->setMaterial(mat);
   this->setFlag(QSGGeometryNode::OwnsMaterial, true);
   // Geometry
