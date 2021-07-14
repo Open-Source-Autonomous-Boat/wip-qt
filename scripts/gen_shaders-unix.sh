@@ -13,6 +13,11 @@ check_qsb_loc() {
         QSB_BIN=$(echo $qsb_bin_res | tr " " "\n" | cut -d " " -f1)
 }
 
+remove_old() {
+        echo -e "Gotta make sure you know what you are doing\n"
+        rm -i $(find . -regextype sed -regex ".*qsb")
+}
+
 compile_shaders() {
         if ! [ -d "." ]
         then
@@ -21,6 +26,7 @@ compile_shaders() {
         fi
         shader_files=$(find . -regextype sed -regex ".*\(frag\|vert\)"
         )
+        remove_old
         echo $shader_files | tr " " "\n" | while read file
         do
                 $QSB_BIN -b --glsl "$GLSL_VER" --hlsl $HLSL_VER --msl $MSL_VER -o "$file.qsb" "$file"
@@ -32,12 +38,9 @@ compile_shaders() {
 main() {
         if ! command -v qsb &> /dev/null
         then
-                echo "Failed to find qsb"
-                echo "Trying to find qsb location"
                 check_qsb_loc
         else
                 QSB_BIN=$(command -v qsb)
-                echo "qsb found $qsb_bin"
         fi
         compile_shaders
 }

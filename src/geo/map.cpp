@@ -10,6 +10,7 @@
 
 #include <QColor>
 #include <QDebug>
+#include <QSGFlatColorMaterial>
 #include <memory>
 
 #include "geo/shapes.h"
@@ -32,7 +33,7 @@ QSGNode* MapDisplay::updatePaintNode(QSGNode* old, UpdatePaintNodeData*) {
   }
   const QRectF rect = this->boundingRect();
   auto* vertices = node->geometry()->vertexDataAsPoint2D();
-  vertices[0].set(0, 0);
+  vertices[0].set(rect.bottomLeft().x(), 1);
   vertices[1].set(200, 0);
   vertices[2].set(0, 200);
   vertices[3].set(200, 200);
@@ -62,10 +63,10 @@ QSGMaterialType* MapMaterial::type() const {
   return &type;
 }
 
-int MapMaterial::compare(const QSGMaterial* other) const {
-  Q_ASSERT(other && this->type() == other->type());
-  const auto* other_2 = static_cast<const MapMaterial*>(other);
-  return other_2 == this ? 0 : 1;
+int MapMaterial::compare(const QSGMaterial* o) const {
+  Q_ASSERT(o && this->type() == o->type());
+  const auto* other = static_cast<const MapMaterial*>(o);
+  return other == this ? 0 : 1;
 }
 
 QSGMaterialShader* MapMaterial::createShader(
@@ -77,12 +78,12 @@ QSGMaterialShader* MapMaterial::createShader(
 
 MapNode::MapNode() {
   // Material
-  auto* mat = new QSGFlatColorMaterial();
-  mat->setColor(Qt::blue);
+  auto* mat = new MapMaterial();
   this->setMaterial(mat);
   this->setFlag(QSGGeometryNode::OwnsMaterial, true);
   // Geometry
   auto* geo = get_geo_data::GetRectShape();
+  QSGGeometry::updateTexturedRectGeometry(geo, QRect(), QRect());
   this->setGeometry(geo);
   this->setFlag(QSGGeometryNode::OwnsGeometry, true);
 }
@@ -93,5 +94,3 @@ void MapNode::ChangeRectBounds(const QRectF& bounds) {
   this->markDirty(QSGNode::DirtyGeometry);
 }
 
-void MapNode::SetSegments(const QRectF rect) {
-}

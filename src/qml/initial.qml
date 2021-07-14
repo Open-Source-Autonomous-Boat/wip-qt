@@ -24,7 +24,7 @@ ApplicationWindow {
 	id: main_tab_bar
 	width: parent.width
 	Repeater {
-        model: ["Dashboard", "Device Information", "Debug map"]
+        model: ["Dashboard", "Device Information", "VIS", "Debug map"]
 	  TabButton {
 		hoverEnabled: true
 		id: tab_button
@@ -59,6 +59,7 @@ ApplicationWindow {
       height: parent.height
       width: parent.width
     } 
+    VisUtil {}
   }
   footer: RowLayout {
 	id: button_bar
