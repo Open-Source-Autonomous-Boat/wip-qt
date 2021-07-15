@@ -19,6 +19,7 @@
 #endif
 
 #include "geo/map.h"
+#include "parser/qt_vis_parser.h"
 #include "utils/apps.h"
 #include "widgets/base_widgets.h"
 #include "widgets/dashboard.h"
@@ -48,11 +49,13 @@ void InitialWindow::SetupSignals() {
   // So I can use Dash without importing from QML <3
   qmlRegisterSingletonType<DashBoard>("osab.xyz.DashBoard", 1, 0, "Dash",
                                       DashBoard::SingletonGet);
+  // Same but for the VIS parser
+  qmlRegisterSingletonType<QtVISParseClass>("osab.xyz.QtVIS", 1, 0, "QtVIS",
+                                            QtVISParseClass::SingletonGet);
   qmlRegisterType<MapDisplay>("osab.xyz.Map", 1, 0, "MapDisplay");
 }
 
-void InitialWindow::SetupContext() {
-}
+void InitialWindow::SetupContext() {}
 
 // Returns exit code ;-;
 int InitialWindow::exec() { return this->app->exec(); }

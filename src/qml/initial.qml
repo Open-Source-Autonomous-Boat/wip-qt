@@ -55,11 +55,11 @@ ApplicationWindow {
       height: parent.height
       width: window.width
     }
+    VisUtil {}
     MapQML {
       height: parent.height
       width: parent.width
     } 
-    VisUtil {}
   }
   footer: RowLayout {
 	id: button_bar

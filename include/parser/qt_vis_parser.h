@@ -3,7 +3,9 @@
 #include <qtmetamacros.h>
 
 #include <QDebug>
+#include <QJSEngine>
 #include <QObject>
+#include <QQmlEngine>
 #include <QQuickItem>
 #include <QString>
 #include <QtQml>
@@ -20,6 +22,8 @@ class QtVISParseClass : public QObject {
   explicit QtVISParseClass(QObject* parent = nullptr);
   QString chosenfile();
   void setchosenfile(const QString file);
+
+  static QObject* SingletonGet(QQmlEngine* engine, QJSEngine* script_engine);
 
  private:
   QString prop_chosen_file;

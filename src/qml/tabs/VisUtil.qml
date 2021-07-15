@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
 import Qt.labs.platform 1.1
 import osab.xyz.DashBoard 1.0
+import osab.xyz.QtVIS 1.0
 
 import "../snippets"
 import "../settings"
@@ -14,17 +15,27 @@ ColumnLayout {
   width: parent.width
   height: parent.height
   RowLayout {
-    Button {
-      width: 200
-      height: 100
-      text: "Click me!"
-      onClicked: file_diag.open()
+    Rectangle {
+      width: parent.width
+      Rectangle {
+        id: file_label
+        width: parent.width * 0.8
+        Label {
+          text: file_diag.file
+        }
+      }
+      Button {
+        width: parent.width * 0.2
+        height: 100
+        text: "Open File"
+        anchors.left: file_label.right
+        onClicked: file_diag.open()
+      }
     }
     FileDialog {
       id: file_diag
       title: "Open VIS file"
-      //folder: shortcuts.home
-      //Component.onCompleted: true
+      fileMode: FileDialog.OpenFile
     }
   }
 }
