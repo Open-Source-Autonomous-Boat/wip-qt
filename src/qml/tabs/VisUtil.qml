@@ -14,28 +14,28 @@ ColumnLayout {
   id: root
   width: parent.width
   height: parent.height
+  HeaderSnip{label_name: "VIS Editor"}
+  Settings {
+    id: sett
+  }
   RowLayout {
+    height: 200
     Rectangle {
-      width: parent.width
-      Rectangle {
-        id: file_label
-        width: parent.width * 0.8
-        Label {
-          text: file_diag.file
-        }
-      }
-      Button {
-        width: parent.width * 0.2
-        height: 100
-        text: "Open File"
-        anchors.left: file_label.right
-        onClicked: file_diag.open()
+      color: "red"
+      id: file_label
+      Layout.fillWidth: true
+      Label {
+        text: file_diag.file
       }
     }
-    FileDialog {
-      id: file_diag
-      title: "Open VIS file"
-      fileMode: FileDialog.OpenFile
+    Button {
+      text: "Open File"
+      onClicked: file_diag.open()
     }
+  }
+  FileDialog {
+    id: file_diag
+    title: "Open VIS file"
+    fileMode: FileDialog.OpenFile
   }
 }

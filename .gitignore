@@ -5,3 +5,4 @@ build/*
 .vs
 out
 out/
+.ccls-cache

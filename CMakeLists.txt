@@ -28,7 +28,8 @@ set(QT_COMP
     Sql
     Qml
     Widgets
-    QuickControls2)
+    QuickControls2
+    ShaderTools)
 
 set(QT_LIB
     Qt6::Core
@@ -46,6 +47,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_IMPORT_SOURCE_DIR ON)
 set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(Qt6 COMPONENTS ${QT_COMP} REQUIRED)
 

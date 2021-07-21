@@ -15,3 +15,4 @@ QObject* QtVISParseClass::SingletonGet(QQmlEngine* engine,
   Q_UNUSED(script_engine);
   return new QtVISParseClass();
 }
+

@@ -5,6 +5,8 @@
 #include <QJSEngine>
 #pragma once
 
-class QMLUrlParser {
+class QMLUrlParser: public QObject {
+  Q_OBJECT;
+  QML_ELEMENT;
   static QString UrlToString(const QString url);
 };

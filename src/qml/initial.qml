@@ -17,36 +17,36 @@ ApplicationWindow {
   title: qsTr("WIP-QT")
 
   Settings {
-	id: sett
+    id: sett
   }
-    
+
   TabBar {
-	id: main_tab_bar
-	width: parent.width
-	Repeater {
-        model: ["Dashboard", "Device Information", "VIS", "Debug map"]
-	  TabButton {
-		hoverEnabled: true
-		id: tab_button
+    id: main_tab_bar
+    width: parent.width
+    Repeater {
+      model: ["Dashboard", "Device Information", "VIS", "Debug map"]
+      TabButton {
+        hoverEnabled: true
+        id: tab_button
         font.pixelSize: sett.font_size
-		text: qsTr(modelData)
-		ToolTip.visible: hovered
-		ToolTip.delay: 1000
-		ToolTip.timeout: 5000
-		ToolTip.text: qsTr(modelData)
-	  }
-	}
+        text: qsTr(modelData)
+        ToolTip.visible: hovered
+        ToolTip.delay: 1000
+        ToolTip.timeout: 5000
+        ToolTip.text: qsTr(modelData)
+      }
+    }
   }
   StackLayout {
-	width: parent.width
-	height: parent.height - main_tab_bar.height
-	anchors {
-	  top: main_tab_bar.bottom
-	  left: window.left
-	  right: window.right
-	  bottom: button_bar.top
-	}
-	currentIndex: main_tab_bar.currentIndex
+    width: parent.width
+    height: parent.height - main_tab_bar.height
+    anchors {
+      top: main_tab_bar.bottom
+      left: window.left
+      right: window.right
+      bottom: button_bar.top
+    }
+    currentIndex: main_tab_bar.currentIndex
     DashBoard {
       height: parent.height
       width: window.width
@@ -55,30 +55,32 @@ ApplicationWindow {
       height: parent.height
       width: window.width
     }
-    VisUtil {}
+    VisUtil {
+      height: parent.height
+      width: window.width
+    }
     MapQML {
       height: parent.height
       width: parent.width
     } 
   }
   footer: RowLayout {
-	id: button_bar
-	width: parent.width
-	anchors {
-	  bottom: window.bottom
-	  left: window.left
-	  right: window.right
-	}
-	Button {
+    id: button_bar
+    width: parent.width
+    Layout.alignment: Qt.AlignHCenter
+    Button {
       font.pixelSize: sett.font_size
-	  implicitWidth: button_bar.width / 2
-	  text: qsTr("Exit")
+      Layout.alignment: Qt.AlignHCenter
+      Layout.fillWidth: true
+      text: qsTr("Exit")
       onClicked: function() {window.close()}
-	}
-	Button {
+    }
+    Button {
       font.pixelSize: sett.font_size
-	  implicitWidth: button_bar.width / 2
-	  text: qsTr("Settings")
-	}
+      Layout.fillWidth: true
+      width: 500
+      Layout.alignment: Qt.AlignHCenter
+      text: qsTr("Settings")
+    }
   }
 }

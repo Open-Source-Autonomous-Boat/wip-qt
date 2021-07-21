@@ -33,10 +33,10 @@ QSGNode* MapDisplay::updatePaintNode(QSGNode* old, UpdatePaintNodeData*) {
   }
   const QRectF rect = this->boundingRect();
   auto* vertices = node->geometry()->vertexDataAsPoint2D();
-  vertices[0].set(rect.bottomLeft().x(), 1);
-  vertices[1].set(200, 0);
-  vertices[2].set(0, 200);
-  vertices[3].set(200, 200);
+  vertices[2].set(rect.bottomLeft().x(), rect.bottomLeft().y());
+  vertices[3].set(rect.bottomRight().x(), rect.bottomRight().y());
+  vertices[0].set(rect.topLeft().x(), rect.topLeft().y());
+  vertices[1].set(rect.topRight().x(), rect.topRight().y());
   node->markDirty(QSGNode::DirtyGeometry);
   return node;
 }
@@ -53,6 +53,25 @@ MapShader::MapShader() {
   this->setShaderFileName(VertexStage, ":/geo/shader/map.vert.qsb");
   this->setShaderFileName(FragmentStage, ":/geo/shader/map.frag.qsb");
 };
+
+bool MapShader::updateUniformData(RenderState& state, QSGMaterial* new_material,
+                                  QSGMaterial* old_material) {
+  bool changed = false;
+  QByteArray* buf = state.uniformData();
+  Q_ASSERT(buf->size() >= 64);
+
+  if (state.isMatrixDirty()) {
+    const QMatrix4x4 m = state.combinedMatrix();
+    std::memcpy(buf->data(), m.constData(), sizeof(QMatrix4x4));
+    changed = true;
+  }
+  auto* cus_masterial = static_cast<MapMaterial*>(new_material);
+  if (old_material != new_material || cus_masterial->uniform.dirty) {
+    cus_masterial->uniform.dirty = false;
+    changed = true;
+  }
+  return changed;
+}
 
 /* MapMaterial Class */
 
@@ -93,4 +112,3 @@ void MapNode::ChangeRectBounds(const QRectF& bounds) {
                                           QRectF(0, 0, 0, 0));
   this->markDirty(QSGNode::DirtyGeometry);
 }
-
