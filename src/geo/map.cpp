@@ -101,7 +101,7 @@ MapNode::MapNode() {
   this->setMaterial(mat);
   this->setFlag(QSGGeometryNode::OwnsMaterial, true);
   // Geometry
-  auto* geo = get_geo_data::GetRectShape();
+  auto* geo = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), 4);//get_geo_data::GetRectShape();
   QSGGeometry::updateTexturedRectGeometry(geo, QRect(), QRect());
   this->setGeometry(geo);
   this->setFlag(QSGGeometryNode::OwnsGeometry, true);

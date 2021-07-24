@@ -67,7 +67,6 @@ ApplicationWindow {
   footer: RowLayout {
     id: button_bar
     width: parent.width
-    Layout.alignment: Qt.AlignHCenter
     Button {
       font.pixelSize: sett.font_size
       Layout.alignment: Qt.AlignHCenter
@@ -78,7 +77,6 @@ ApplicationWindow {
     Button {
       font.pixelSize: sett.font_size
       Layout.fillWidth: true
-      width: 500
       Layout.alignment: Qt.AlignHCenter
       text: qsTr("Settings")
     }

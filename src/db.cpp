@@ -1,21 +1,5 @@
 #include "db.h"
 
-#include <qfileinfo.h>
-#include <qsqldatabase.h>
-#include <qsqlquery.h>
-
-#include <QDebug>
-#include <QDir>
-#include <QFileInfo>
-#include <QString>
-#include <QtSql>
-#if defined(_WINDOWS) || defined(__MINGW64__) || defined(__MINGW32__) || \
-    defined(_MSC_VER)
-#include <windows.h>
-#endif
-#include <cstdlib>
-#include <memory>
-
 DBManager::DBManager() {
   // If on Windows, get home directory and set cache to respective sub-dir
 #if defined(_WINDOWS) || defined(__MINGW64__) || defined(__MINGW32__) || \
@@ -37,8 +21,7 @@ DBManager::DBManager() {
   const QString cache_dir(QString("%1/.cache/osab").arg(home_dir));
 #else                    // if on some esotheric OS
   const QString cache_dir(QString("./"));
-  qDebug() << "Unknown/Unhandled OS";  // Please open GitHub issue for such
-                                       // events uwu
+  std::cerr << "Unknown/Unhandled OS" << std::endl;  // Please open GitHub issue for such events uwu
 #endif
   const QString path(QString("%1/db.sql").arg(cache_dir));
   QDir db_dir(cache_dir);
