@@ -41,7 +41,8 @@ class MapDisplay : public QQuickItem {
 class MapShader : public QSGMaterialShader {
  public:
   MapShader();
-  bool updateUniformData(RenderState &state, QSGMaterial* new_material, QSGMaterial* old_material) override;
+  bool updateUniformData(RenderState& state, QSGMaterial* new_material,
+                         QSGMaterial* old_material) override;
 };
 
 // Material for map

@@ -97,7 +97,8 @@ QSGMaterialShader* MapMaterial::createShader(
 
 MapNode::MapNode() {
   // Material
-  auto* mat = new MapMaterial();
+  auto* mat = new QSGFlatColorMaterial();
+  mat->setColor(Qt::red);
   this->setMaterial(mat);
   this->setFlag(QSGGeometryNode::OwnsMaterial, true);
   // Geometry
