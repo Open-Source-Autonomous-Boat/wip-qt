@@ -98,6 +98,7 @@ QSGMaterialShader* MapMaterial::createShader(
 MapNode::MapNode() {
   // Material
   auto* mat = new MapMaterial();
+  this->setMaterial(mat);
   this->setFlag(QSGGeometryNode::OwnsMaterial, true);
   // Geometry
   auto* geo = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(), 4);//get_geo_data::GetRectShape();
