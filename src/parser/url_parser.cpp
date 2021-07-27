@@ -11,3 +11,7 @@ QString QMLUrlParser::UrlToString(const QString url) {
   }
   return QString();
 }
+
+QString QMLUrlParser::UrlToFilename(const QString url) {
+  return QUrl(url).fileName();
+}

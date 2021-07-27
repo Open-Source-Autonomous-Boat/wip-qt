@@ -1,5 +1,7 @@
 #include "parser/qt_vis_parser.h"
 
+#include "parser/url_parser.h"
+
 QtVISParseClass::QtVISParseClass(QObject* parent) : QObject(parent) {}
 
 QString QtVISParseClass::chosenfile() { return this->prop_chosen_file; }
@@ -16,3 +18,6 @@ QObject* QtVISParseClass::SingletonGet(QQmlEngine* engine,
   return new QtVISParseClass();
 }
 
+QString QtVISParseClass::UrlToFilenameWrapper(const QString text) {
+  return QString(QMLUrlParser::UrlToFilename(text));
+}

@@ -9,6 +9,7 @@
 #include <QQuickItem>
 #include <QString>
 #include <QtQml>
+#include <QApplication>
 
 #pragma once
 
@@ -22,6 +23,8 @@ class QtVISParseClass : public QObject {
   explicit QtVISParseClass(QObject* parent = nullptr);
   QString chosenfile();
   void setchosenfile(const QString file);
+
+  Q_INVOKABLE QString UrlToFilenameWrapper (const QString text);
 
   static QObject* SingletonGet(QQmlEngine* engine, QJSEngine* script_engine);
 

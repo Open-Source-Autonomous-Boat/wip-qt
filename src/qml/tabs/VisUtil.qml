@@ -25,7 +25,7 @@ ColumnLayout {
       id: file_label
       Layout.fillWidth: true
       Label {
-        text: file_diag.file
+        text: QtVIS.UrlToFilenameWrapper(file_diag.file)
       }
     }
     Button {
