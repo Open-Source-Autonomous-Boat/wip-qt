@@ -46,6 +46,9 @@ class MapShader : public QSGMaterialShader {
 };
 
 // Material for map
+/*
+ * FIXME: Shaders do not show!
+ */
 class MapMaterial : public QSGMaterial {
  public:
   MapMaterial();
