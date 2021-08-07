@@ -2,12 +2,12 @@
 #include <qsqldatabase.h>
 #include <qsqlquery.h>
 
-#include <iostream>
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
 #include <QString>
 #include <QtSql>
+#include <iostream>
 #if defined(_WINDOWS) || defined(__MINGW64__) || defined(__MINGW32__) || \
     defined(_MSC_VER)
 #include <windows.h>

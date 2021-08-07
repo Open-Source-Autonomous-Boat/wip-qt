@@ -6,7 +6,7 @@ DBManager::DBManager() {
     defined(_MSC_VER)
   // Why Windows whyyyyy????!?!??
   int buf_size = 65535;
-  std::wstring buff;
+  std::wstring buff;  
   buff.resize(buf_size);
   buf_size = GetEnvironmentVariableW(L"USERPROFILE", &buff[0], buf_size);
   if (!buf_size) {
@@ -21,7 +21,8 @@ DBManager::DBManager() {
   const QString cache_dir(QString("%1/.cache/osab").arg(home_dir));
 #else                    // if on some esotheric OS
   const QString cache_dir(QString("./"));
-  std::cerr << "Unknown/Unhandled OS" << std::endl;  // Please open GitHub issue for such events uwu
+  std::cerr << "Unknown/Unhandled OS"
+            << std::endl;  // Please open GitHub issue for such events uwu
 #endif
   const QString path(QString("%1/db.sql").arg(cache_dir));
   QDir db_dir(cache_dir);

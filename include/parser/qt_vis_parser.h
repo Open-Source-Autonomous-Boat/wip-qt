@@ -2,6 +2,7 @@
 #include <qobject.h>
 #include <qtmetamacros.h>
 
+#include <QApplication>
 #include <QDebug>
 #include <QJSEngine>
 #include <QObject>
@@ -9,22 +10,22 @@
 #include <QQuickItem>
 #include <QString>
 #include <QtQml>
-#include <QApplication>
 
 #pragma once
 
 class QtVISParseClass : public QObject {
   Q_OBJECT;
-  Q_PROPERTY(QString chosenfile READ chosenfile WRITE setchosenfile NOTIFY
-                 chosenfileChanged)
+  Q_PROPERTY(QString chosen_file READ chosen_file WRITE setchosen_file NOTIFY
+                 chosen_fileChanged)
   QML_ELEMENT;
 
  public:
   explicit QtVISParseClass(QObject* parent = nullptr);
-  QString chosenfile();
-  void setchosenfile(const QString file);
+  QString chosen_file();
+  void setchosen_file(const QString file);
 
-  Q_INVOKABLE QString UrlToFilenameWrapper (const QString text);
+  /* Invokable */
+  Q_INVOKABLE QString UrlToFilenameWrapper(const QString text);
 
   static QObject* SingletonGet(QQmlEngine* engine, QJSEngine* script_engine);
 
@@ -32,5 +33,5 @@ class QtVISParseClass : public QObject {
   QString prop_chosen_file;
 
  signals:
-  void chosenfileChanged();
+  void chosen_fileChanged();
 };

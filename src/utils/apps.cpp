@@ -1,7 +1,7 @@
 #include "utils/apps.h"
 
-#include <QGuiApplication>
 #include <QApplication>
+#include <QGuiApplication>
 #include <QQuickStyle>
 #include <memory>
 

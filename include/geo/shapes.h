@@ -22,5 +22,5 @@ struct rect_shape {
 };
 
 namespace get_geo_data {
-  QSGGeometry* GetRectShape();
+QSGGeometry* GetRectShape();
 }

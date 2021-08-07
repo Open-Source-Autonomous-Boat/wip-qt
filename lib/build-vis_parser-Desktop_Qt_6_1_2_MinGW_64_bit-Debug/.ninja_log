@@ -1,6 +1,0 @@
-# ninja log v5
-1	109	6484969128551950	CMakeFiles/VISL.dir/src/VIS-Interpreter.cpp.obj	a479d0ced4b742ca
-21	1078	6484969138098662	CMakeFiles/VISL.dir/src/VISCWrapper.cpp.obj	fbbb4153602b4ecf
-28	1181	6484969139238836	CMakeFiles/VISL.dir/src/VISUtils.cpp.obj	f5ec54ad5387e167
-25	1231	6484969139598898	CMakeFiles/VISL.dir/src/VISParser.cpp.obj	4a13bf0e8169a1e2
-1231	1468	6484969142129330	libVISL.a	64e90ac194dac99c

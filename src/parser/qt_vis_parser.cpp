@@ -4,11 +4,13 @@
 
 QtVISParseClass::QtVISParseClass(QObject* parent) : QObject(parent) {}
 
-QString QtVISParseClass::chosenfile() { return this->prop_chosen_file; }
+QString QtVISParseClass::chosen_file() { return this->prop_chosen_file; }
 
-void QtVISParseClass::setchosenfile(const QString file) {
+void QtVISParseClass::setchosen_file(const QString file) {
   this->prop_chosen_file = file;
-  emit this->chosenfileChanged();
+  qDebug() << "Hey you set the chosen file to " +
+                  this->UrlToFilenameWrapper(file);
+  emit this->chosen_fileChanged();
 }
 
 QObject* QtVISParseClass::SingletonGet(QQmlEngine* engine,

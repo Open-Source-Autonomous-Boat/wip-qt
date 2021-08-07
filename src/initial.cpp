@@ -1,29 +1,5 @@
 #include "initial.h"
 
-#include <qnamespace.h>
-#include <qqml.h>
-#include <qsgnode.h>
-#include <qsgrendererinterface.h>
-
-#include <QDebug>
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QQmlTypeInfo>
-#include <QQuickItem>
-#include <QQuickView>
-#include <memory>
-#if defined(__unix__)
-#include <unistd.h>
-#elif defined(_WINDOWS)
-#include <windows.h>
-#endif
-
-#include "geo/map.h"
-#include "parser/qt_vis_parser.h"
-#include "utils/apps.h"
-#include "widgets/base_widgets.h"
-#include "widgets/dashboard.h"
-
 InitialWindow::InitialWindow(int argc, char** argv)
     : app(app_utils::CreateApp(argc, argv)) {
   this->SetupSignals();
@@ -52,6 +28,9 @@ void InitialWindow::SetupSignals() {
   // Same but for the VIS parser
   qmlRegisterSingletonType<QtVISParseClass>("osab.xyz.QtVIS", 1, 0, "QtVIS",
                                             QtVISParseClass::SingletonGet);
+  // Same also, but for line number handling
+  qmlRegisterSingletonType<LineNumberHandler>(
+      "osab.xyz.QtVIS", 1, 0, "LineNumHandle", LineNumberHandler::SingletonGet);
   qmlRegisterType<MapDisplay>("osab.xyz.Map", 1, 0, "MapDisplay");
 }
 
