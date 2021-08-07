@@ -87,24 +87,11 @@ ColumnLayout {
             contentY = el.y + el.height
           }
         }
-
-        Column {
-          width: editor_area.numbers_margin
-          Repeater {
-            model: editor_area.file_lines
-            Label {
-              text: index
-              color: "black"
-              horizontalAlignment: Text.AlignRight
-              width: editor_area.numbers_margin
-            }
-          }
-        }
         TextEdit {
           id: editor
           text: "Test"
           color: "black"
-          leftPadding: editor_area.numbers_margin + 1
+          leftPadding: 0 //editor_area.numbers_margin + 1
           selectByMouse: true
           focus: true
           wrapMode: TextEdit.Wrap

@@ -62,7 +62,7 @@ bool MapShader::updateUniformData(RenderState& state, QSGMaterial* new_material,
 
   if (state.isMatrixDirty()) {
     const QMatrix4x4 m = state.combinedMatrix();
-    std::memcpy(buf->data(), m.constData(), sizeof(QMatrix4x4));
+    std::memcpy(buf->data(), m.constData(), 64);
     changed = true;
   }
   auto* cus_masterial = static_cast<MapMaterial*>(new_material);
@@ -90,7 +90,7 @@ int MapMaterial::compare(const QSGMaterial* o) const {
 
 QSGMaterialShader* MapMaterial::createShader(
     QSGRendererInterface::RenderMode) const {
-  return new MapShader();
+  return new MapShader;
 }
 
 /* MapNode Class */
