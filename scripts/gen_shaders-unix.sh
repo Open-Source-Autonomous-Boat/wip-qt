@@ -1,9 +1,9 @@
 #!/bin/bash
 
 QSB_BIN=""
-GLSL_VER="440,460,100"
-MSL_VER=12
-HLSL_VER=51
+GLSL_VER="460"
+MSL_VER=0
+HLSL_VER=0
 
 check_qsb_loc() {
         qsb_bin_res=$(

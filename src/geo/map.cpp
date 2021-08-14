@@ -47,11 +47,11 @@ void MapDisplay::geometryChange(const QRectF& new_geo, const QRectF& old_geo) {
   QQuickItem::geometryChange(new_geo, old_geo);
 }
 
-/* MapShader Class */
+/* MapShader Class FIXME: Shaders do not show */
 
 MapShader::MapShader() {
-  this->setShaderFileName(VertexStage, ":/geo/shader/map.vert.qsb");
-  this->setShaderFileName(FragmentStage, ":/geo/shader/map.frag.qsb");
+  setShaderFileName(VertexStage, QLatin1String(":/geo/shader/map.vert.qsb"));
+  setShaderFileName(FragmentStage, QLatin1String(":/geo/shader/map.frag.qsb"));
 };
 
 bool MapShader::updateUniformData(RenderState& state, QSGMaterial* new_material,
@@ -76,7 +76,7 @@ bool MapShader::updateUniformData(RenderState& state, QSGMaterial* new_material,
 /* MapMaterial Class */
 
 MapMaterial::MapMaterial(){};
-MapMaterial::~MapMaterial(){};
+
 QSGMaterialType* MapMaterial::type() const {
   static QSGMaterialType type;
   return &type;

@@ -27,7 +27,6 @@ class MapDisplay : public QQuickItem {
 
  public:
   MapDisplay(QQuickItem* parent = nullptr);
-  ~MapDisplay() {}
 
  private:
   bool flag_geo_changed = true;
@@ -52,7 +51,6 @@ class MapShader : public QSGMaterialShader {
 class MapMaterial : public QSGMaterial {
  public:
   MapMaterial();
-  ~MapMaterial();
   QSGMaterialType* type() const override;
   int compare(const QSGMaterial* other) const override;
   QSGMaterialShader* createShader(

@@ -42,7 +42,7 @@ set(QT_LIB
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOQUIC ON)
+set(CMAKE_AUTOUIC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_IMPORT_SOURCE_DIR ON)
@@ -51,11 +51,8 @@ set(QT_QML_DEBUG ON)
 
 find_package(Qt6 COMPONENTS ${QT_COMP} REQUIRED)
 
-if (WIN32)
-   add_executable(osab-qt WIN32 ${SOURCES})
-elseif (UNIX)
-   add_executable(osab-qt ${SOURCES})
-endif()
+qt_add_executable(osab-qt WIN32 ${SOURCES})
 
 target_link_libraries(osab-qt PUBLIC ${QT_LIB} VISL)
+
 
