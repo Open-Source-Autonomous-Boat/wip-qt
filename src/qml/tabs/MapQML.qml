@@ -14,8 +14,10 @@ ColumnLayout {
   width: parent.width
   height: parent.height
   HeaderSnip{label_name: "Map"}
-  MapDisplay {
-    width: parent.width
-    height: parent.height
+  ColumnLayout {
+    MapDisplay {
+      width: parent.width
+      height: parent.height
+    }
   }
 }

@@ -23,6 +23,7 @@ public:
   int lines_count();
   void setlines_count(const int a_lines);
 private:
+  void ResetBar();
   int prop_lines_count;
 signals:
   void lines_countChanged();

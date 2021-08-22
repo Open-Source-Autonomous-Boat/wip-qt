@@ -28,6 +28,19 @@ ColumnLayout {
       readOnly: true
       placeholderText: "Open File"
     }
+    FileDialog {
+      id: file_diag
+      title: "Open VIS file"
+      fileMode: FileDialog.OpenFile
+      onAccepted: {
+        QtVIS.chosen_file = file_diag.file
+        file_label.text = QtVIS.UrlToFilenameWrapper(file_diag.file)
+      }
+    }
+  }
+  RowLayout {
+    Layout.leftMargin: 20
+    Layout.rightMargin: 20
     Button {
       text: "Open File"
       onClicked: file_diag.open()
@@ -39,14 +52,11 @@ ColumnLayout {
         QtVIS.chosen_file = ""
       }
     }
-    FileDialog {
-      id: file_diag
-      title: "Open VIS file"
-      fileMode: FileDialog.OpenFile
-      onAccepted: {
-        QtVIS.chosen_file = file_diag.file
-        file_label.text = QtVIS.UrlToFilenameWrapper(file_diag.file)
-      }
+    Button {
+      text: "Save"
+    }
+    Button {
+      text: "Syntax"
     }
   }
   /*
@@ -55,14 +65,13 @@ ColumnLayout {
    * Sucks, but should work
    * TODO: Create autothemer based on current scheme
    */
-  RowLayout {
+  ColumnLayout {
     Layout.leftMargin: 20
     Layout.rightMargin: 20
     Layout.bottomMargin: 5
     //visible: (file_label.text == "") ? false : true
     Rectangle {
       id: editor_area
-      height: parent.width
       Layout.fillHeight: true // More of a hack but it works :)
       Layout.fillWidth: true
       color: "white"
@@ -89,7 +98,7 @@ ColumnLayout {
         }
         TextEdit {
           id: editor
-          text: "Test"
+          text: QtVIS.file_contents
           color: "black"
           leftPadding: 0 //editor_area.numbers_margin + 1
           selectByMouse: true

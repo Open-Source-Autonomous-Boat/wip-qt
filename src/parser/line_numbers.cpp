@@ -36,10 +36,17 @@ QObject* LineNumberHandler::SingletonGet(QQmlEngine* a_engine,
   return new LineNumberHandler();
 }
 
+void LineNumberHandler::ResetBar() {
+  QQmlEngine engine;
+  QQmlComponent component(&engine, "./tabs/VisUtil.qml");
+  QObject *object = component.create();
+}
+
 /* Properties */
 int LineNumberHandler::lines_count() { return this->prop_lines_count; }
 void LineNumberHandler::setlines_count(const int a_lines) {
   this->prop_lines_count = a_lines;
   qDebug() << a_lines;
+  this->ResetBar();
   emit this->lines_countChanged();
 }
