@@ -72,6 +72,13 @@ bool MapShader::updateUniformData(RenderState& state, QSGMaterial* new_material,
   }
   return changed;
 }
+void MapShader::updateSampledImage(QSGMaterialShader::RenderState& state,
+                                   int binding, QSGTexture** texture,
+                                   QSGMaterial* new_material,
+                                   QSGMaterial* old_material) {
+  
+  return;
+}
 
 /* MapMaterial Class */
 

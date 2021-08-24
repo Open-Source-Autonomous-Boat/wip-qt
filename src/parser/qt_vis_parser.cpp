@@ -46,7 +46,7 @@ void QtVISParseClass::FileGetText() {
   QFile file(this->prop_chosen_file);
   QTextStream stream(&file);
   if (file.open(QIODevice::ReadOnly)) {
-    for (;!stream.atEnd();) {
+    for (; !stream.atEnd();) {
       QString line = stream.readLine();
       this->prop_file_contents += line + "\n";
     }

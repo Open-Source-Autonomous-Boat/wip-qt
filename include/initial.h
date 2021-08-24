@@ -14,8 +14,8 @@
 #endif
 
 #include "geo/map.h"
-#include "parser/qt_vis_parser.h"
 #include "parser/line_numbers.h"
+#include "parser/qt_vis_parser.h"
 #include "utils/apps.h"
 #include "widgets/base_widgets.h"
 #include "widgets/dashboard.h"

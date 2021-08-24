@@ -39,7 +39,7 @@ QObject* LineNumberHandler::SingletonGet(QQmlEngine* a_engine,
 void LineNumberHandler::ResetBar() {
   QQmlEngine engine;
   QQmlComponent component(&engine, "./tabs/VisUtil.qml");
-  QObject *object = component.create();
+  QObject* object = component.create();
 }
 
 /* Properties */

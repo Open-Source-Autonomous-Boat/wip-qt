@@ -4,24 +4,24 @@
 
 #include <QApplication>
 #include <QDebug>
+#include <QFile>
 #include <QJSEngine>
 #include <QObject>
 #include <QQmlEngine>
 #include <QQuickItem>
 #include <QString>
-#include <QtQml>
 #include <QTextDocument>
-#include <QFile>
 #include <QTextStream>
-
+#include <QtQml>
 
 #pragma once
 
 class QtVISParseClass : public QObject {
   Q_OBJECT;
   Q_PROPERTY(QString chosen_file READ chosen_file WRITE setchosen_file NOTIFY
-      chosen_fileChanged);
-  Q_PROPERTY(QString file_contents READ file_contents WRITE setfile_contents NOTIFY file_contentsChanged);
+                 chosen_fileChanged);
+  Q_PROPERTY(QString file_contents READ file_contents WRITE setfile_contents
+                 NOTIFY file_contentsChanged);
   QML_ELEMENT;
 
  public:

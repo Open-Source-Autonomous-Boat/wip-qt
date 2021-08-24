@@ -6,7 +6,7 @@ DBManager::DBManager() {
     defined(_MSC_VER)
   // Why Windows whyyyyy????!?!??
   int buf_size = 65535;
-  std::wstring buff;  
+  std::wstring buff;
   buff.resize(buf_size);
   buf_size = GetEnvironmentVariableW(L"USERPROFILE", &buff[0], buf_size);
   if (!buf_size) {
