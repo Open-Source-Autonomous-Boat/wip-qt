@@ -7,5 +7,5 @@ layout(std140, binding=0) uniform buf {
 } ubuf;
 
 void main() {
-  frag_color = vec4(0.0, 0.0, 1.0, 0.8);
+  frag_color = vec4(0.0, 0.12, 0.6, 1.0);
 }
