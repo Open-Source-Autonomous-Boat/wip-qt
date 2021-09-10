@@ -3,7 +3,7 @@
 LineNumberHandler::LineNumberHandler() {}
 
 int LineNumberHandler::CalculateFileLines(const QString a_path) {
-  if (a_path == "") return 0;
+  if (a_path.isEmpty()) return 0;
   qDebug() << a_path;
   std::ifstream file(a_path.toStdString());
   int count;

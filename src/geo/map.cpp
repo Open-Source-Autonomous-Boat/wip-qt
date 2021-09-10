@@ -53,7 +53,7 @@ void MapDisplay::geometryChange(const QRectF& new_geo, const QRectF& old_geo) {
   QQuickItem::geometryChange(new_geo, old_geo);
 }
 
-const QQuickItem* MapDisplay::source() { return this->m_source; }
+// const QQuickItem* MapDisplay::source() { return this->m_source; }
 
 void MapDisplay::setsource(QQuickItem* a_source) {
   this->m_source = a_source;

@@ -16,19 +16,15 @@
 #include <QtQuick>
 #pragma once
 
-/*
- * I don't know wtf I am doing
- */
-
-// This handles gui functions and lives in the gui thread
 class MapDisplay : public QQuickItem {
   Q_OBJECT;
-  Q_PROPERTY(QQuickItem* source READ source WRITE setsource NOTIFY sourceChanged);
+  Q_PROPERTY(
+      QQuickItem* source READ source WRITE setsource NOTIFY sourceChanged);
   QML_ELEMENT;
 
  public:
   MapDisplay(QQuickItem* parent = nullptr);
-  const QQuickItem* source();
+  QQuickItem* source() const { return this->m_source; };
   void setsource(QQuickItem* a_source);
 
  private:
@@ -39,7 +35,8 @@ class MapDisplay : public QQuickItem {
  protected:
   QSGNode* updatePaintNode(QSGNode* old, UpdatePaintNodeData*) override;
   void geometryChange(const QRectF& new_geo, const QRectF& old_geo) override;
-signals:
+
+ signals:
   void sourceChanged();
 };
 
@@ -80,9 +77,10 @@ class MapNode : public QSGGeometryNode {
   void ChangeRectBounds(const QRectF& bounds);
   void SetSegments(const QRectF rect);
   void preprocess() override;
+
  private:
   MapMaterial* m_mat;
   QSGGeometry* m_geo;
   QSGGeometryNode m_node;
-  QPointer<QSGTextureProvider>texture1;
+  QPointer<QSGTextureProvider> texture1;
 };

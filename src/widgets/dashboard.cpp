@@ -40,7 +40,7 @@ QString DashBoard::devname() {
   // Declare QString and get value from SQLite DB
   this->prop_dev_name = this->db->GetValue("dev_name");
   // Check if empty or non-existant
-  if (this->prop_dev_name == "") {
+  if (this->prop_dev_name.isEmpty()) {
     // Generate random string of numbers and set it as name
     this->db->SetValue("dev_name", psuedo_uuid::gen());
   }
@@ -50,7 +50,7 @@ QString DashBoard::devname() {
 
 void DashBoard::setdevname(const QString user_name) {
   // Checks if user_name is empty, and if so, do not change device name
-  if (user_name == "") {
+  if (user_name.isEmpty()) {
     // And return from function too <3
     return;
   }

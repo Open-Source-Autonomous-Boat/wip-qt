@@ -12,5 +12,5 @@ QString QMLUrlParser::UrlToString(const QString url) {
 }
 
 QString QMLUrlParser::UrlToFilename(const QString url) {
-  return QUrl(url).fileName();
+  return QUrl(url).toLocalFile();
 }

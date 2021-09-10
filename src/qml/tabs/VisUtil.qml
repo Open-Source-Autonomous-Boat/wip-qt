@@ -35,6 +35,8 @@ ColumnLayout {
       onAccepted: {
         QtVIS.chosen_file = file_diag.file
         file_label.text = QtVIS.UrlToFilenameWrapper(file_diag.file)
+        editor.text = ""
+        editor.text = QtVIS.file_contents
       }
     }
   }
@@ -50,10 +52,14 @@ ColumnLayout {
       onClicked: {
         file_label.text = ""
         QtVIS.chosen_file = ""
+        editor.text = ""
       }
     }
     Button {
       text: "Save"
+      onClicked: {
+        QtVIS.file_contents = editor.text
+      }
     }
     Button {
       text: "Syntax"
@@ -98,7 +104,7 @@ ColumnLayout {
         }
         TextEdit {
           id: editor
-          text: QtVIS.file_contents
+          // text: QtVIS.file_contents
           color: "black"
           leftPadding: 0 //editor_area.numbers_margin + 1
           selectByMouse: true
