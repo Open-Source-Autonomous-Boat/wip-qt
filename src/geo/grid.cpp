@@ -1,17 +1,19 @@
-#include "geo/map.h"
+
+#include "geo/grid.h"
+
 #include "geo/shapes.h"
 
-/* MapDisplay Class */
+/* GridDisplay Class */
 
-MapDisplay::MapDisplay(QQuickItem* parent) : QQuickItem(parent) {
+GridDisplay::GridDisplay(QQuickItem* parent) : QQuickItem(parent) {
   this->setFlag(ItemHasContents, true);
 };
 
-QSGNode* MapDisplay::updatePaintNode(QSGNode* old, UpdatePaintNodeData*) {
-  auto* node = static_cast<MapNode*>(old);
+QSGNode* GridDisplay::updatePaintNode(QSGNode* old, UpdatePaintNodeData*) {
+  auto* node = static_cast<GridNode*>(old);
 
   if (!node) {
-    node = new MapNode();
+    node = new GridNode();
   }
   if (this->flag_geo_changed) {
     node->ChangeRectBounds(this->boundingRect());
@@ -19,29 +21,30 @@ QSGNode* MapDisplay::updatePaintNode(QSGNode* old, UpdatePaintNodeData*) {
   }
   const QRectF rect = this->boundingRect();
   auto* vertices = node->geometry()->vertexDataAsPoint2D();
-  vertices[0].set(rect.bottomLeft().x(), rect.bottomLeft().y());
-  vertices[1].set(rect.bottomRight().x(), rect.bottomRight().y());
-  vertices[2].set(rect.topLeft().x(), rect.topLeft().y());
-  vertices[3].set(rect.topRight().x(), rect.topRight().y());
+  vertices[0].set(0, 100);
+  vertices[1].set(100, 100);
+  vertices[2].set(0, 0);
+  vertices[3].set(100, 0);
   node->markDirty(QSGNode::DirtyGeometry);
   return node;
 }
 
-void MapDisplay::geometryChange(const QRectF& new_geo, const QRectF& old_geo) {
+void GridDisplay::geometryChange(const QRectF& new_geo, const QRectF& old_geo) {
   this->flag_geo_changed = false;
   this->update();
   QQuickItem::geometryChange(new_geo, old_geo);
 }
 
-/* MapShader Class */
+/* GridShader Class */
 
-MapShader::MapShader() {
-  setShaderFileName(VertexStage, QLatin1String(":/geo/shader/map.vert.qsb"));
-  setShaderFileName(FragmentStage, QLatin1String(":/geo/shader/map.frag.qsb"));
+GridShader::GridShader() {
+  setShaderFileName(VertexStage, QLatin1String(":/geo/shader/grid.vert.qsb"));
+  setShaderFileName(FragmentStage, QLatin1String(":/geo/shader/grid.frag.qsb"));
 };
 
-bool MapShader::updateUniformData(RenderState& state, QSGMaterial* new_material,
-                                  QSGMaterial* old_material) {
+bool GridShader::updateUniformData(RenderState& state,
+                                   QSGMaterial* new_material,
+                                   QSGMaterial* old_material) {
   bool changed = false;
   QByteArray* buf = state.uniformData();
   Q_ASSERT(buf->size() >= 64);
@@ -51,7 +54,7 @@ bool MapShader::updateUniformData(RenderState& state, QSGMaterial* new_material,
     std::memcpy(buf->data(), m.constData(), 64);
     changed = true;
   }
-  auto* cus_masterial = static_cast<MapMaterial*>(new_material);
+  auto* cus_masterial = static_cast<GridMaterial*>(new_material);
   if (old_material != new_material || cus_masterial->uniform.dirty) {
     cus_masterial->uniform.dirty = false;
     changed = true;
@@ -59,31 +62,31 @@ bool MapShader::updateUniformData(RenderState& state, QSGMaterial* new_material,
   return changed;
 }
 
-/* MapMaterial Class */
+/* GridMaterial Class */
 
-MapMaterial::MapMaterial(){};
+GridMaterial::GridMaterial(){};
 
-QSGMaterialType* MapMaterial::type() const {
+QSGMaterialType* GridMaterial::type() const {
   static QSGMaterialType type;
   return &type;
 }
 
-int MapMaterial::compare(const QSGMaterial* o) const {
+int GridMaterial::compare(const QSGMaterial* o) const {
   Q_ASSERT(o && this->type() == o->type());
-  const auto* other = static_cast<const MapMaterial*>(o);
+  const auto* other = static_cast<const GridMaterial*>(o);
   return other == this ? 0 : 1;
 }
 
-QSGMaterialShader* MapMaterial::createShader(
+QSGMaterialShader* GridMaterial::createShader(
     QSGRendererInterface::RenderMode) const {
-  return new MapShader;
+  return new GridShader;
 }
 
-/* MapNode Class */
+/* GridNode Class */
 
-MapNode::MapNode() {
+GridNode::GridNode() {
   // Material
-  this->m_mat = new MapMaterial();
+  this->m_mat = new GridMaterial();
   this->setMaterial(this->m_mat);
   this->setFlag(QSGGeometryNode::OwnsMaterial, true);
   // Geometry
@@ -93,7 +96,7 @@ MapNode::MapNode() {
   this->setFlag(QSGGeometryNode::OwnsGeometry, true);
 }
 
-void MapNode::ChangeRectBounds(const QRectF& bounds) {
+void GridNode::ChangeRectBounds(const QRectF& bounds) {
   QSGGeometry::updateTexturedRectGeometry(this->geometry(), bounds,
                                           QRectF(0, 0, 0, 0));
   this->markDirty(QSGNode::DirtyGeometry);

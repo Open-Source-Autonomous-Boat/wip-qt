@@ -28,3 +28,7 @@ Just no.
 
 click handling can be done with `MouseArea` in QML, so we could link that to a C++ class
 that can handle clicking.
+
+## Grid size
+Should be a hardcoded value, maybe 200 or less?
+And each sub-box should have it's own coordinate value too.

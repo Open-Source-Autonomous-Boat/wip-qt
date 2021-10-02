@@ -2,7 +2,7 @@
 
 int main(int argc, char *argv[]) {
   // Enable qml debugging
-  QQmlDebuggingEnabler enabler;
+  // QQmlDebuggingEnabler enabler;
   // Create application (duhh)
   InitialWindow win(argc, argv);
   // Return exit value

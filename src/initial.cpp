@@ -32,6 +32,7 @@ void InitialWindow::SetupSignals() {
   qmlRegisterSingletonType<LineNumberHandler>(
       "osab.xyz.QtVIS", 1, 0, "LineNumHandle", LineNumberHandler::SingletonGet);
   qmlRegisterType<MapDisplay>("osab.xyz.Map", 1, 0, "MapDisplay");
+  qmlRegisterType<GridDisplay>("osab.xyz.Map", 1, 0, "GridDisplay");
 }
 
 void InitialWindow::SetupContext() {}

@@ -14,6 +14,7 @@
 #endif
 
 #include "geo/map.h"
+#include "geo/grid.h"
 #include "parser/line_numbers.h"
 #include "parser/qt_vis_parser.h"
 #include "utils/apps.h"
