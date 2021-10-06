@@ -13,8 +13,8 @@
 #include <windows.h>
 #endif
 
-#include "geo/map.h"
 #include "geo/grid.h"
+#include "geo/map.h"
 #include "parser/line_numbers.h"
 #include "parser/qt_vis_parser.h"
 #include "utils/apps.h"
@@ -32,7 +32,9 @@ class InitialWindow : public WindowClass {
   void SetupContext();
   int exec();
 
- private:
+ protected:
   QQmlApplicationEngine* engine;
+
+ private:
   QGuiApplication* app;
 };

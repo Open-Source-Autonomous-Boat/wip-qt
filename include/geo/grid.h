@@ -19,6 +19,7 @@ class GridDisplay : public QQuickItem {
  protected:
   QSGNode* updatePaintNode(QSGNode* old, UpdatePaintNodeData*) override;
   void geometryChange(const QRectF& new_geo, const QRectF& old_geo) override;
+  QQmlEngine* engine;
 };
 
 // Shaders for map

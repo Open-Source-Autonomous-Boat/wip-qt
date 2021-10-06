@@ -1,9 +1,11 @@
 #include "geo/map.h"
+#include <qqmlengine.h>
 #include "geo/shapes.h"
 
 /* MapDisplay Class */
 
-MapDisplay::MapDisplay(QQuickItem* parent) : QQuickItem(parent) {
+MapDisplay::MapDisplay(QQuickItem* parent)
+  : QQuickItem(parent) {
   this->setFlag(ItemHasContents, true);
 };
 

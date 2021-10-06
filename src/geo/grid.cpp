@@ -1,11 +1,14 @@
 
 #include "geo/grid.h"
 
+#include <qqmlengine.h>
+
 #include "geo/shapes.h"
 
 /* GridDisplay Class */
 
-GridDisplay::GridDisplay(QQuickItem* parent) : QQuickItem(parent) {
+GridDisplay::GridDisplay(QQuickItem* parent)
+    : QQuickItem(parent) {
   this->setFlag(ItemHasContents, true);
 };
 
@@ -54,9 +57,9 @@ bool GridShader::updateUniformData(RenderState& state,
     std::memcpy(buf->data(), m.constData(), 64);
     changed = true;
   }
-  auto* cus_masterial = static_cast<GridMaterial*>(new_material);
-  if (old_material != new_material || cus_masterial->uniform.dirty) {
-    cus_masterial->uniform.dirty = false;
+  auto* cus_material = static_cast<GridMaterial*>(new_material);
+  if (old_material != new_material || cus_material->uniform.dirty) {
+    cus_material->uniform.dirty = false;
     changed = true;
   }
   return changed;
