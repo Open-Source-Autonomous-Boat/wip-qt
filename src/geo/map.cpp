@@ -1,12 +1,18 @@
 #include "geo/map.h"
-#include <qqmlengine.h>
+
 #include "geo/shapes.h"
 
 /* MapDisplay Class */
 
 MapDisplay::MapDisplay(QQuickItem* parent)
-  : QQuickItem(parent) {
+    : QQuickItem(parent), m_engine(qmlEngine(this)) {
   this->setFlag(ItemHasContents, true);
+  QQmlComponent grid_comp(this->m_engine,
+                          QUrl("qrc://qml/snippets/GridWrapper.qml"));
+  // auto* grid_obj = qobject_cast<QQuickItem*>(grid_comp.create());
+  // QQmlEngine::setObjectOwnership(grid_obj, QQmlEngine::CppOwnership);
+  // grid_obj->setParentItem(this);
+  // grid_obj->setParent(this->m_engine);
 };
 
 QSGNode* MapDisplay::updatePaintNode(QSGNode* old, UpdatePaintNodeData*) {

@@ -7,6 +7,9 @@
 #include <QSGTexture>
 #include <QSGTextureProvider>
 #include <QtQuick>
+#include <QQmlEngine>
+#include <QtQml>
+#include <QQmlComponent>
 #include <memory>
 #pragma once
 
@@ -19,11 +22,12 @@ class MapDisplay : public QQuickItem {
 
  private:
   bool flag_geo_changed = true;
+  bool m_first_bool = false;
 
  protected:
   QSGNode* updatePaintNode(QSGNode* old, UpdatePaintNodeData*) override;
   void geometryChange(const QRectF& new_geo, const QRectF& old_geo) override;
-  QQmlEngine* engine;
+  QQmlEngine* m_engine;
 
  signals:
 };

@@ -7,6 +7,7 @@
         <file>qml/tabs/VisUtil.qml</file>
         <file>qml/snippets/HeaderSnip.qml</file>
         <file>qml/snippets/LineNumbers.qml</file>
+        <file>qml/snippets/GridWrapper.qml</file>
         <file>qml/settings/Settings.qml</file>
         <file>geo/shader/map.frag.qsb</file>
         <file>geo/shader/map.vert.qsb</file>

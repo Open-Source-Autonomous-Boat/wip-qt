@@ -18,10 +18,7 @@ ColumnLayout {
     MapDisplay {
       width: parent.width
       height: parent.height
-      GridDisplay {
-        width: parent.width
-        height: parent.height
-      }
+      // GridWrapper {}
     }
   }
 }

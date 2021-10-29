@@ -1,16 +1,13 @@
-
 #include "geo/grid.h"
-
-#include <qqmlengine.h>
 
 #include "geo/shapes.h"
 
 /* GridDisplay Class */
 
 GridDisplay::GridDisplay(QQuickItem* parent)
-    : QQuickItem(parent) {
+    : QQuickItem(parent), m_engine(qmlEngine(this)) {
   this->setFlag(ItemHasContents, true);
-};
+}
 
 QSGNode* GridDisplay::updatePaintNode(QSGNode* old, UpdatePaintNodeData*) {
   auto* node = static_cast<GridNode*>(old);
@@ -24,10 +21,12 @@ QSGNode* GridDisplay::updatePaintNode(QSGNode* old, UpdatePaintNodeData*) {
   }
   const QRectF rect = this->boundingRect();
   auto* vertices = node->geometry()->vertexDataAsPoint2D();
-  vertices[0].set(0, 100);
-  vertices[1].set(100, 100);
+  int size_width = this->property("width").toInt();
+  int size_height = this->property("height").toInt();
+  vertices[0].set(0, size_height);
+  vertices[1].set(size_width, size_height);
   vertices[2].set(0, 0);
-  vertices[3].set(100, 0);
+  vertices[3].set(size_width, 0);
   node->markDirty(QSGNode::DirtyGeometry);
   return node;
 }
@@ -90,6 +89,7 @@ QSGMaterialShader* GridMaterial::createShader(
 GridNode::GridNode() {
   // Material
   this->m_mat = new GridMaterial();
+
   this->setMaterial(this->m_mat);
   this->setFlag(QSGGeometryNode::OwnsMaterial, true);
   // Geometry
