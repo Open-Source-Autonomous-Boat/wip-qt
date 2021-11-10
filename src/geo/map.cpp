@@ -4,19 +4,40 @@
 
 /* MapDisplay Class */
 
-MapDisplay::MapDisplay(QQuickItem* parent)
-    : QQuickItem(parent), m_engine(qmlEngine(this)) {
+MapDisplay::MapDisplay(QQuickItem* parent) : QQuickItem(parent) {
+  // QQmlEngine* test_engine = qmlEngine(this);
   this->setFlag(ItemHasContents, true);
-  QQmlComponent grid_comp(this->m_engine,
-                          QUrl("qrc://qml/snippets/GridWrapper.qml"));
+  /* ERROR: connection issue */
+  // if (test_engine == nullptr) {
+  //   qWarning() << "Failed to load engine";
+  //   return;
+  // }
+  // QQmlComponent grid_comp(
+  //     test_engine, QUrl::fromLocalFile("../qml/snippets/GridWrapper.qml"));
   // auto* grid_obj = qobject_cast<QQuickItem*>(grid_comp.create());
   // QQmlEngine::setObjectOwnership(grid_obj, QQmlEngine::CppOwnership);
   // grid_obj->setParentItem(this);
-  // grid_obj->setParent(this->m_engine);
+  // grid_obj->setParent(test_engine);
 };
 
 QSGNode* MapDisplay::updatePaintNode(QSGNode* old, UpdatePaintNodeData*) {
   auto* node = static_cast<MapNode*>(old);
+  QQmlEngine* test_engine = qmlEngine(this);
+  if (test_engine == nullptr) {
+    qDebug() << "Failed to get engine!";
+  }
+  QQmlComponent grid_comp(
+      test_engine, QUrl("qrc:/qml/snippets/GridWrapper.qml"));
+  if (grid_comp.status() != QQmlComponent::Ready) {
+    if (grid_comp.status() == QQmlComponent::Error) {
+      qDebug() << grid_comp.errorString();
+    }
+  }
+  auto* grid_obj = qobject_cast<QQuickItem*>(grid_comp.create());
+  grid_obj->moveToThread(this->thread());
+  // QQmlEngine::setObjectOwnership(grid_obj, QQmlEngine::CppOwnership);
+  // grid_obj->setParentItem(this);
+  // grid_obj->setParent(test_engine);
 
   if (!node) {
     node = new MapNode();

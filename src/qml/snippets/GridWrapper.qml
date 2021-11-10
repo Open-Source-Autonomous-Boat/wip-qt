@@ -19,9 +19,9 @@ GridDisplay {
       console.log(mouse_area.mouseY, mouse_area.mouseX)
     }
   }
-  MouseArea {
-    id: mouse_area
-    anchors.fill: root
-    onClicked: root.click()
-  }
+  // MouseArea {
+  //   id: mouse_area
+  //   anchors.fill: root
+  //   onClicked: root.click()
+  // }
 }

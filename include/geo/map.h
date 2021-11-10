@@ -29,7 +29,6 @@ class MapDisplay : public QQuickItem {
   void geometryChange(const QRectF& new_geo, const QRectF& old_geo) override;
   QQmlEngine* m_engine;
 
- signals:
 };
 
 // Shaders for map
