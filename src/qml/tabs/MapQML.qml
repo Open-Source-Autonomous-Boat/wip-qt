@@ -16,8 +16,14 @@ ColumnLayout {
   HeaderSnip{label_name: "Map"}
   ColumnLayout {
     MapDisplay {
+      id: map_in_map
       width: parent.width
       height: parent.height
+      Component.onCompleted: {
+        var grid1 = Qt.createComponent("qrc:/qml/snippets/GridWrapper.qml");
+        var grid_obj = grid1.createObject(map_in_map, {});
+        console.log(grid1, grid_obj) 
+      }
       // GridWrapper {}
     }
   }
