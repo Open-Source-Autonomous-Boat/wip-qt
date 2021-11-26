@@ -4,6 +4,7 @@
 #include <QQmlTypeInfo>
 #include <QQuickItem>
 #include <QQuickView>
+#include <QtWebEngineQuick/QtWebEngineQuick>
 #include <memory>
 
 #include "widgets/base_widgets.h"

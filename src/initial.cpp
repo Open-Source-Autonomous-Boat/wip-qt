@@ -1,4 +1,6 @@
 #include "initial.h"
+#include <QFile>
+#include <QDir>
 
 InitialWindow::InitialWindow(int argc, char** argv)
     : app(app_utils::CreateApp(argc, argv)) {
@@ -8,6 +10,8 @@ InitialWindow::InitialWindow(int argc, char** argv)
 InitialWindow::~InitialWindow() { delete this->engine; }
 
 void InitialWindow::SetupRenderer() {
+  // Initialize Webengineview
+  QtWebEngineQuick::initialize();
   // Initializes QML engine for program :D
   this->engine = new QQmlApplicationEngine(this);
   // Add path that engine can import from
@@ -31,8 +35,8 @@ void InitialWindow::SetupSignals() {
   // Same also, but for line number handling
   qmlRegisterSingletonType<LineNumberHandler>(
       "osab.xyz.QtVIS", 1, 0, "LineNumHandle", LineNumberHandler::SingletonGet);
-  qmlRegisterType<MapDisplay>("osab.xyz.Map", 1, 0, "MapDisplay");
-  qmlRegisterType<GridDisplay>("osab.xyz.Map", 1, 0, "GridDisplay");
+  //qmlRegisterType<MapDisplay>("osab.xyz.Map", 1, 0, "MapDisplay");
+  //qmlRegisterType<GridDisplay>("osab.xyz.Map", 1, 0, "GridDisplay");
 }
 
 void InitialWindow::SetupContext() {}

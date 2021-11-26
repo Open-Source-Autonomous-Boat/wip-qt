@@ -5,15 +5,17 @@ project(osab-qt VERSION 0.0.1 LANGUAGES CXX)
 # Directories
 set(OSAB_SOURCE_DIR "src")
 set(OSAB_INCLUDE_DIR "include")
+set(OSAB_QML_DIR "qml")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/lib")
 include_directories(osab-qt PUBLIC ${OSAB_SOURCE_DIR})
 include_directories(osab-qt PUBLIC ${OSAB_INCLUDE_DIR})
+include_directories(osab-qt PUBLIC ${OSAB_QML_DIR})
 
 # Sauce
 file(GLOB_RECURSE SOURCES
-                  "${OSAB_SOURCE_DIR}/*.qml"
-                  "${OSAB_SOURCE_DIR}/*.qrc"
+  #"${OSAB_QML_DIR}/*.qml"
+                  "${OSAB_QML_DIR}/*.qrc"
                   "${OSAB_INCLUDE_DIR}/*.h"
                   "${OSAB_SOURCE_DIR}/*.cpp"
 
@@ -29,6 +31,8 @@ set(QT_COMP
     Qml
     Widgets
     QuickControls2
+    Positioning
+    WebEngineQuick
     ShaderTools)
 
 set(QT_LIB
@@ -37,6 +41,8 @@ set(QT_LIB
     Qt6::Sql
     Qt6::Qml
     Qt6::Widgets
+    Qt6::Positioning
+    Qt6::WebEngineQuick
     Qt6::QuickControls2)
 # Settings
 
@@ -49,9 +55,10 @@ set(CMAKE_IMPORT_SOURCE_DIR ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(QT_QML_DEBUG ON)
 
+message(${SOURCES})
 find_package(Qt6 COMPONENTS ${QT_COMP} REQUIRED)
 
-qt_add_executable(osab-qt WIN32 ${SOURCES})
+qt6_add_executable(osab-qt WIN32 ${SOURCES})
 
 target_link_libraries(osab-qt PUBLIC ${QT_LIB} VISL)
 

@@ -47,10 +47,11 @@ ApplicationWindow {
       bottom: button_bar.top
     }
     currentIndex: main_tab_bar.currentIndex
+    ScrollView{
     DashBoard {
       height: parent.height
       width: window.width
-    }
+    }}
     DevInfo {
       height: parent.height
       width: window.width

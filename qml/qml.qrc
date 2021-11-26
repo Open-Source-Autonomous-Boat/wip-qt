@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/qml">
+        <file>initial.qml</file>
+        <file>settings/Settings.qml</file>
+        <file>snippets/GridWrapper.qml</file>
+        <file>snippets/HeaderSnip.qml</file>
+        <file>snippets/LineNumbers.qml</file>
+        <file>snippets/MapBox.qml</file>
+        <file>tabs/DashBoard.qml</file>
+        <file>tabs/DevInfo.qml</file>
+        <file>tabs/MapQML.qml</file>
+        <file>tabs/VisUtil.qml</file>
+    </qresource>
+</RCC>

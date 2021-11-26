@@ -5,7 +5,6 @@ import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
 
 import osab.xyz.DashBoard 1.0
-import osab.xyz.Map 1.0
 import "../snippets"
 import "../settings"
 
@@ -15,7 +14,8 @@ ColumnLayout {
   height: parent.height
   // Layout.topMargin: 20
   HeaderSnip{label_name : "Dashboard"}
-  Settings{id : sett} GridLayout {
+  Settings{id : sett}
+  GridLayout {
     columns: 2
     rows: 4
     height : root.height
@@ -57,4 +57,5 @@ ColumnLayout {
     }
     Layout.fillWidth : true
   }
+  MapBox{height: 600; Layout.fillWidth: true}
 }
