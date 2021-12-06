@@ -5,17 +5,31 @@ project(osab-qt VERSION 0.0.1 LANGUAGES CXX)
 # Directories
 set(OSAB_SOURCE_DIR "src")
 set(OSAB_INCLUDE_DIR "include")
+<<<<<<< HEAD
 set(OSAB_QML_DIR "qml")
+=======
+set(OSAB_QRC_DIR "qrc")
+set(OSAB_HTML_DIR "html")
+>>>>>>> 4673b3d (Reconfigured directories)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/lib")
 include_directories(osab-qt PUBLIC ${OSAB_SOURCE_DIR})
 include_directories(osab-qt PUBLIC ${OSAB_INCLUDE_DIR})
 include_directories(osab-qt PUBLIC ${OSAB_QML_DIR})
+<<<<<<< HEAD
+=======
+include_directories(osab-qt PUBLIC ${OSAB_HTML_DIR})
+>>>>>>> 4673b3d (Reconfigured directories)
 
 # Sauce
 file(GLOB_RECURSE SOURCES
   #"${OSAB_QML_DIR}/*.qml"
+<<<<<<< HEAD
                   "${OSAB_QML_DIR}/*.qrc"
+=======
+                  "${OSAB_QRC_DIR}/*.qrc"
+                  "${OSAB_HTML_DIR}/*.qrc"
+>>>>>>> 4673b3d (Reconfigured directories)
                   "${OSAB_INCLUDE_DIR}/*.h"
                   "${OSAB_SOURCE_DIR}/*.cpp"
 
