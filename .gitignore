@@ -1,8 +1,0 @@
-bin/
-CMakeFiles/
-build/*
-.cache
-.vs
-out
-out/
-.ccls-cache
