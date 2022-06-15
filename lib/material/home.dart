@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:osab/map/map.dart';
 import 'package:osab/material/pages/dashboard.dart';
+import 'package:osab/material/pages/settings.dart';
 
 class AndroidHome extends StatefulWidget {
   const AndroidHome({super.key});
@@ -11,6 +12,12 @@ class AndroidHome extends StatefulWidget {
 
 class _AndroidHome extends State<AndroidHome> {
   int mPage = 0;
+
+  final List<Widget> pages = const <Widget>[
+    AndroidDashBoard(),
+    OSABMap(),
+    AndroidSettings()
+  ];
 
   void mCallBack(int aIndex) {
     setState(() {
@@ -34,11 +41,7 @@ class _AndroidHome extends State<AndroidHome> {
             NavigationDestination(icon: Icon(Icons.settings), label: "Settings")
           ],
           onDestinationSelected: (int aSelIndex) => mCallBack(aSelIndex)),
-      body: [
-        const AndroidDashBoard(),
-        const OSABMap(),
-        const Text("Settings")
-      ][mPage],
+      body: pages[mPage],
     );
   }
 
@@ -60,12 +63,7 @@ class _AndroidHome extends State<AndroidHome> {
                 ],
                 onDestinationSelected: (aSelIndex) => mCallBack(aSelIndex),
                 selectedIndex: mPage),
-            Expanded(
-                child: const [
-              AndroidDashBoard(),
-              OSABMap(),
-              Text("Settings")
-            ][mPage])
+            Expanded(child: pages[mPage])
           ],
         ));
   }

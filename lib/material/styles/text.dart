@@ -5,4 +5,13 @@ class TextStyles {
         aText,
         style: const TextStyle(fontSize: 16.0),
       );
+  static Widget sectionTitle(String aText, BuildContext aContext) => Padding(
+      padding: EdgeInsets.only(left: 21),
+      child: Text(
+        aText,
+        style: TextStyle(
+            color: Theme.of(aContext).colorScheme.secondary,
+            fontSize: 14.0,
+            fontWeight: FontWeight.bold),
+      ));
 }

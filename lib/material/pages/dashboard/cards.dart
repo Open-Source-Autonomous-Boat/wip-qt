@@ -109,13 +109,13 @@ class _DeviceCardState extends State<_DeviceCard> {
   }
 
   Future<String> _getDeviceName() async {
-    OSABDB db = await OSABDB.mainDB();
-    return await db.getValue(['devname']);
+    OSABDB db = await OSABDB.getInstance();
+    return await db.getItem(['devname']);
   }
 
   void _setDeviceName(aName) {
-    OSABDB.mainDB().then((value) {
-      value.set<String>("devname", aName);
+    OSABDB.getInstance().then((value) {
+      value.set({"id": "devname", "val": aName});
     });
   }
 }
@@ -137,44 +137,49 @@ class _GreetingCardState extends State<_GreetingCard> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      flex: 1,
-      child: FutureBuilder<String>(
-        future: mName,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Card(
-              child: SizedBox.expand(
-                  child: Stack(children: [
-                Center(
-                    child: Image.network(
-                  'https://upload.wikimedia.org/wikipedia/commons/5/58/Blue_ocean_wave_(Unsplash).jpg',
-                  fit: BoxFit.fill,
-                )),
-                Center(
-                  child: TextStyles.cardText(snapshot.data!),
-                )
-              ])),
-            );
-          } else {
-            return Card(
-              child: SizedBox.expand(
-                child: TextStyles.cardText("FAILED TO GET USER NAME!"),
-              ),
-            );
-          }
-        },
-      ),
-    );
+        flex: 1,
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: FutureBuilder<String>(
+            future: mName,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Card(
+                  child: SizedBox.expand(
+                      child: Stack(children: [
+                    Center(
+                        child: Image.network(
+                      'https://upload.wikimedia.org/wikipedia/commons/5/58/Blue_ocean_wave_(Unsplash).jpg',
+                      fit: BoxFit.fill,
+                    )),
+                    Center(
+                      child: TextStyles.cardText(snapshot.data!),
+                    )
+                  ])),
+                );
+              } else {
+                return Card(
+                  child: SizedBox.expand(
+                    child: TextStyles.cardText("FAILED TO GET USER NAME!"),
+                  ),
+                );
+              }
+            },
+          ),
+        ));
   }
 
   static Future<String> _getUserName() async {
     // Hopefully doesn't cause issues :)
-    OSABDB db = await OSABDB.mainDB();
-    return await db.getValue(['name']);
+    OSABDB db = await OSABDB.getInstance();
+    return await db.getItem(['name']);
   }
 }
 
 class DashBoardCards {
-  static var list = [_DeviceCard(), _LocationCard()];
+  static var list = [
+    Padding(padding: const EdgeInsets.all(10), child: _DeviceCard()),
+    Padding(padding: const EdgeInsets.all(10), child: _LocationCard()),
+  ];
   static Widget greetingCard() => _GreetingCard();
 }

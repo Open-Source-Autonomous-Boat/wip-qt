@@ -16,7 +16,8 @@ class _AndroidDasBoard extends State<AndroidDashBoard> {
         Expanded(
             flex: 2,
             child: ListView(
-              children: [for (var value in DashBoardCards.list) value],
+              // children: [for (var value in DashBoardCards.list) value],
+              children: DashBoardCards.list,
             ))
       ]);
 }

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as material;
-import 'package:osab/db/db.dart';
 import 'package:osab/material/home.dart';
 import 'dart:async';
 
@@ -13,7 +12,6 @@ Future<void> main(List<String> args) async {
   if (Platform.isMacOS || Platform.isLinux || Platform.isWindows) {
     sqfliteFfiInit();
   }
-  OSABDB db = await OSABDB.mainDB();
   switch (defaultTargetPlatform) {
     case (TargetPlatform.iOS):
       material.runApp(const AndroidApp());
