@@ -1,12 +1,12 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:osab/material/home.dart';
-import 'dart:async';
-
 import 'package:osab/meta/navigation.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+
 
 Future<void> main(List<String> args) async {
   if (Platform.isMacOS || Platform.isLinux || Platform.isWindows) {

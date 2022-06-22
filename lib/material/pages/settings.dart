@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:osab/material/pages/settings/profile.dart';
-import 'package:osab/material/styles/text.dart';
 
 class AndroidSettings extends StatelessWidget {
   const AndroidSettings({super.key});
@@ -21,11 +20,11 @@ class AndroidSettings extends StatelessWidget {
       ),
     ];
     return Column(children: [
-      Expanded(
+      const Expanded(
           flex: 1,
           child: Card(
             child: SizedBox.expand(
-              child: const Text("Lol"),
+              child: Text("Lol"),
             ),
           )),
       Expanded(
