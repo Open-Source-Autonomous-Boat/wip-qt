@@ -7,7 +7,6 @@ import 'package:osab/material/home.dart';
 import 'package:osab/meta/navigation.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-
 Future<void> main(List<String> args) async {
   if (Platform.isMacOS || Platform.isLinux || Platform.isWindows) {
     sqfliteFfiInit();
@@ -43,6 +42,7 @@ class _AndroidApp extends material.State<AndroidApp> {
     return material.MaterialApp(
       navigatorKey: GlobalNavigation.globalNavigation,
       theme: material.ThemeData(useMaterial3: true),
+      debugShowCheckedModeBanner: false,
       home: const material.Scaffold(body: AndroidHome()),
     );
   }

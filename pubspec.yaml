@@ -43,6 +43,7 @@ dependencies:
   latlong2: any
   uuid: ^3.0.6
   settings_ui: ^2.0.2
+  flutter_speed_dial: ^6.0.0
 
 dev_dependencies:
   flutter_test:

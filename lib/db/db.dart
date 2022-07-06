@@ -25,7 +25,7 @@ abstract class DBClass {
     return true;
   }
 
-  Future<List<Map<String, Object?>>> get(List<String> aColumn,
+  Future<List<DBData>> get(List<String> aColumn,
       {String? aWhere, List<Object>? aWhereArgs}) async {
     _checkDBNull();
     var val = mDB!.query(mTableName,
@@ -38,13 +38,13 @@ abstract class DBClass {
     return null;
   }
 
-  Future set(Map<String, Object?> aValues) async {
+  Future set(DBData aValues) async {
     _checkDBNull();
     await mDB!.insert(mTableName, aValues,
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  Future update<T, B>(List<B> aID, Map<String, Object?> aValues) async {
+  Future update<T, B>(List<B> aID, DBData aValues) async {
     _checkDBNull();
   }
 
@@ -111,7 +111,7 @@ class OSABDB extends DBClass {
   }
 
   @override
-  Future update<T, B>(List<B> aID, Map<String, Object?> aValues) async {
+  Future update<T, B>(List<B> aID, DBData aValues) async {
     super.update(aID, aValues);
     await mDB!.update(mTableName, aValues, where: 'id = ?', whereArgs: aID);
   }
@@ -134,7 +134,7 @@ class DeviceDB extends DBClass {
   }
 
   @override
-  Future<T?> getItem<T>(List<String> aID) async {
+  Future<T> getItem<T>(List<String> aID) async {
     super.getItem(aID);
     var val =
         await get(['uuid', 'name', 'date'], aWhere: 'id = ?', aWhereArgs: aID);
@@ -146,21 +146,30 @@ class DeviceDB extends DBClass {
     super.createDB();
     mDB!.execute('CREATE TABLE IF NOT EXISTS $mTableName'
         '(id INTEGER PRIMARY KEY AUTOINCREMENT,'
-        'uuid REAL NOT NULL'
+        'uuid REAL NOT NULL,'
         'name TEXT NOT NULL,'
-        'date INTEGER,'
+        'date INTEGER'
         ')');
   }
 
   @override
-  Future update<T, B>(List<B> aID, Map<String, Object?> aValues) async {
+  Future update<T, B>(List<B> aID, DBData aValues) async {
     super.update(aID, aValues);
     aValues["id"] = aID;
     await mDB!.update(mTableName, aValues);
   }
 
+  // Get DB count
+  Future<int> getTotalItemCount() async {
+    return Sqflite.firstIntValue(
+            await mDB!.rawQuery("SELECT COUNT(*) FROM $mTableName")) ??
+        0;
+  }
+
   static Future<DeviceDB> getInstance() async {
     String path = join(await _OSABPaths.path, "db.sql");
-    return DeviceDB(mPath: path, mTableName: "OSAB").openDB();
+    return DeviceDB(mPath: path, mTableName: "DEV").openDB();
   }
 }
+
+typedef DBData = Map<String, Object?>;

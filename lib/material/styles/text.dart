@@ -6,7 +6,7 @@ class TextStyles {
         style: const TextStyle(fontSize: 16.0),
       );
   static Widget sectionTitle(String aText, BuildContext aContext) => Padding(
-      padding: EdgeInsets.only(left: 21),
+      padding: const EdgeInsets.only(left: 21),
       child: Text(
         aText,
         style: TextStyle(

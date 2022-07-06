@@ -1,6 +1,82 @@
 import 'package:flutter/material.dart';
 import 'package:osab/material/styles/text.dart';
-import 'package:settings_ui/settings_ui.dart';
+
+class _ProfileNameClass extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _ProfileNameClassState();
+}
+
+class _ProfileNameClassState extends State<_ProfileNameClass> {
+  @override
+  Widget build(BuildContext context) => ListTile(
+        leading: const Icon(Icons.person),
+        subtitle: const TextField(
+          decoration: InputDecoration(
+              border: OutlineInputBorder(), label: Text("Profile Name")),
+        ),
+        trailing: TextButton(
+          child: const Text("Set"),
+          onPressed: () {},
+        ),
+      );
+}
+
+class _ProfileBirthdayClass extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _ProfileBirthdayClassState();
+}
+
+class _ProfileBirthdayClassState extends State<_ProfileBirthdayClass> {
+  DateTime _dateTime = DateTime.fromMillisecondsSinceEpoch(0);
+  @override
+  Widget build(BuildContext context) => ListTile(
+        leading: const Icon(Icons.cake),
+        subtitle: TextField(
+          readOnly: true,
+          onTap: () {
+            showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.fromMillisecondsSinceEpoch(0),
+                    lastDate: DateTime.now())
+                .then((value) {
+              setState(() {
+                value ??= DateTime.fromMicrosecondsSinceEpoch(0);
+                _dateTime = value!;
+              });
+            });
+          },
+          decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              label: const Text("Birthday"),
+              hintText: _dateTime.toString()),
+        ),
+        trailing: TextButton(
+          child: const Text("Set"),
+          onPressed: () {},
+        ),
+      );
+}
+
+class _OrganizationNameClass extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _OrganizationNameClassState();
+}
+
+class _OrganizationNameClassState extends State<_OrganizationNameClass> {
+  @override
+  Widget build(BuildContext context) => ListTile(
+        leading: const Icon(Icons.people),
+        subtitle: const TextField(
+          decoration: InputDecoration(
+              border: OutlineInputBorder(), label: Text("Organization Name")),
+        ),
+        trailing: TextButton(
+          child: const Text("Set"),
+          onPressed: () {},
+        ),
+      );
+}
 
 class AndroidSettingsProfile extends StatefulWidget {
   const AndroidSettingsProfile({super.key});
@@ -11,8 +87,6 @@ class AndroidSettingsProfile extends StatefulWidget {
 class _AndroidSettingsProfile extends State<AndroidSettingsProfile> {
   _AndroidSettingsProfile();
 
-  DateTime _dateTime = DateTime.fromMicrosecondsSinceEpoch(0);
-
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -22,58 +96,11 @@ class _AndroidSettingsProfile extends State<AndroidSettingsProfile> {
         body: ListView(
           children: [
             TextStyles.sectionTitle("Personal Information", context),
-            ListTile(
-              leading: const Icon(Icons.person),
-              subtitle: const TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(), label: Text("Profile Name")),
-              ),
-              trailing: TextButton(
-                child: const Text("Set"),
-                onPressed: () {},
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.cake),
-              subtitle: TextField(
-                readOnly: true,
-                onTap: () {
-                  showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime.fromMillisecondsSinceEpoch(0),
-                          lastDate: DateTime.now())
-                      .then((value) {
-                    setState(() {
-                      value ??= DateTime.fromMicrosecondsSinceEpoch(0);
-                      _dateTime = value!;
-                    });
-                  });
-                },
-                decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    label: const Text("Birthday"),
-                    hintText: _dateTime.toString()),
-              ),
-              trailing: TextButton(
-                child: const Text("Set"),
-                onPressed: () {},
-              ),
-            ),
+            _ProfileNameClass(),
+            _ProfileBirthdayClass(),
             const Divider(),
             TextStyles.sectionTitle("Organizational Information", context),
-            ListTile(
-              leading: const Icon(Icons.people),
-              subtitle: const TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    label: Text("Organization Name")),
-              ),
-              trailing: TextButton(
-                child: const Text("Set"),
-                onPressed: () {},
-              ),
-            ),
+            _OrganizationNameClass(),
           ],
         ),
       );
