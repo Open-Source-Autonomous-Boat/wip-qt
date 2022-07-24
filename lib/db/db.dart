@@ -1,175 +1,240 @@
-import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
-import 'package:path/path.dart';
+import 'package:path/path.dart' as path_lib;
 import 'package:sqflite/sqflite.dart';
+import 'package:logging/logging.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 
-class _OSABPaths {
-  static Future<String> get path async =>
-      (await getApplicationSupportDirectory()).path;
+class DBClassItemFields {
+  static List<String> osab = ['id', 'val'];
+  static List<String> devices = ['id', 'name', 'uuid', 'date'];
 }
 
-abstract class DBClass {
-  DBClass({required this.mPath, this.fDebug = false, required this.mTableName});
+abstract class DataClass {
+  List<dynamic> from(dynamic data);
+  dynamic find(dynamic id);
+  static String creator() {
+    throw UnimplementedError();
+  }
+}
 
-  Future<DBClass> openDB();
+abstract class DBActions {
+  bool checkEmpty();
+}
+
+class OSABData extends DataClass {
+  @override
+  List<OSABDataValues> from(dynamic data) {
+    if (data == null) {
+      return mList;
+    }
+    if (data is List<DBData?>) {
+      data.map((e) {
+        if (e != null) {
+          mList.add(OSABDataValues(
+              id: e["id"].toString(), value: e["value"].toString()));
+        }
+      });
+    }
+    if (data is DBData) {
+      mList.add(OSABDataValues(
+          id: data["id"].toString(), value: data["val"].toString()));
+    } else {
+      Logger("OSABData").warning("FAILED TO ACCEPT DATA");
+    }
+    return mList;
+  }
+
+  @override
+  OSABDataValues find(var id) {
+    return mList.firstWhere((element) => element.id == id.toString());
+  }
+
+  static String creator(String name) => '''
+    CREATE TABLE IF NOT EXISTS $name (id TEXT PRIMARY KEY, val TEXT NOT NULL)
+  ''';
+
+  List<OSABDataValues> mList = [];
+}
+
+class OSABDataValues {
+  OSABDataValues({required this.id, this.value});
+  Map<String, String?> asMap() => {"id": id, "val": value};
+  late String id;
+  late String? value;
+}
+
+class DeviceData extends DataClass {
+  @override
+  List<DeviceDataValues> from(dynamic data) {
+    if (data == null) {
+      return mList;
+    }
+    if (data is List<DBData?>) {
+      data.map((e) {
+        if (e != null) {
+          mList.add(DeviceDataValues(
+              id: int.tryParse(e["id"].toString())!,
+              name: e["name"].toString(),
+              uuid: double.tryParse(e["uuid"].toString())));
+        }
+      });
+    }
+    if (data is DBData) {
+      if (data.isEmpty) {
+        return mList;
+      }
+      mList.add(DeviceDataValues(
+          id: int.tryParse(data["id"].toString())!,
+          name: data["name"].toString(),
+          uuid: double.tryParse(data["uuid"].toString())));
+    } else {
+      Logger("OSABData").warning("FAILED TO ACCEPT DATA");
+    }
+    return mList;
+  }
+
+  @override
+  find(id) {
+    return mList.firstWhere((element) => element.id == int.tryParse(id));
+  }
+
+  static String creator(String name) => '''
+    CREATE TABLE IF NOT EXISTS $name (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      uuid REAL NOT NULL,
+      name TEXT NOT NULL,
+      date INTEGER
+    )
+  ''';
+
+  List<DeviceDataValues> mList = [];
+}
+
+class DeviceDataValues {
+  DeviceDataValues(
+      {required this.id, this.uuid, required this.name, this.date});
+  Map<String, Object?> asMap() =>
+      {"id": id, "name": name, "uuid": uuid, "date": date};
+
+  late int id;
+  late String name;
+  late double? uuid;
+  late int? date;
+}
+
+class DBClass {
+  DBClass(
+      {required this.path,
+      this.fDebug = false,
+      required this.tableName,
+      required itemFields,
+      required this.creator}) {
+    if (kDebugMode) {
+      print("$tableName: $path");
+    }
+    this.itemFields = [...itemFields]; // Can't pass by ref
+    if (!this.itemFields.remove('id')) {
+      this.itemFields.removeAt(0);
+    }
+  }
+
+  static Future<String> createPath(String name) async {
+    final String dirPath = (await getApplicationSupportDirectory()).path;
+    return path_lib.join(dirPath, name);
+  }
+
+  Future<DBClass> openDB() async {
+    db = await dbFFi.openDatabase(path);
+    db!.execute(creator(tableName));
+    return this;
+  }
 
   Future<bool> closeDB() async {
     _checkDBNull();
-    if (mDB!.isOpen) {
-      mDB!.close();
+    if (db!.isOpen) {
+      db!.close();
     }
     return true;
   }
 
-  Future<List<DBData>> get(List<String> aColumn,
-      {String? aWhere, List<Object>? aWhereArgs}) async {
+  Future<List<DBData?>> get(List<String> column,
+      {String? where, List<Object>? whereArgs}) async {
     _checkDBNull();
-    var val = mDB!.query(mTableName,
-        columns: aColumn, where: aWhere, whereArgs: aWhereArgs);
-    return val;
+    return await db!.query(tableName, where: where, whereArgs: whereArgs);
   }
 
-  Future<T?> getItem<T>(List<String> aID) async {
+  Future<DBData?> getItem(String id) async {
     _checkDBNull();
-    return null;
+    var data = await get(itemFields, where: "id = ?", whereArgs: [id]);
+    return (data.isEmpty) ? {} : data.first;
   }
 
-  Future set(DBData aValues) async {
+  Future<void> set(DBData values) async {
     _checkDBNull();
-    await mDB!.insert(mTableName, aValues,
-        conflictAlgorithm: ConflictAlgorithm.replace);
+    db!.insert(tableName, values, conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  Future update<T, B>(List<B> aID, DBData aValues) async {
+  Future update(List<DBData> data) async {
     _checkDBNull();
   }
 
-  Future rm(String aName, {String? aWhere, List<Object>? aWhereArgs}) async {
+  Future rm(String name, {String? where, List<Object>? whereArgs}) async {
     _checkDBNull();
-    await mDB!.delete(mTableName, where: aWhere, whereArgs: aWhereArgs);
-  }
-
-  Future createDB() async {
-    _checkDBNull();
+    await db!.delete(tableName, where: where, whereArgs: whereArgs);
   }
 
   Future deleteDB() async {
     _checkDBNull();
-    await mDB!.delete(mTableName);
-    mDB!.close();
-    await mDBffi.deleteDatabase(mPath);
+    await db!.delete(tableName);
+    db!.close();
+    await dbFFi.deleteDatabase(path);
     if (kDebugMode) {
-      print("DATABSE $mTableName DELETED");
+      print("DATA TABLE $tableName DELETED");
     }
   }
 
-  void _logError(String aMsg) {
-    log(aMsg, time: DateTime.now());
-  }
-
-  void _checkDBNull() {
-    if (mDB == null) {
-      _logError("mDB is null");
+  Future<int> getCount({String column = "*"}) async {
+    if (!_checkDBNull()) {
+      return -1;
     }
-  }
-
-  final String mTableName;
-
-  final String mPath;
-  final bool fDebug;
-  final mDBffi = databaseFactoryFfi;
-  Database? mDB;
-}
-
-class OSABDB extends DBClass {
-  OSABDB(
-      {required super.mPath, super.fDebug = false, required super.mTableName});
-
-  @override
-  Future<OSABDB> openDB() async {
-    mDB = await mDBffi.openDatabase(mPath);
-    createDB();
-    return this;
-  }
-
-  @override
-  Future createDB() async {
-    super.createDB();
-    mDB!.execute(
-        'CREATE TABLE IF NOT EXISTS $mTableName (id TEXT PRIMARY KEY, val TEXT NOT NULL)');
-  }
-
-  @override
-  Future<T?> getItem<T>(List<String> aID) async {
-    super.getItem(aID);
-    var val = await get(['val'], aWhere: 'id = ?', aWhereArgs: aID);
-    return val.first['val'] as T;
-  }
-
-  @override
-  Future update<T, B>(List<B> aID, DBData aValues) async {
-    super.update(aID, aValues);
-    await mDB!.update(mTableName, aValues, where: 'id = ?', whereArgs: aID);
-  }
-
-  static Future<OSABDB> getInstance() async {
-    String path = join(await _OSABPaths.path, "db.sql");
-    return OSABDB(mPath: path, mTableName: "OSAB").openDB();
-  }
-}
-
-class DeviceDB extends DBClass {
-  DeviceDB(
-      {required super.mPath, super.fDebug = false, required super.mTableName});
-
-  @override
-  Future<DeviceDB> openDB() async {
-    mDB = await mDBffi.openDatabase(mPath);
-    createDB();
-    return this;
-  }
-
-  @override
-  Future<T> getItem<T>(List<String> aID) async {
-    super.getItem(aID);
-    var val =
-        await get(['uuid', 'name', 'date'], aWhere: 'id = ?', aWhereArgs: aID);
-    return val.first as T;
-  }
-
-  @override
-  Future createDB() async {
-    super.createDB();
-    mDB!.execute('CREATE TABLE IF NOT EXISTS $mTableName'
-        '(id INTEGER PRIMARY KEY AUTOINCREMENT,'
-        'uuid REAL NOT NULL,'
-        'name TEXT NOT NULL,'
-        'date INTEGER'
-        ')');
-  }
-
-  @override
-  Future update<T, B>(List<B> aID, DBData aValues) async {
-    super.update(aID, aValues);
-    aValues["id"] = aID;
-    await mDB!.update(mTableName, aValues);
-  }
-
-  // Get DB count
-  Future<int> getTotalItemCount() async {
     return Sqflite.firstIntValue(
-            await mDB!.rawQuery("SELECT COUNT(*) FROM $mTableName")) ??
+            await db!.rawQuery("SELECT COUNT(*) FROM $tableName")) ??
         0;
   }
 
-  static Future<DeviceDB> getInstance() async {
-    String path = join(await _OSABPaths.path, "db.sql");
-    return DeviceDB(mPath: path, mTableName: "DEV").openDB();
+  bool _checkDBNull() {
+    if (db == null) {
+      Logger("db is null");
+      return false;
+    }
+    return true;
   }
+
+  final String tableName;
+
+  final String path;
+  final bool fDebug;
+  final dbFFi = databaseFactoryFfi;
+  Database? db;
+  final Function(String) creator;
+  List<String> itemFields = [];
 }
 
 typedef DBData = Map<String, Object?>;
+
+class DBInstances {
+  static Future<DBClass> osab() async => DBClass(
+          path: await DBClass.createPath("db.sql"),
+          tableName: "OSAB",
+          creator: OSABData.creator,
+          itemFields: DBClassItemFields.osab)
+      .openDB();
+  static Future<DBClass> devices() async => DBClass(
+          path: await DBClass.createPath("db.sql"),
+          tableName: "DEV",
+          creator: DeviceData.creator,
+          itemFields: DBClassItemFields.devices)
+      .openDB();
+}

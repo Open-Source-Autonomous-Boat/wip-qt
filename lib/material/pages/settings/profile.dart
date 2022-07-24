@@ -21,43 +21,6 @@ class _ProfileNameClassState extends State<_ProfileNameClass> {
       );
 }
 
-class _ProfileBirthdayClass extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _ProfileBirthdayClassState();
-}
-
-class _ProfileBirthdayClassState extends State<_ProfileBirthdayClass> {
-  DateTime _dateTime = DateTime.fromMillisecondsSinceEpoch(0);
-  @override
-  Widget build(BuildContext context) => ListTile(
-        leading: const Icon(Icons.cake),
-        subtitle: TextField(
-          readOnly: true,
-          onTap: () {
-            showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime.fromMillisecondsSinceEpoch(0),
-                    lastDate: DateTime.now())
-                .then((value) {
-              setState(() {
-                value ??= DateTime.fromMicrosecondsSinceEpoch(0);
-                _dateTime = value!;
-              });
-            });
-          },
-          decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              label: const Text("Birthday"),
-              hintText: _dateTime.toString()),
-        ),
-        trailing: TextButton(
-          child: const Text("Set"),
-          onPressed: () {},
-        ),
-      );
-}
-
 class _OrganizationNameClass extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _OrganizationNameClassState();
@@ -97,7 +60,6 @@ class _AndroidSettingsProfile extends State<AndroidSettingsProfile> {
           children: [
             TextStyles.sectionTitle("Personal Information", context),
             _ProfileNameClass(),
-            _ProfileBirthdayClass(),
             const Divider(),
             TextStyles.sectionTitle("Organizational Information", context),
             _OrganizationNameClass(),

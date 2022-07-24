@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:osab/db/db.dart';
 import 'package:osab/material/styles/text.dart';
 import 'package:uuid/uuid.dart';
@@ -30,19 +31,19 @@ class _DeviceCard extends StatefulWidget {
 
 class _DeviceCardState extends State<_DeviceCard> {
   late Future<String> mName;
+  late Future<String> mID;
   var mDeviceQuery = ["Change Name", "Set Name"];
   int mDeviceIndex = 0;
-  final TextEditingController mTextCtrl = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    mID = _getDeviceID();
     mName = _getDeviceName();
   }
 
   @override
   void dispose() {
-    mTextCtrl.dispose();
     super.dispose();
   }
 
@@ -58,38 +59,14 @@ class _DeviceCardState extends State<_DeviceCard> {
           FutureBuilder(
               future: mName,
               builder: ((context, AsyncSnapshot<String> snapshot) {
-                if (snapshot.hasData) {
-                  String name = snapshot.data!;
-                  var deviceNameList = [
-                    Text(name),
-                    TextField(
-                      controller: mTextCtrl,
-                      decoration: InputDecoration(
-                          label: const Text("Set Name"), hintText: name),
-                    )
-                  ];
-                  return ListTile(
-                    title: const Text("Device Name"),
-                    subtitle: deviceNameList[mDeviceIndex],
-                    trailing: TextButton(
-                      child: Text(mDeviceQuery[mDeviceIndex]),
-                      onPressed: () {
-                        setState(() {
-                          if (mDeviceIndex > 0) {
-                            _setDeviceName(mTextCtrl.text);
-                            mName = _getDeviceName();
-                          }
-                          mDeviceIndex = (mDeviceIndex == 0) ? 1 : 0;
-                        });
-                      },
-                    ),
-                  );
-                } else {
-                  return const ListTile(
-                    title: Text("Device Name"),
-                    subtitle: Text("FAILED TO GET NAME"),
-                  );
-                }
+                String name = (snapshot.hasData &&
+                        snapshot.connectionState == ConnectionState.done)
+                    ? snapshot.data!
+                    : "Unknown Name";
+                return ListTile(
+                  title: const Text("Device Name"),
+                  subtitle: Text(name),
+                );
               })),
           ListTile(
             title: const Text("UUID"),
@@ -109,14 +86,30 @@ class _DeviceCardState extends State<_DeviceCard> {
   }
 
   Future<String> _getDeviceName() async {
-    OSABDB db = await OSABDB.getInstance();
-    return await db.getItem(['devname']);
+    var name = DeviceData()
+        .from(await (await DBInstances.devices()).getItem(await mID));
+    return (name.isEmpty) ? "0" : name.first.name;
   }
 
-  void _setDeviceName(aName) {
-    OSABDB.getInstance().then((value) {
-      value.set({"id": "devname", "val": aName});
-    });
+  Future<String> _getDeviceID() async {
+    List<OSABDataValues> data =
+        OSABData().from(await (await DBInstances.osab()).getItem("devid"));
+    return (data.isEmpty || data.first.value == "null")
+        ? "0"
+        : data.first.value ?? "0";
+  }
+
+  void _setDeviceName(String aName) {
+    if (aName.isEmpty) {
+      return;
+    }
+    //DBInstances.osab().then((value) {
+    //  value.set(OSABDataValues(id: "devname", value: aName).asMap());
+    //});
+    DBInstances.devices().then((value) => {
+          value.set(DeviceDataValues(id: int.tryParse("0") ?? -1, name: aName)
+              .asMap())
+        });
   }
 }
 
@@ -148,11 +141,6 @@ class _GreetingCardState extends State<_GreetingCard> {
                   child: SizedBox.expand(
                       child: Stack(children: [
                     Center(
-                        child: Image.network(
-                      'https://upload.wikimedia.org/wikipedia/commons/5/58/Blue_ocean_wave_(Unsplash).jpg',
-                      fit: BoxFit.fill,
-                    )),
-                    Center(
                       child: TextStyles.cardText(snapshot.data!),
                     )
                   ])),
@@ -170,9 +158,11 @@ class _GreetingCardState extends State<_GreetingCard> {
   }
 
   static Future<String> _getUserName() async {
-    // Hopefully doesn't cause issues :)
-    OSABDB db = await OSABDB.getInstance();
-    return await db.getItem(['name']);
+    String? data = OSABData()
+        .from(await (await DBInstances.osab()).getItem("name"))
+        .first
+        .value;
+    return data ?? "[Unknown UserName]";
   }
 }
 

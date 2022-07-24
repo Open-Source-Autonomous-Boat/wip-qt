@@ -12,7 +12,7 @@ class AndroidDashBoard extends StatefulWidget {
 class _AndroidDasBoard extends State<AndroidDashBoard> {
   @override
   Widget build(BuildContext context) => Column(children: [
-        DashBoardCards.greetingCard(),
+        // DashBoardCards.greetingCard(),
         Expanded(
             flex: 2,
             child: ListView(

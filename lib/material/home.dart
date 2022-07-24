@@ -25,57 +25,48 @@ class _AndroidHome extends State<AndroidHome> {
     });
   }
 
-  Widget mobileHome() {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Test"),
-      ),
-      bottomNavigationBar: NavigationBar(
-          selectedIndex: mPage,
-          destinations: const [
-            NavigationDestination(
-              icon: Icon(Icons.home),
-              label: "Home",
-            ),
-            NavigationDestination(icon: Icon(Icons.map), label: "Map"),
-            NavigationDestination(icon: Icon(Icons.settings), label: "Settings")
-          ],
-          onDestinationSelected: (int aSelIndex) => mCallBack(aSelIndex)),
-      body: pages[mPage],
-    );
-  }
-
-  Widget desktopHome() {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text("Test"),
-        ),
-        body: Row(
-          children: [
-            NavigationRail(
-                destinations: const [
-                  NavigationRailDestination(
-                      icon: Icon(Icons.home), label: Text("lol")),
-                  NavigationRailDestination(
-                      icon: Icon(Icons.map), label: Text("Map")),
-                  NavigationRailDestination(
-                      icon: Icon(Icons.settings), label: Text("Settings"))
-                ],
-                onDestinationSelected: (aSelIndex) => mCallBack(aSelIndex),
-                selectedIndex: mPage),
-            Expanded(child: pages[mPage])
-          ],
-        ));
-  }
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, container) {
-      if (container.maxWidth < 600) {
-        return mobileHome();
-      } else {
-        return desktopHome();
-      }
+      return Scaffold(
+          appBar: AppBar(
+            title: const Text("OSAB - Watercraft Interface"),
+          ),
+          bottomNavigationBar: (container.maxWidth < 600)
+              ? NavigationBar(
+                  selectedIndex: mPage,
+                  destinations: const [
+                    NavigationDestination(
+                      icon: Icon(Icons.home),
+                      label: "Home",
+                    ),
+                    NavigationDestination(icon: Icon(Icons.map), label: "Map"),
+                    NavigationDestination(
+                        icon: Icon(Icons.settings), label: "Settings")
+                  ],
+                  onDestinationSelected: (int aSelIndex) =>
+                      mCallBack(aSelIndex))
+              : null,
+          body: (container.maxWidth < 600)
+              ? pages[mPage]
+              : Row(
+                  children: [
+                    NavigationRail(
+                        destinations: const [
+                          NavigationRailDestination(
+                              icon: Icon(Icons.home), label: Text("lol")),
+                          NavigationRailDestination(
+                              icon: Icon(Icons.map), label: Text("Map")),
+                          NavigationRailDestination(
+                              icon: Icon(Icons.settings),
+                              label: Text("Settings"))
+                        ],
+                        onDestinationSelected: (aSelIndex) =>
+                            mCallBack(aSelIndex),
+                        selectedIndex: mPage),
+                    Expanded(child: pages[mPage])
+                  ],
+                ));
     });
   }
 }

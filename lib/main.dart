@@ -3,11 +3,13 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as material;
+import 'package:osab/db/db.dart';
 import 'package:osab/material/home.dart';
 import 'package:osab/meta/navigation.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 Future<void> main(List<String> args) async {
+  material.WidgetsFlutterBinding.ensureInitialized();
   if (Platform.isMacOS || Platform.isLinux || Platform.isWindows) {
     sqfliteFfiInit();
   }
@@ -25,6 +27,7 @@ Future<void> main(List<String> args) async {
     case (TargetPlatform.android):
     default:
       material.runApp(const AndroidApp());
+      break;
   }
 }
 
