@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 import 'package:osab/db/db.dart';
 import 'package:osab/material/styles/text.dart';
 import 'package:uuid/uuid.dart';
@@ -99,18 +98,6 @@ class _DeviceCardState extends State<_DeviceCard> {
         : data.first.value ?? "0";
   }
 
-  void _setDeviceName(String aName) {
-    if (aName.isEmpty) {
-      return;
-    }
-    //DBInstances.osab().then((value) {
-    //  value.set(OSABDataValues(id: "devname", value: aName).asMap());
-    //});
-    DBInstances.devices().then((value) => {
-          value.set(DeviceDataValues(id: int.tryParse("0") ?? -1, name: aName)
-              .asMap())
-        });
-  }
 }
 
 class _GreetingCard extends StatefulWidget {

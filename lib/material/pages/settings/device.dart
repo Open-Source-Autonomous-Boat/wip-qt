@@ -12,6 +12,14 @@ class AndroidSettingsDevice extends StatefulWidget {
 
 class _AndroidSettingsDevice extends State<AndroidSettingsDevice> {
   late Future<int> mCount;
+  List<Widget> children = [];
+
+  void callback(BuildContext context) {
+    children = [];
+    setState(() {
+      mCount = _getCount();
+    });
+  }
 
   @override
   void initState() {
@@ -31,7 +39,13 @@ class _AndroidSettingsDevice extends State<AndroidSettingsDevice> {
           body: FutureBuilder(
               future: mCount,
               builder: ((context, snapshot) {
-                List<Widget> children = [];
+              children = [];
+                const Widget errorText = Center(
+                  child: Text(
+                    "No Device Found",
+                    textAlign: TextAlign.center,
+                  ),
+                );
                 if (snapshot.hasData &&
                     snapshot.connectionState == ConnectionState.done) {
                   int data = snapshot.data as int;
@@ -39,17 +53,19 @@ class _AndroidSettingsDevice extends State<AndroidSettingsDevice> {
                     children.add(DeviceGetCard(
                       mID: i,
                       constraints: constraints,
+                      callback: callback,
                     ));
                   }
+                  return (data > 0)
+                      ? GridView.count(
+                          padding: const EdgeInsets.all(5),
+                          crossAxisCount: (constraints.maxWidth ~/ 250),
+                          children: children,
+                        )
+                      : errorText;
                 } else {
-                  Widget child = const Text("NO DEVICE FOUND");
-                  children.add(GridTile(child: child));
+                  return errorText;
                 }
-                return GridView.count(
-                  padding: const EdgeInsets.all(5),
-                  crossAxisCount: (constraints.maxWidth ~/ 250),
-                  children: children,
-                );
               })),
           floatingActionButton: FutureBuilder(
               future: mCount,
@@ -59,7 +75,8 @@ class _AndroidSettingsDevice extends State<AndroidSettingsDevice> {
                   int data = snapshot.data!;
                   return FloatingActionButton(
                     onPressed: () {
-                      EditPage.showDialog(context, data);
+                      EditPage.showDialog(context, data,
+                          firstTime: true, callback: callback);
                     },
                     child: const Icon(Icons.add),
                   );

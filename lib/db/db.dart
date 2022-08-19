@@ -8,7 +8,7 @@ import 'dart:async';
 
 class DBClassItemFields {
   static List<String> osab = ['id', 'val'];
-  static List<String> devices = ['id', 'name', 'uuid', 'date'];
+  static List<String> devices = ['id', 'name', 'uuid'];
 }
 
 abstract class DataClass {
@@ -68,16 +68,20 @@ class OSABDataValues {
 class DeviceData extends DataClass {
   @override
   List<DeviceDataValues> from(dynamic data) {
+    void adder(Map e) {
+      mList.add(DeviceDataValues(
+          id: int.tryParse(e["id"].toString())!,
+          name: e["name"].toString(),
+          uuid: e["uuid"].toString()));
+    }
+
     if (data == null) {
       return mList;
     }
     if (data is List<DBData?>) {
       data.map((e) {
         if (e != null) {
-          mList.add(DeviceDataValues(
-              id: int.tryParse(e["id"].toString())!,
-              name: e["name"].toString(),
-              uuid: double.tryParse(e["uuid"].toString())));
+          adder(e);
         }
       });
     }
@@ -85,10 +89,7 @@ class DeviceData extends DataClass {
       if (data.isEmpty) {
         return mList;
       }
-      mList.add(DeviceDataValues(
-          id: int.tryParse(data["id"].toString())!,
-          name: data["name"].toString(),
-          uuid: double.tryParse(data["uuid"].toString())));
+      adder(data);
     } else {
       Logger("OSABData").warning("FAILED TO ACCEPT DATA");
     }
@@ -103,9 +104,8 @@ class DeviceData extends DataClass {
   static String creator(String name) => '''
     CREATE TABLE IF NOT EXISTS $name (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      uuid REAL NOT NULL,
-      name TEXT NOT NULL,
-      date INTEGER
+      uuid TEXT NOT NULL,
+      name TEXT NOT NULL
     )
   ''';
 
@@ -113,14 +113,16 @@ class DeviceData extends DataClass {
 }
 
 class DeviceDataValues {
-  DeviceDataValues(
-      {required this.id, this.uuid, required this.name, this.date});
-  Map<String, Object?> asMap() =>
-      {"id": id, "name": name, "uuid": uuid, "date": date};
+  DeviceDataValues({required this.id, this.uuid, required this.name});
+  Map<String, Object?> asMap() => {
+        "id": id,
+        "name": name,
+        "uuid": uuid,
+      };
 
   late int id;
   late String name;
-  late double? uuid;
+  late String? uuid;
   late int? date;
 }
 
@@ -171,6 +173,11 @@ class DBClass {
     return (data.isEmpty) ? {} : data.first;
   }
 
+  Future<void> rmItem(String id) async {
+    _checkDBNull();
+    await rm(where: "id = ?", whereArgs: [id]);
+  }
+
   Future<void> set(DBData values) async {
     _checkDBNull();
     db!.insert(tableName, values, conflictAlgorithm: ConflictAlgorithm.replace);
@@ -180,7 +187,7 @@ class DBClass {
     _checkDBNull();
   }
 
-  Future rm(String name, {String? where, List<Object>? whereArgs}) async {
+  Future rm({String? where, List<Object>? whereArgs}) async {
     _checkDBNull();
     await db!.delete(tableName, where: where, whereArgs: whereArgs);
   }

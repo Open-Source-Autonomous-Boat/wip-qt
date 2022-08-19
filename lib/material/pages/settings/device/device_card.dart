@@ -3,11 +3,12 @@ import 'package:osab/db/db.dart';
 import 'package:osab/material/pages/settings/device/edit_page.dart';
 
 class DeviceGetCard extends StatefulWidget {
-  const DeviceGetCard({Key? key, required this.mID, required this.constraints})
+  const DeviceGetCard({Key? key, required this.mID, required this.constraints, required this.callback})
       : super(key: key);
 
   final int mID;
   final BoxConstraints constraints;
+  final Function(BuildContext context) callback;
 
   @override
   State<StatefulWidget> createState() => _DeviceGetCard();
@@ -40,7 +41,7 @@ class _DeviceGetCard extends State<DeviceGetCard> {
             final DBData data = snapshot.data!;
             final ElevatedButton editButton = ElevatedButton.icon(
                 onPressed: () {
-                  EditPage.showDialog(context, mID);
+                  EditPage.showDialog(context, mID, callback: widget.callback );
                 },
                 icon: const Icon(Icons.edit),
                 label: const Text("Edit"));
@@ -70,11 +71,7 @@ class _DeviceGetCard extends State<DeviceGetCard> {
   }
 
   Future<DBData> _getData() async {
-    //DeviceDB db = await DeviceDB.getInstance();
-    //return await db.getItem<DBData>([mID.toString()]);
     DBClass db = await DBInstances.devices();
-    await db.set(
-        DeviceDataValues(id: 0, name: "DEV-lol", uuid: 0.0, date: 000).asMap());
     DBData? data = await db.getItem(mID.toString());
     return data ?? {};
   }
