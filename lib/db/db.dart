@@ -1,10 +1,11 @@
-import 'package:flutter/foundation.dart';
-import 'package:path/path.dart' as path_lib;
-import 'package:sqflite/sqflite.dart';
-import 'package:logging/logging.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:path_provider/path_provider.dart';
 import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:logging/logging.dart';
+import 'package:path/path.dart' as path_lib;
+import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class DBClassItemFields {
   static List<String> osab = ['id', 'val'];
@@ -19,25 +20,22 @@ abstract class DataClass {
   }
 }
 
-abstract class DBActions {
-  bool checkEmpty();
-}
-
 class OSABData extends DataClass {
   @override
   List<OSABDataValues> from(dynamic data) {
     if (data == null) {
       return mList;
     }
-    if (data is List<DBData?>) {
-      data.map((e) {
+    if (data is List<DBData?> ||
+        (data is List<DBData>?) ||
+        data is List<DBData>) {
+      data.forEach((e) {
         if (e != null) {
           mList.add(OSABDataValues(
               id: e["id"].toString(), value: e["value"].toString()));
         }
       });
-    }
-    if (data is DBData) {
+    } else if (data is DBData) {
       mList.add(OSABDataValues(
           id: data["id"].toString(), value: data["val"].toString()));
     } else {
@@ -76,21 +74,35 @@ class DeviceData extends DataClass {
     }
 
     if (data == null) {
+      if (kDebugMode) {
+        print("DeviceData is null");
+      }
       return mList;
     }
-    if (data is List<DBData?>) {
-      data.map((e) {
+    if (data is List<DBData?> ||
+        (data is List<DBData>?) ||
+        data is List<DBData>) {
+      if (kDebugMode) {
+        print("DeviceData is list");
+      }
+      data.forEach((e) {
         if (e != null) {
           adder(e);
-        }
+        } else {}
       });
-    }
-    if (data is DBData) {
+    } else if (data is DBData) {
+      if (kDebugMode) {
+        print("Data is DBData");
+      }
       if (data.isEmpty) {
         return mList;
       }
       adder(data);
     } else {
+      if (kDebugMode) {
+        print("Failed to accept data");
+        print(data is List<DBData>);
+      }
       Logger("OSABData").warning("FAILED TO ACCEPT DATA");
     }
     return mList;
@@ -114,16 +126,11 @@ class DeviceData extends DataClass {
 
 class DeviceDataValues {
   DeviceDataValues({required this.id, this.uuid, required this.name});
-  Map<String, Object?> asMap() => {
-        "id": id,
-        "name": name,
-        "uuid": uuid,
-      };
+  Map<String, Object?> asMap() => {"id": id, "name": name, "uuid": uuid};
 
   late int id;
   late String name;
   late String? uuid;
-  late int? date;
 }
 
 class DBClass {
@@ -161,15 +168,14 @@ class DBClass {
     return true;
   }
 
-  Future<List<DBData?>> get(List<String> column,
-      {String? where, List<Object>? whereArgs}) async {
+  Future<List<DBData>> get({String? where, List<Object>? whereArgs}) async {
     _checkDBNull();
     return await db!.query(tableName, where: where, whereArgs: whereArgs);
   }
 
   Future<DBData?> getItem(String id) async {
     _checkDBNull();
-    var data = await get(itemFields, where: "id = ?", whereArgs: [id]);
+    var data = await get(where: "id = ?", whereArgs: [id]);
     return (data.isEmpty) ? {} : data.first;
   }
 

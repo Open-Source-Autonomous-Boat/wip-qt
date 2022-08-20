@@ -43,7 +43,11 @@ class _AndroidApp extends material.State<AndroidApp> {
   material.Widget build(material.BuildContext context) {
     return material.MaterialApp(
       navigatorKey: GlobalNavigation.globalNavigation,
-      theme: material.ThemeData(useMaterial3: true),
+      theme:
+          material.ThemeData(useMaterial3: true, brightness: Brightness.light),
+      darkTheme:
+          material.ThemeData(useMaterial3: true, brightness: Brightness.dark),
+      themeMode: material.ThemeMode.system,
       debugShowCheckedModeBanner: false,
       home: const material.Scaffold(body: AndroidHome()),
     );

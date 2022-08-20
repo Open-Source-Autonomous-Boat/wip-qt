@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:osab/db/db.dart';
+import 'package:osab/db/actions.dart';
 
 class FavoriteButton extends StatefulWidget {
   final VoidCallback? callback;
@@ -18,7 +18,7 @@ class FavoriteButton extends StatefulWidget {
 }
 
 class _FavoriteButton extends State<FavoriteButton> {
-  late final Future<bool> status;
+  late Future<bool> status;
   @override
   void initState() {
     super.initState();
@@ -27,20 +27,30 @@ class _FavoriteButton extends State<FavoriteButton> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(builder: ((context, snapshot) {
-      return IconButton(
-        onPressed: widget.callback,
-        icon: const Icon(Icons.star),
-      );
-    }));
+    return FutureBuilder(
+        future: status,
+        builder: ((context, snapshot) {
+          Icon icon = const Icon(Icons.star_border_outlined);
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.hasData) {
+            if ((snapshot.data as bool) == true) {
+              icon = const Icon(Icons.star);
+            }
+          }
+          return IconButton(
+            onPressed: () {
+              if (widget.callback != null) {
+                widget.callback?.call();
+              }
+              setState(() {
+                status = _checkFav();
+              });
+            },
+            icon: icon,
+          );
+        }));
   }
 
-  Future<bool> _checkFav() async {
-    DBClass db = await DBInstances.osab();
-    List<OSABDataValues> data = OSABData().from(await db.getItem("devid"));
-    if (data.isEmpty) {
-      return false;
-    }
-    return true;
-  }
+  Future<bool> _checkFav() async =>
+      (await DBActions.getFavoriteDevice()) == widget.id;
 }

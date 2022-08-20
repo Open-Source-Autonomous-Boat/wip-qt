@@ -1,27 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:osab/db/actions.dart';
 import 'package:osab/db/db.dart';
-import 'package:osab/material/styles/text.dart';
-import 'package:uuid/uuid.dart';
-import 'dart:async';
-
-class _LocationCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-        child: Column(children: [
-      ListTile(
-        leading: const Icon(Icons.location_city),
-        title: TextStyles.cardText("Location"),
-        subtitle: const Text("Washington DC"),
-      ),
-      ButtonBar(
-        children: [
-          TextButton(onPressed: (() => {}), child: const Text("Open Settings"))
-        ],
-      )
-    ]));
-  }
-}
 
 class _DeviceCard extends StatefulWidget {
   @override
@@ -29,16 +8,10 @@ class _DeviceCard extends StatefulWidget {
 }
 
 class _DeviceCardState extends State<_DeviceCard> {
-  late Future<String> mName;
-  late Future<String> mID;
-  var mDeviceQuery = ["Change Name", "Set Name"];
-  int mDeviceIndex = 0;
-
+  late Future<DeviceDataValues?> deviceData;
   @override
   void initState() {
-    super.initState();
-    mID = _getDeviceID();
-    mName = _getDeviceName();
+    deviceData = DBActions.getDeviceFavValue();
   }
 
   @override
@@ -48,115 +21,53 @@ class _DeviceCardState extends State<_DeviceCard> {
 
   @override
   Widget build(BuildContext context) {
+    ListTile waitTile = const ListTile(
+        leading: Icon(Icons.waving_hand),
+        title: Text("Waiting for data to load...."),
+        subtitle: Text("Might wanna submit a report on this one :("));
+    ListTile errorTile = const ListTile(
+        leading: Icon(Icons.error),
+        title: Text("Failed to recieve favorite device id"),
+        subtitle: Text("Please submit bug report :)"));
     return Card(
-        child: Column(children: [
-      ExpansionTile(
-        leading: const Icon(Icons.devices),
-        title: TextStyles.cardText("Device"),
-        subtitle: const Text("CONNECTED"),
-        children: [
-          FutureBuilder(
-              future: mName,
-              builder: ((context, AsyncSnapshot<String> snapshot) {
-                String name = (snapshot.hasData &&
-                        snapshot.connectionState == ConnectionState.done)
-                    ? snapshot.data!
-                    : "Unknown Name";
-                return ListTile(
-                  title: const Text("Device Name"),
-                  subtitle: Text(name),
-                );
-              })),
-          ListTile(
-            title: const Text("UUID"),
-            subtitle: Text(const Uuid().v1()),
-          ),
-          const ListTile(
-            title: Text("Date Added"),
-          )
-        ],
-      ),
-      ButtonBar(
-        children: [
-          TextButton(onPressed: (() => {}), child: const Text("Disconnect"))
-        ],
-      )
-    ]));
-  }
-
-  Future<String> _getDeviceName() async {
-    var name = DeviceData()
-        .from(await (await DBInstances.devices()).getItem(await mID));
-    return (name.isEmpty) ? "0" : name.first.name;
-  }
-
-  Future<String> _getDeviceID() async {
-    List<OSABDataValues> data =
-        OSABData().from(await (await DBInstances.osab()).getItem("devid"));
-    return (data.isEmpty || data.first.value == "null")
-        ? "0"
-        : data.first.value ?? "0";
-  }
-
-}
-
-class _GreetingCard extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _GreetingCardState();
-}
-
-class _GreetingCardState extends State<_GreetingCard> {
-  late final Future<String> mName;
-
-  @override
-  void initState() {
-    super.initState();
-    mName = _getUserName();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-        flex: 1,
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: FutureBuilder<String>(
-            future: mName,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Card(
-                  child: SizedBox.expand(
-                      child: Stack(children: [
-                    Center(
-                      child: TextStyles.cardText(snapshot.data!),
-                    )
-                  ])),
-                );
-              } else {
-                return Card(
-                  child: SizedBox.expand(
-                    child: TextStyles.cardText("FAILED TO GET USER NAME!"),
-                  ),
-                );
+        child: FutureBuilder(
+            future: deviceData,
+            builder: (BuildContext context,
+                AsyncSnapshot<DeviceDataValues?> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.active:
+                case ConnectionState.waiting:
+                  return waitTile;
+                case ConnectionState.none:
+                  return errorTile;
+                case ConnectionState.done:
+                  {
+                    if (!snapshot.hasData || snapshot.data == null) {
+                      return const ListTile(
+                          leading: Icon(Icons.warning),
+                          title: Text("No device available!"),
+                          subtitle: Text("Please add new device :)"));
+                    }
+                    DeviceDataValues data = snapshot.data!;
+                    return ExpansionTile(
+                        leading: const Icon(Icons.device_hub),
+                        title: Text(data.name),
+                        subtitle: Text("ID: ${data.id.toString()}"),
+                        children: <Widget>[
+                          if (data.uuid != null)
+                            ListTile(
+                                leading: const Icon(Icons.perm_identity),
+                                title: const Text("UUID"),
+                                subtitle: Text(data.uuid!)),
+                        ]);
+                  }
               }
-            },
-          ),
-        ));
-  }
-
-  static Future<String> _getUserName() async {
-    String? data = OSABData()
-        .from(await (await DBInstances.osab()).getItem("name"))
-        .first
-        .value;
-    return data ?? "[Unknown UserName]";
+            }));
   }
 }
 
 class DashBoardCards {
   static var list = [
     Padding(padding: const EdgeInsets.all(10), child: _DeviceCard()),
-    Padding(padding: const EdgeInsets.all(10), child: _LocationCard()),
   ];
-  static Widget greetingCard() => _GreetingCard();
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:osab/map/map.dart';
+import 'package:osab/material/pages/control.dart';
 import 'package:osab/material/pages/dashboard.dart';
 import 'package:osab/material/pages/settings.dart';
 
@@ -15,6 +16,7 @@ class _AndroidHome extends State<AndroidHome> {
 
   final List<Widget> pages = const <Widget>[
     AndroidDashBoard(),
+    AndroidController(),
     OSABMap(),
     AndroidSettings()
   ];
@@ -40,6 +42,8 @@ class _AndroidHome extends State<AndroidHome> {
                       icon: Icon(Icons.home),
                       label: "Home",
                     ),
+                    NavigationDestination(
+                        icon: Icon(Icons.control_camera), label: "Control"),
                     NavigationDestination(icon: Icon(Icons.map), label: "Map"),
                     NavigationDestination(
                         icon: Icon(Icons.settings), label: "Settings")
@@ -55,6 +59,9 @@ class _AndroidHome extends State<AndroidHome> {
                         destinations: const [
                           NavigationRailDestination(
                               icon: Icon(Icons.home), label: Text("lol")),
+                          NavigationRailDestination(
+                              icon: Icon(Icons.control_camera),
+                              label: Text("Control")),
                           NavigationRailDestination(
                               icon: Icon(Icons.map), label: Text("Map")),
                           NavigationRailDestination(

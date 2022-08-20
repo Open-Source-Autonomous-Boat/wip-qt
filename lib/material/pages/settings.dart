@@ -8,19 +8,6 @@ class AndroidSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Widget> settingsWidgets = <Widget>[
-      // Card(
-      //   child: ListTile(
-      //     leading: const Icon(Icons.person),
-      //     subtitle: const Text("Profile"),
-      //     trailing: const Icon(Icons.arrow_forward),
-      //     onTap: () {
-      //       Navigator.push(
-      //           context,
-      //           MaterialPageRoute(
-      //               builder: ((context) => const AndroidSettingsProfile())));
-      //     },
-      //   ),
-      // ),
       Card(
           child: ListTile(
               leading: const Icon(Icons.phone),

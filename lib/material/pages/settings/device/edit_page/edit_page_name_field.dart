@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:osab/db/db.dart';
+import 'package:osab/db/actions.dart';
 
 class EditPageNameField extends StatefulWidget {
   const EditPageNameField(
       {super.key, required this.id, required this.controller});
   @override
   State<StatefulWidget> createState() => _EditPageNameField();
-
 
   String getText() => controller.text;
 
@@ -32,7 +31,8 @@ class _EditPageNameField extends State<EditPageNameField> {
           String name = (snapshot.hasData &&
                   snapshot.connectionState == ConnectionState.done)
               ? snapshot.data.toString()
-              : "ERROR!";
+              : "";
+          widget.controller.text = name;
           return ListTile(
             leading: const Icon(Icons.edit),
             subtitle: TextField(
@@ -48,11 +48,10 @@ class _EditPageNameField extends State<EditPageNameField> {
 
   Future<String> _getName() async {
     String id = widget.id;
-    var data =
-        DeviceData().from(await (await DBInstances.devices()).getItem(id));
-    if (data.isEmpty || data.first.name == "null") {
+    var data = await DBActions.getDevice(id);
+    if (data == null || data.name == "null") {
       return "";
     }
-    return data.first.name;
+    return data.name;
   }
 }

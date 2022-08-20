@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:osab/db/db.dart';
+import 'package:osab/db/actions.dart';
 import 'package:osab/material/pages/settings/device/edit_page/edit_page_name_field.dart';
 import 'package:osab/material/pages/settings/device/edit_page/star_icon_button.dart';
 import 'package:uuid/uuid.dart';
@@ -53,9 +53,8 @@ class _EditPage extends State<EditPage> {
           if (!widget.firstTime)
             IconButton(
                 onPressed: () {
-                  DBInstances.devices().then((value) {
-                    value.rmItem(widget.id.toString());
-                  });
+                  DBActions.rmDeviceId(widget.id.toString());
+                  DBActions.resetFavoriteDevice(widget.id.toString());
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text("Deleted item id: ${widget.id}")));
@@ -65,8 +64,9 @@ class _EditPage extends State<EditPage> {
             FavoriteButton(
                 callback: () {
                   _ButtonActions.setDefault(widget.id);
+                  setState(() {});
                 },
-                id: "0")
+                id: widget.id.toString())
         ],
       ),
       body: ListView(
@@ -89,18 +89,17 @@ class _EditPage extends State<EditPage> {
         child: const Icon(Icons.save),
         onPressed: () {
           final String name = nameField.getText();
-          if (name.isEmpty) {
+          if (name.isEmpty || name == "null") {
             if (kDebugMode) {
               print("Failed to get name");
             }
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text("Invalid name $name")));
             return;
           }
           var uuid = const Uuid().v5(Uuid.NAMESPACE_NIL, name);
-          var data = DeviceDataValues(
-              id: widget.id, name: nameField.getText(), uuid: uuid);
-          DBInstances.devices().then((value) {
-            value.set(data.asMap());
-          });
+          DBActions.setDevice(
+              name: nameField.getText(), uuid: uuid, id: widget.id);
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text("Device $name saved")));
         },
@@ -111,8 +110,6 @@ class _EditPage extends State<EditPage> {
 
 class _ButtonActions {
   static setDefault(int aId) {
-    DBInstances.osab().then((value) {
-      value.set(OSABDataValues(id: "devid", value: aId.toString()).asMap());
-    });
+    DBActions.setFavoriteDevice(aId.toString());
   }
 }
