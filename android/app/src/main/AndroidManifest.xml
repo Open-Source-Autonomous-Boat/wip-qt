@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.osab">
+    package="osab.xyz.wip-flutter">
    <application
         android:label="osab"
         android:name="${applicationName}"
